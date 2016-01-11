@@ -20,6 +20,7 @@ public class Cli {
     private String name;
     private String nickname;
     private String ip;
+    private String port;
 
     public Cli(String[] args, int type) {
 
@@ -31,7 +32,7 @@ public class Cli {
             options.addOption("t", "tui", false, "run as tui");
             options.addOption("g", "gui", false, "run as gui");
             options.addOption("n", "name", false, "server name");
-
+            options.addOption("p", "port", false, "port to listen on");
 
         }
 
@@ -42,7 +43,7 @@ public class Cli {
             options.addOption("ip", "ip", false, "server ip, used to connect to the server.");
             options.addOption("t", "tui", false, "run as tui");
             options.addOption("g", "gui", false, "run as gui");
-
+            options.addOption("p", "port", false, "port to connect to");
         }
 
     }
@@ -63,7 +64,8 @@ public class Cli {
             if (cmd.hasOption("n"))
                 this.name = cmd.getOptionValue("n");
 
-
+            if (cmd.hasOption("p"))
+                this.port = cmd.getOptionValue("p");
 
             if (cmd.hasOption("v")) {
                 log.log(Level.INFO, "Using cli argument -v=" + cmd.getOptionValue("v"));
@@ -97,6 +99,9 @@ public class Cli {
 
             if (cmd.hasOption("n"))
                 this.nickname = cmd.getOptionValue("n");
+
+            if (cmd.hasOption("p"))
+                this.port = cmd.getOptionValue("p");
 
             else {
                 help();
