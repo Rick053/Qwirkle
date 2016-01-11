@@ -1,0 +1,5 @@
+echo -e square '\U25A0' 
+cross U+274C
+circle U+23FA
+plus U+271A
+star U+2737

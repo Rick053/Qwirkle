@@ -5,19 +5,22 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import ss.qwirkle.common.cli.Cli;
+import ss.qwirkle.common.ui.GUI;
+import ss.qwirkle.common.ui.TUI;
+import ss.qwirkle.common.ui.UserInterface;
 
 public class Client extends Application{
     public static void main(String[] args) {
         //Determine the interface type
-//        UserInterface ui;
-//
-//        if(args.length > 0 && args[0].equals("-TUI")) {
-//            ui = new TUI();
-//        } else {
-//            ui = new GUI();
-//        }
-//
-//        ui.run(args);
+        UserInterface ui;
+        Cli cli = new Cli(args, 0);
+        cli.parse();
+        if (cli.getUI() == "TUI"){
+            ui = new TUI();
+        } else {
+            ui = new GUI();
+        }
         launch(args);
     }
 
