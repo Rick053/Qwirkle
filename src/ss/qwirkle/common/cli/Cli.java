@@ -20,6 +20,7 @@ public class Cli {
     private String name;
     private String nickname;
     private String ip;
+    private String port;
 
     public Cli(String[] args, int type) {
 
@@ -31,7 +32,7 @@ public class Cli {
             options.addOption("t", "tui", false, "run as tui");
             options.addOption("g", "gui", false, "run as gui");
             options.addOption("n", "name", false, "server name");
-
+            options.addOption("p", "port", false, "port to listen on");
 
         }
 
@@ -42,7 +43,7 @@ public class Cli {
             options.addOption("ip", "ip", false, "server ip, used to connect to the server.");
             options.addOption("t", "tui", false, "run as tui");
             options.addOption("g", "gui", false, "run as gui");
-
+            options.addOption("p", "port", false, "port to connect to");
         }
 
     }
@@ -63,14 +64,12 @@ public class Cli {
             if (cmd.hasOption("n"))
                 this.name = cmd.getOptionValue("n");
 
-
+            if (cmd.hasOption("p"))
+                this.port = cmd.getOptionValue("p");
 
             if (cmd.hasOption("v")) {
                 log.log(Level.INFO, "Using cli argument -v=" + cmd.getOptionValue("v"));
                 // Whatever you want to do with the setting goes here
-
-            } else {
-                help();
             }
 
         } catch (ParseException e) {
@@ -98,9 +97,8 @@ public class Cli {
             if (cmd.hasOption("n"))
                 this.nickname = cmd.getOptionValue("n");
 
-            else {
-                help();
-            }
+            if (cmd.hasOption("p"))
+                this.port = cmd.getOptionValue("p");
 
         } catch (ParseException e) {
             log.log(Level.SEVERE, "Failed to parse comand line properties", e);
@@ -112,7 +110,7 @@ public class Cli {
         // This prints out some help
         HelpFormatter formater = new HelpFormatter();
 
-        formater.printHelp("Main", options);
+        formater.printHelp("Qwirkle game", options);
         System.exit(0);
     }
 
@@ -135,6 +133,10 @@ public class Cli {
 
     public String getUI() {
         return UI;
+    }
+
+    public String getPort() {
+        return port;
     }
 }
 
