@@ -26,4 +26,6 @@ public interface UserInterface {
      * @return boolean returns true if the positive (yes) option was chosen
      */
     boolean prompt(String message, String yes, String no);
+
+    void setup();
 }
