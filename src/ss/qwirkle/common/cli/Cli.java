@@ -70,7 +70,7 @@ public class Cli {
             if (cmd.hasOption("v")) {
                 log.log(Level.INFO, "Using cli argument -v=" + cmd.getOptionValue("v"));
                 // Whatever you want to do with the setting goes here
-
+            }
 
         } catch (ParseException e) {
             log.log(Level.SEVERE, "Failed to parse comand line properties", e);
@@ -133,6 +133,10 @@ public class Cli {
 
     public String getUI() {
         return UI;
+    }
+
+    public String getPort() {
+        return port;
     }
 }
 
