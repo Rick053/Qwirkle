@@ -26,6 +26,11 @@ public class GUI extends Application implements UserInterface {
         return false;
     }
 
+    @Override
+    public void setup() {
+
+    }
+
 
     @Override
     public void start(Stage window) throws Exception {

@@ -21,6 +21,11 @@ public class TUI implements UserInterface {
         return false;
     }
 
+    @Override
+    public void setup() {
+
+    }
+
     public void printScreen(){
         System.out.flush();
         System.out.println(gameInfo);
