@@ -71,9 +71,6 @@ public class Cli {
                 log.log(Level.INFO, "Using cli argument -v=" + cmd.getOptionValue("v"));
                 // Whatever you want to do with the setting goes here
 
-            } else {
-                help();
-            }
 
         } catch (ParseException e) {
             log.log(Level.SEVERE, "Failed to parse comand line properties", e);
@@ -102,10 +99,6 @@ public class Cli {
 
             if (cmd.hasOption("p"))
                 this.port = cmd.getOptionValue("p");
-
-            else {
-                help();
-            }
 
         } catch (ParseException e) {
             log.log(Level.SEVERE, "Failed to parse comand line properties", e);
