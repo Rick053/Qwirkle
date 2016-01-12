@@ -14,7 +14,7 @@ public class Client extends Application{
     public static void main(String[] args) {
         //Determine the interface type
         UserInterface ui;
-        Cli cli = new Cli(args, 0);
+        Cli cli = new Cli(args, 1);//start as client
         cli.parse();
         if (cli.getUI() == "TUI"){
             ui = new TUI();

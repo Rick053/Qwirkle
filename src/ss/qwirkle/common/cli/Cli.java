@@ -117,7 +117,7 @@ public class Cli {
         // This prints out some help
         HelpFormatter formater = new HelpFormatter();
 
-        formater.printHelp("Main", options);
+        formater.printHelp("Qwirkle game", options);
         System.exit(0);
     }
 
