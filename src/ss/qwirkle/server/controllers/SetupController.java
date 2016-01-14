@@ -5,7 +5,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import ss.qwirkle.common.Protocol;
+import ss.qwirkle.common.ui.GUI;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.URL;
 import java.net.UnknownHostException;
@@ -42,8 +44,36 @@ public class SetupController implements Initializable {
         if(maxConns != -1)
             maxConnections.setText(Integer.toString(maxConns));
 
+        //Is executed when the start server button is clicked.
         connect.setOnAction(e -> {
+            int p = (isNumeric(port.getText()) ? Integer.parseInt(port.getText()) : Protocol.Server.Settings.DEFAULT_PORT);
+            int mc = (isNumeric(maxConnections.getText()) ? Integer.parseInt(maxConnections.getText()) : -1);
 
+            controller.setPort(p);
+            controller.setMaxConnections(mc);
+
+            try {
+                ((GUI) controller.getUi()).changeScreen(
+                        "Qwirkle Server",
+                        "ss/qwirkle/server/views/main.fxml");
+            } catch (IOException ioe) {
+                ServerController.getInstance().log("error", ioe.getMessage());
+            }
         });
+    }
+
+    /**
+     * Check if a string is numeric
+     * @param text
+     * @return
+     */
+    private boolean isNumeric(String text) {
+        try {
+            Integer.parseInt(text);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+
+        return true;
     }
 }

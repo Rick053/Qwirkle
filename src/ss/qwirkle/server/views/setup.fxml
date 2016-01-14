@@ -5,13 +5,12 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<VBox fx:controller="ss.qwirkle.server.controllers.SetupController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ss.qwirkle.server.controllers.SetupController">
    <children>
-      <VBox>
+      <VBox VBox.vgrow="ALWAYS">
          <children>
             <Label text="IP Address" />
-            <TextField fx:id="host" />
+            <TextField fx:id="ip" editable="false" />
             <Label text="Port Number" />
             <TextField fx:id="port" />
             <Label text="Max. Connections" />

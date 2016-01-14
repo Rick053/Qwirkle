@@ -1,5 +1,7 @@
 package ss.qwirkle.common.ui;
 
+import java.io.IOException;
+
 /**
  * Abstract class that defines interaction with a User Interface
  */
@@ -27,5 +29,4 @@ public interface UserInterface {
      */
     boolean prompt(String message, String yes, String no);
 
-    void setup();
 }
