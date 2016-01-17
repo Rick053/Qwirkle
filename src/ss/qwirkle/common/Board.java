@@ -54,12 +54,34 @@ public class Board {
         String board = "";
         for (List<Integer> row:boardList) {
             for (int tile:row) {
-                board += tile;
+                board += intToQwirkle(tile);
 
             }
             board += "\n";
         }
         return board;
+    }
+    public String intToQwirkle(int i){
+        switch (i){
+            case -1:
+                return "#";
+            case 0:
+                return "O";
+            case 1:
+                return "\u25A0"; //square
+            case 2:
+                return "\u274C"; //cross
+            case 3:
+                return "\u271A"; //plus
+            case 4:
+                return "\u2737"; //star
+            case 5:
+                return "5";
+            case 6:
+                return "6";
+
+        }
+        return null;
     }
 
 

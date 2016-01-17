@@ -23,6 +23,8 @@ public class TUI implements UserInterface {
         gameInfo = "Qwirkle";
         message = "test";
         board = new Board(5);
+        board.addTile(0,0,1);
+        board.addTile(1,0,4);
     }
 
     @Override
