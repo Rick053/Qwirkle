@@ -65,9 +65,11 @@ public class TUI implements UserInterface {
     }
     public String promptString(String promptMessage){
         setPromptString(promptMessage);
+        board.addColumns();
         printScreen();
         String answer = scanner.next();
         return answer;
+
     }
 
     public void printScreen(){
