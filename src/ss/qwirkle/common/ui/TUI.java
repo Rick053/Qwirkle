@@ -1,10 +1,21 @@
 package ss.qwirkle.common.ui;
+import java.util.Scanner;
 
 public class TUI implements UserInterface {
     private String message = "test";
     private String gameInfo = "Qwirkle";
+    final String ANSI_CLS = "\u001b[2J";
+    final String ANSI_HOME = "\u001b[H";
     //private board 2d list
+    Scanner scanner;
     //private hand
+
+
+    public TUI(){
+        this.scanner = new Scanner(System.in);
+
+    }
+
     @Override
     public void run(String[] args) {
         printScreen();
@@ -18,10 +29,14 @@ public class TUI implements UserInterface {
 
     @Override
     public boolean prompt(String message, String yes, String no) {
+        message("what is your age");
+        int age = scanner.nextInt();
+
+        System.out.println("your age is "+age);
         return false;
     }
-
     public void printScreen(){
+        System.out.print(ANSI_CLS + ANSI_HOME);
         System.out.flush();
         System.out.println(gameInfo);
         System.out.println(message);
