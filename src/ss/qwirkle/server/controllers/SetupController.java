@@ -5,7 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import ss.qwirkle.common.Protocol;
-import ss.qwirkle.common.ui.GUI;
+import ss.qwirkle.server.ui.GUI;
 
 import java.io.IOException;
 import java.net.InetAddress;

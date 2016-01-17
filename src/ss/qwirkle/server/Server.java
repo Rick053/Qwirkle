@@ -1,9 +1,9 @@
 package ss.qwirkle.server;
 
-import ss.qwirkle.common.ui.GUI;
+import ss.qwirkle.common.cli.Cli;
+import ss.qwirkle.server.ui.GUI;
 import ss.qwirkle.common.ui.TUI;
 import ss.qwirkle.common.ui.UserInterface;
-import ss.qwirkle.common.cli.Cli;
 import ss.qwirkle.server.controllers.ServerController;
 
 public class Server {

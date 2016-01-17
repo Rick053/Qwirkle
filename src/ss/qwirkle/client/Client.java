@@ -6,9 +6,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import ss.qwirkle.common.cli.Cli;
-import ss.qwirkle.common.ui.GUI;
 import ss.qwirkle.common.ui.TUI;
 import ss.qwirkle.common.ui.UserInterface;
+import ss.qwirkle.server.ui.GUI;
 
 public class Client extends Application{
     public static void main(String[] args) {
