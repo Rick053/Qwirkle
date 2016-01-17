@@ -22,6 +22,7 @@ public class TUI implements UserInterface {
         this.scanner = new Scanner(System.in);
         gameInfo = "Qwirkle";
         message = "test";
+        board = new Board(5);
     }
 
     @Override

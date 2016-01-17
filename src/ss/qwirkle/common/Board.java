@@ -51,7 +51,16 @@ public class Board {
     }
     @Override
     public String toString(){
+        String board = "";
+        for (List<Integer> row:boardList) {
+            for (int tile:row) {
+                board += tile;
 
+            }
+            board += "\n";
+        }
+        return board;
     }
+
 
 }
