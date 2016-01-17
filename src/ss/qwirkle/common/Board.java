@@ -57,7 +57,7 @@ public class Board {
                 board += intToQwirkle(tile);
 
             }
-            board += "\n";
+            board += System.lineSeparator();
         }
         return board;
     }
