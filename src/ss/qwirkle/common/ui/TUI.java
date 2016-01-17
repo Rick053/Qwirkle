@@ -1,4 +1,6 @@
 package ss.qwirkle.common.ui;
+
+import ss.qwirkle.common.Board;
 import ss.qwirkle.server.Server;
 import ss.qwirkle.server.controllers.ServerController;
 
@@ -11,7 +13,7 @@ public class TUI implements UserInterface {
     private String promptMessage;
     final String ANSI_CLS = "\u001b[2J";
     final String ANSI_HOME = "\u001b[H";
-    //private board 2d list
+    private Board board;
     Scanner scanner;
     //private hand
 
@@ -70,6 +72,7 @@ public class TUI implements UserInterface {
         System.out.flush();
         System.out.println(gameInfo);
         System.out.println(message);
+        System.out.println(board.toString());
         System.out.println(promptMessage);
 
     }
