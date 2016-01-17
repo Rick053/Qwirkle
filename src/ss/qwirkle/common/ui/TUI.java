@@ -29,12 +29,17 @@ public class TUI implements UserInterface {
 
     @Override
     public boolean prompt(String message, String yes, String no) {
-        message("what is your age");
-        int age = scanner.nextInt();
-
-        System.out.println("your age is "+age);
+        message(message);
+        String answer = scanner.next();
+        if (answer == "y"){
+            return true;
+        }
+        if (answer == "n") {
+            return false;
+        }
         return false;
     }
+
     public void printScreen(){
         System.out.print(ANSI_CLS + ANSI_HOME);
         System.out.flush();

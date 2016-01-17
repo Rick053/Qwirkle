@@ -1,7 +1,5 @@
 package ss.qwirkle.common.ui;
 
-import java.io.IOException;
-
 /**
  * Abstract class that defines interaction with a User Interface
  */
