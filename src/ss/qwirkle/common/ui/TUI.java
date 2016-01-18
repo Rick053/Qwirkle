@@ -1,6 +1,6 @@
 package ss.qwirkle.common.ui;
 
-import ss.qwirkle.common.Board;
+import ss.qwirkle.common.game.Board;
 import ss.qwirkle.server.Server;
 import ss.qwirkle.server.controllers.ServerController;
 
@@ -22,6 +22,7 @@ public class TUI implements UserInterface {
         this.scanner = new Scanner(System.in);
         gameInfo = "Qwirkle";
         message = "test";
+        board = new Board(10);
     }
 
     @Override

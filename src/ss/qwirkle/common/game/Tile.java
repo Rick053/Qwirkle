@@ -2,6 +2,24 @@ package ss.qwirkle.common.game;
 
 public class Tile {
 
+    public static final String BLACK = "\u001B[30m";
+    public static final String RED = "\u001B[31m";
+    public static final String GREEN = "\u001B[32m";
+    public static final String YELLOW = "\u001B[33m";
+    public static final String BLUE = "\u001B[34m";
+    public static final String PURPLE = "\u001B[35m";
+    public static final String CYAN = "\u001B[36m";
+    public static final String WHITE = "\u001B[37m";
+    //Reset code
+    public static final String RESET = "\u001B[0m";
+
+    public static final String SQUARE = "\u25A0";
+    public static final String CROSS = "\u274C";
+    public static final String PLUS = "\u271A";
+    public static final String STAR = "\u2737";
+    public static final String CIRCLE = "";
+    public static final String DIAMOND = "";
+
     /**
      * Chars for the shape and colours:
      * A - RED      || Circle
