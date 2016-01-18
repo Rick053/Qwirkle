@@ -44,7 +44,7 @@ public class Tile {
     @Override
     public String toString() {
         //TODO implement tostring for the tile
-        return super.toString();
+        return String.valueOf(this.getColour() + this.getShape());
     }
 
     /*

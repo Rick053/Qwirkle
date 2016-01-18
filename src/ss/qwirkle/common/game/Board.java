@@ -1,5 +1,8 @@
 package ss.qwirkle.common.game;
 
+import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +41,8 @@ public class Board {
             addRows();
         }
 
+        tile.setRow(row);       //Set the tiles row
+        tile.setColumn(col);    //Set the tiles column
         boardList.get(row + offSetY).set(col + offSetX, tile);
     }
 
@@ -79,6 +84,19 @@ public class Board {
             board += System.lineSeparator();
         }
         return board;
+    }
+
+    public GridPane toGrid() {
+        GridPane grid = new GridPane();
+
+        for(int i = 0; i < boardList.size(); i++) {             //Iterate over the rows
+            for(int j = 0; j < boardList.get(i).size(); j++) {  //Iterate over the columns
+                Tile t = boardList.get(i).get(j);
+                grid.add(new Label(t.toString()), j, i);
+            }
+        }
+
+        return grid;
     }
 
     //TODO remove intToQwirkle?
