@@ -12,7 +12,7 @@ public class Server {
         UserInterface ui;
         Cli cli = new Cli(args, 0);
         cli.parse();
-        if (cli.getUI() == "TUI"){
+        if (cli.getUI().equals("TUI")){
             ui = new TUI();
         } else {
             ui = new GUI();
