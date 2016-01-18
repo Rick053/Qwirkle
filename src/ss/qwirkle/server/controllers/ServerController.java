@@ -12,7 +12,7 @@ public class ServerController {
     private UserInterface ui;
     private Cli cli;
 
-    private String ip;
+    private String ip, name;
     private int port, maxConnections;
     private boolean showSetup;
 
@@ -49,7 +49,6 @@ public class ServerController {
      */
     public void setCli(Cli cli) {
         this.cli = cli;
-        this.ip = this.cli.getIp();
 
         try {
             this.port = Integer.parseInt(cli.getPort());
@@ -57,7 +56,7 @@ public class ServerController {
             this.port = -1;
         }
 
-        if(port == -1 || maxConnections == -1) {
+        if((port == -1) || (maxConnections == -1) || (name == null)) {
             showSetup = true;
         }
     }
@@ -96,5 +95,9 @@ public class ServerController {
 
     public void setMaxConnections(int maxConnections) {
         this.maxConnections = maxConnections;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
