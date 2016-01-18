@@ -41,9 +41,15 @@ public class Tile {
         return (t2.getShape() == shape && t2.getColour() == colour);
     }
 
+    @Override
+    public String toString() {
+        //TODO implement tostring for the tile
+        return super.toString();
+    }
+
     /*
-     * Getters and Setters
-     */
+         * Getters and Setters
+         */
     public void setColour(char colour) {
         this.colour = colour;
     }
