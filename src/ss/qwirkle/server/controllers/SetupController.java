@@ -35,14 +35,16 @@ public class SetupController implements Initializable {
 
         //Check if a port is set
         int portNumber = controller.getPort();
-        if(portNumber != -1)
+        if(portNumber != -1) {
             port.setText(Integer.toString(portNumber));
+        }
         port.setPromptText("Default port is: " + Protocol.Server.Settings.DEFAULT_PORT);
 
         //Check if the maximum number of connections is set
         int maxConns = controller.getMaxConnections();
-        if(maxConns != -1)
+        if(maxConns != -1) {
             maxConnections.setText(Integer.toString(maxConns));
+        }
 
         //Is executed when the start server button is clicked.
         connect.setOnAction(e -> {
