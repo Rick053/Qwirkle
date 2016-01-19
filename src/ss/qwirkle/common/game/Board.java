@@ -85,7 +85,18 @@ public class Board {
         }
         return board;
     }
+    public String toIconString(){
+        String board = "";
+        for (List<Tile> row : boardList) {
 
+            for (Tile tile : row) {
+                board += tile.toIconString();
+            }
+
+            board += System.lineSeparator();
+        }
+        return board;
+    }
     public GridPane toGrid() {
         GridPane grid = new GridPane();
 
