@@ -17,6 +17,8 @@ public class TUI implements UserInterface {
     final String ANSI_HOME = "\u001b[H";
     private Board board;
     Scanner scanner;
+    boolean playing = true;
+    Tile[] tiles;
     //private hand
     public static void clearConsole()
     {
@@ -54,15 +56,27 @@ public class TUI implements UserInterface {
             showSetup = true;
             showSetup(ServerController.getInstance());
         }
-        message = ServerController.getInstance().getPort()+"";
+        message = "";
         promptMessage = "";
         printScreen();
+        while (playing){
+
+        }
     }
 
     private void showSetup(ServerController controller) {
         message("Running Setup");
         controller.setName(promptString("Name:"));
-        controller.setPort(Integer.parseInt(promptString("Port:")));
+        try {
+            controller.setPort(Integer.parseInt(promptString("Port:")));
+        }catch (){
+
+        }
+        try {
+            controller.setMaxConnections(Integer.parseInt(promptString("Maximum connections:")));
+        }catch (){
+
+        }
 
     }
 
@@ -91,6 +105,36 @@ public class TUI implements UserInterface {
         return scanner.next();
 
     }
+    public String handToIcons(Tile[] tiles){
+        String hand = "   ";
+        for (Tile tile:tiles) {
+            hand += tile.toIconString() + "   ";
+        }
+        return hand+"\n   1   2   3   4   5   6";
+
+    }
+    //TODO this is ugly....
+/*    public Tile selectTile(){
+        int tile = 0;
+        try{
+            tile = Integer.parseInt(promptString("Select a tile"));
+        }catch (NumberFormatException nfe){
+
+        }
+        if (0 > tile && tile <= 6) {
+            return tiles.indexOf(tile + 1);
+        }
+        if(tile == 0){
+            message("That was not a number.....");
+            selectTile();
+        }
+        else {
+
+            message(tile + " is not in 1-6");
+            selectTile();
+        }
+
+    }*/
 
     public void printScreen(){
         clearConsole();
