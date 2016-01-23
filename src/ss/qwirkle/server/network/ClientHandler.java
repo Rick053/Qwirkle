@@ -118,6 +118,7 @@ public class ClientHandler extends Thread{
             in.close();
             out.close();
             socket.close();
+            ServerController.getInstance().removeHandler(this);
         } catch (IOException e) {
             ServerController.getInstance().log("error", e.getMessage());
         }
