@@ -51,6 +51,14 @@ public class ServerController {
      */
     public void run(String[] args) {
         ui.run(args);
+
+        if(!showSetup()) {
+            if(getUi() instanceof GUI) {
+                startServerGui();
+            } else {
+                startServer();
+            }
+        }
     }
 
     /**
