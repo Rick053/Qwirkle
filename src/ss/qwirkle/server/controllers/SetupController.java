@@ -54,13 +54,7 @@ public class SetupController implements Initializable {
             controller.setPort(p);
             controller.setMaxConnections(mc);
 
-            try {
-                ((GUI) controller.getUi()).changeScreen(
-                        "Qwirkle Server",
-                        "ss/qwirkle/server/views/main.fxml");
-            } catch (IOException ioe) {
-                ServerController.getInstance().log("error", ioe.getMessage());
-            }
+            controller.startServerGui();
         });
     }
 

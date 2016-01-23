@@ -6,8 +6,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<BorderPane fx:controller="ss.qwirkle.server.controllers.MainController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ss.qwirkle.server.controllers.MainController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -27,9 +26,13 @@
       </MenuBar>
    </top>
    <center>
-      <ListView fx:id="messages" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <ScrollPane fitToWidth="true" prefViewportHeight="375.0" prefViewportWidth="400.0">
+         <content>
+            <ListView id="messages" fx:id="messages" BorderPane.alignment="CENTER" />
+         </content>
+      </ScrollPane>
    </center>
    <right>
-      <ListView fx:id="connections" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <ListView id="connections" fx:id="connections" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
    </right>
 </BorderPane>

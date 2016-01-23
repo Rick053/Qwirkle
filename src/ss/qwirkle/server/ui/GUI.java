@@ -1,11 +1,13 @@
 package ss.qwirkle.server.ui;
 
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import ss.qwirkle.common.ui.UserInterface;
+import ss.qwirkle.server.controllers.MainController;
 import ss.qwirkle.server.controllers.ServerController;
 
 import java.io.IOException;
@@ -16,9 +18,10 @@ import java.io.IOException;
 public class GUI extends Application implements UserInterface {
 
     private Stage window;
+    private MainController controller;
 
     public GUI() {
-
+        controller = null;
     }
 
     @Override
@@ -28,7 +31,9 @@ public class GUI extends Application implements UserInterface {
 
     @Override
     public void message(String message) {
-
+        if(controller != null) {
+            controller.showMessage(message);
+        }
     }
 
     @Override
@@ -44,7 +49,15 @@ public class GUI extends Application implements UserInterface {
      */
     public void changeScreen(String title, String fxmlResource) throws IOException {
         window.setTitle(title);
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource(fxmlResource));
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlResource));
+        Parent root = loader.load();
+
+        if(fxmlResource.contains("main")) {
+            controller = (MainController) loader.getController();
+        }
+
+        ServerController.getInstance().getUi().message("test");
+
         window.setScene(new Scene(root));
         window.show();
     }

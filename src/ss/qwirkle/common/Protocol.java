@@ -6,7 +6,7 @@ package ss.qwirkle.common;
  * -------------
  * - CHANGELOG -
  * -------------
- *
+ *          STONE: ColorShape
  * Versie 1.2
  * 	+ Chat commando updated
  * 		+ CHAT_playerName_message --peter verzijl
