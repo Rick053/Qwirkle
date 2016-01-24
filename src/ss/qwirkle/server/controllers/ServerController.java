@@ -75,7 +75,7 @@ public class ServerController {
             this.port = -1;
         }
 
-        if((port == -1) || (maxConnections == -1) || (name == null)) {
+        if((port == -1) || (maxConnections == -1)) {
             showSetup = true;
         }
     }
