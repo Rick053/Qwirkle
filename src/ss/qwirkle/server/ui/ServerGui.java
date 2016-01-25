@@ -13,14 +13,14 @@ import ss.qwirkle.server.controllers.ServerController;
 import java.io.IOException;
 
 /**
- *  Handles all GUI interaction
+ *  Handles all ServerGui interaction
  */
-public class GUI extends Application implements UserInterface {
+public class ServerGui extends Application implements UserInterface {
 
     private Stage window;
     private MainController controller;
 
-    public GUI() {
+    public ServerGui() {
         controller = null;
     }
 
