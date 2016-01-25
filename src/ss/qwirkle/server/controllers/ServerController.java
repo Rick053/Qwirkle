@@ -4,9 +4,8 @@ import ss.qwirkle.common.cli.Cli;
 import ss.qwirkle.common.ui.UserInterface;
 import ss.qwirkle.server.network.ClientHandler;
 import ss.qwirkle.server.network.ServerCommunication;
-import ss.qwirkle.server.ui.GUI;
+import ss.qwirkle.server.ui.ServerGui;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +52,7 @@ public class ServerController {
         ui.run(args);
 
         if(!showSetup()) {
-            if(getUi() instanceof GUI) {
+            if(getUi() instanceof ServerGui) {
                 startServerGui();
             } else {
                 startServer();
@@ -82,7 +81,7 @@ public class ServerController {
 
     public void startServerGui() {
         try {
-            ((GUI) ui).changeScreen(
+            ((ServerGui) ui).changeScreen(
                     "Qwirkle Server",
                     "ss/qwirkle/server/views/main.fxml");
 

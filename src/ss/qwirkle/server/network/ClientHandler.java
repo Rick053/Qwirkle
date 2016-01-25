@@ -6,6 +6,7 @@ import ss.qwirkle.server.controllers.ServerController;
 
 import java.io.*;
 import java.net.Socket;
+import java.nio.charset.Charset;
 import java.util.Arrays;
 
 public class ClientHandler extends Thread{
@@ -20,8 +21,10 @@ public class ClientHandler extends Thread{
         this.name = null;
 
         try {
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+            in = new BufferedReader(new InputStreamReader(
+                    socket.getInputStream(), Charset.forName(Protocol.Server.Settings.ENCODING)));
+            out = new BufferedWriter(new OutputStreamWriter(
+                    socket.getOutputStream(), Charset.forName(Protocol.Server.Settings.ENCODING)));
         } catch (IOException e) {
             ServerController.getInstance().log("error", e.getMessage());
             shutdown();

@@ -1,7 +1,7 @@
 package ss.qwirkle.server;
 
 import ss.qwirkle.common.cli.Cli;
-import ss.qwirkle.server.ui.GUI;
+import ss.qwirkle.server.ui.ServerGui;
 import ss.qwirkle.common.ui.TUI;
 import ss.qwirkle.common.ui.UserInterface;
 import ss.qwirkle.server.controllers.ServerController;
@@ -15,7 +15,7 @@ public class Server {
         if (cli.getUI().equals("TUI")){
             ui = new TUI();
         } else {
-            ui = new GUI();
+            ui = new ServerGui();
         }
 
 //        ui.run(args);

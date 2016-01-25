@@ -1,4 +1,4 @@
-package ss.qwirkle.server.ui;
+package ss.qwirkle.client.ui;
 
 import javafx.application.Application;
 import javafx.fxml.FXML;
@@ -15,12 +15,12 @@ import java.io.IOException;
 /**
  *  Handles all ServerGui interaction
  */
-public class ServerGui extends Application implements UserInterface {
+public class ClientGui extends Application implements UserInterface {
 
     private Stage window;
     private MainController controller;
 
-    public ServerGui() {
+    public ClientGui() {
         controller = null;
     }
 
@@ -71,6 +71,6 @@ public class ServerGui extends Application implements UserInterface {
         ServerController.getInstance().setUi(this);
         this.window = window;
 
-        changeScreen("Qwirkle", "ss/qwirkle/client/views/" + viewPath);
+        changeScreen("Qwirkle", "ss/qwirkle/server/views/" + viewPath);
     }
 }
