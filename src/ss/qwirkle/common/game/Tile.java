@@ -10,7 +10,7 @@ public class Tile {
         colorMap = new HashMap<>();
         colorMap.put('0',"");
         colorMap.put('A',"\u001B[31m");
-        colorMap.put('B',"");
+        colorMap.put('B',"\u001B[36m");
         colorMap.put('C',"\u001B[33m");
         colorMap.put('D',"\u001B[32m");
         colorMap.put('E',"\u001B[34m");
@@ -18,10 +18,10 @@ public class Tile {
     }
     static {
         iconMap = new HashMap<>();
-        iconMap.put('0'," ");
-        iconMap.put('A',"");
+        iconMap.put('0',"\u25A1");
+        iconMap.put('A',"\u2665");
         iconMap.put('B',"\u274C");
-        iconMap.put('C',"");
+        iconMap.put('C',"\u25C6");
         iconMap.put('D',"\u25A0");
         iconMap.put('E',"\u2737");
         iconMap.put('F',"\u271A");
@@ -29,12 +29,6 @@ public class Tile {
     //Reset code
     public static final String RESET = "\u001B[0m";
 
-    public static final String SQUARE = "\u25A0";
-    public static final String CROSS = "\u274C";
-    public static final String PLUS = "\u271A";
-    public static final String STAR = "\u2737";
-    public static final String CIRCLE = "";
-    public static final String DIAMOND = "";
 
     /**
      * Chars for the shape and colours:

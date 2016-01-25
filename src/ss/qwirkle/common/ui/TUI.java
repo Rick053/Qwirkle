@@ -2,12 +2,14 @@ package ss.qwirkle.common.ui;
 
 import ss.qwirkle.common.game.Board;
 import ss.qwirkle.common.game.Tile;
-import ss.qwirkle.server.Server;
 import ss.qwirkle.server.controllers.ServerController;
 
-import java.lang.reflect.Array;
+import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Class that creates a Textual User Interface.
+ */
 public class TUI implements UserInterface {
     private String message;
     private String gameInfo;
@@ -18,8 +20,7 @@ public class TUI implements UserInterface {
     private Board board;
     Scanner scanner;
     boolean playing = true;
-    Tile[] tiles;
-    //private hand
+    List<Tile> hand;
     public static void clearConsole()
     {
         try
@@ -48,6 +49,7 @@ public class TUI implements UserInterface {
         board = new Board(10);
         Tile tile = new Tile('E','E');
         board.addTile(0,0,tile);
+
     }
 
     @Override
@@ -59,9 +61,9 @@ public class TUI implements UserInterface {
         message = "";
         promptMessage = "";
         printScreen();
+        /*
         while (playing){
-
-        }
+        }*/
     }
 
     private void showSetup(ServerController controller) {
@@ -69,14 +71,15 @@ public class TUI implements UserInterface {
         controller.setName(promptString("Name:"));
         try {
             controller.setPort(Integer.parseInt(promptString("Port:")));
-        }catch (){
+        }catch (NumberFormatException e){
 
         }
         try {
             controller.setMaxConnections(Integer.parseInt(promptString("Maximum connections:")));
-        }catch (){
+        }catch (NumberFormatException e){
 
         }
+        showSetup = false;
 
     }
 
@@ -105,7 +108,7 @@ public class TUI implements UserInterface {
         return scanner.next();
 
     }
-    public String handToIcons(Tile[] tiles){
+    public String handToIcons(List<Tile> tiles){
         String hand = "   ";
         for (Tile tile:tiles) {
             hand += tile.toIconString() + "   ";
@@ -144,7 +147,9 @@ public class TUI implements UserInterface {
         System.out.println(message);
         if (!showSetup) {
             System.out.println(board.toIconString());
+            System.out.println(handToIcons(hand));
         }
+
         System.out.println(promptMessage);
 
     }
