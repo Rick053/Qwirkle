@@ -5,12 +5,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import ss.qwirkle.client.controllers.ClientController;
 import ss.qwirkle.common.cli.Cli;
 import ss.qwirkle.common.ui.TUI;
 import ss.qwirkle.common.ui.UserInterface;
 import ss.qwirkle.server.ui.GUI;
 
-public class Client extends Application{
+public class Client{
     public static void main(String[] args) {
         //Determine the interface type
         UserInterface ui;
@@ -21,15 +22,10 @@ public class Client extends Application{
         } else {
             ui = new GUI();
         }
-        launch(args);
-    }
 
-    @Override
-    public void start(Stage window) throws Exception {
-        window.setTitle("Test");
-        Parent root = FXMLLoader.load(getClass().getResource("view/connection.fxml"));
-        Scene s = new Scene(root);
-        window.setScene(s);
-        window.show();
+        ClientController controller = ClientController.getInstance();
+        controller.setCli(cli);
+        controller.setUi(ui);
+        controller.run(args);
     }
 }

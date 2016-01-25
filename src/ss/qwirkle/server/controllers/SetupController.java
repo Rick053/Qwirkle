@@ -5,9 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import ss.qwirkle.common.Protocol;
-import ss.qwirkle.server.ui.GUI;
 
-import java.io.IOException;
 import java.net.InetAddress;
 import java.net.URL;
 import java.net.UnknownHostException;
@@ -54,13 +52,7 @@ public class SetupController implements Initializable {
             controller.setPort(p);
             controller.setMaxConnections(mc);
 
-            try {
-                ((GUI) controller.getUi()).changeScreen(
-                        "Qwirkle Server",
-                        "ss/qwirkle/server/views/main.fxml");
-            } catch (IOException ioe) {
-                ServerController.getInstance().log("error", ioe.getMessage());
-            }
+            controller.startServerGui();
         });
     }
 

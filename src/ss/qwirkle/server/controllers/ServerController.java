@@ -2,12 +2,19 @@ package ss.qwirkle.server.controllers;
 
 import ss.qwirkle.common.cli.Cli;
 import ss.qwirkle.common.ui.UserInterface;
+import ss.qwirkle.server.network.ClientHandler;
+import ss.qwirkle.server.network.ServerCommunication;
+import ss.qwirkle.server.ui.ServerGui;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ServerController {
 
     private static ServerController instance = null;
+
+    private List<ClientHandler> clients;
 
     private UserInterface ui;
     private Cli cli;
@@ -16,9 +23,12 @@ public class ServerController {
     private int port, maxConnections;
     private boolean showSetup;
 
+    private ServerCommunication server;
+
     public ServerController() {
         port = -1;
         maxConnections = -1;
+        clients = new ArrayList<>();
     }
 
     /**
@@ -40,6 +50,14 @@ public class ServerController {
      */
     public void run(String[] args) {
         ui.run(args);
+
+        if(!showSetup()) {
+            if(getUi() instanceof ServerGui) {
+                startServerGui();
+            } else {
+                startServer();
+            }
+        }
     }
 
     /**
@@ -63,8 +81,29 @@ public class ServerController {
         this.name = cli.getName();
 
 
-        if((port == -1) || (maxConnections == -1) || (name == null)) {
+        if((port == -1) || (maxConnections == -1)) {
             showSetup = true;
+        }
+    }
+
+    public void startServerGui() {
+        try {
+            ((ServerGui) ui).changeScreen(
+                    "Qwirkle Server",
+                    "ss/qwirkle/server/views/main.fxml");
+
+            startServer();
+        } catch (IOException e) {
+            log("error", e.getMessage());
+        }
+    }
+
+    public void startServer() {
+        try {
+            this.server = new ServerCommunication(port);
+            this.server.start();
+        } catch (IOException e) {
+            log("error", e.getMessage());
         }
     }
 
@@ -106,5 +145,21 @@ public class ServerController {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<ClientHandler> getConnections() {
+        return clients;
+    }
+
+    public void addHandler(ClientHandler handler) {
+        this.clients.add(handler);
+    }
+
+    public void removeHandler(ClientHandler handler) {
+        this.clients.remove(handler);
+    }
+
+    public synchronized void joinWaitingRoom(ClientHandler clientHandler, int opponents) {
+
     }
 }

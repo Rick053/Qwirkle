@@ -12,7 +12,7 @@ public class Board {
     private int offSetX, offSetY;
 
     public Board(int size){
-        for(int i = 0; i < size; i++) {
+        for (int i = 0; i < size; i++) {
             List<Tile> col = new ArrayList<>();
 
             for (int j = 0; j < size; j++) {
@@ -61,7 +61,7 @@ public class Board {
     }
 
     /**
-     * Add extra rows to the bottom to make more space
+     * Add extra rows to the board to make more space
      */
     public void addColumns(){
         for (int j = 0; j < boardList.size(); j++){

@@ -1,24 +1,27 @@
 package ss.qwirkle.server.ui;
 
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import ss.qwirkle.common.ui.UserInterface;
+import ss.qwirkle.server.controllers.MainController;
 import ss.qwirkle.server.controllers.ServerController;
 
 import java.io.IOException;
 
 /**
- *  Handles all GUI interaction
+ *  Handles all ServerGui interaction
  */
-public class GUI extends Application implements UserInterface {
+public class ServerGui extends Application implements UserInterface {
 
     private Stage window;
+    private MainController controller;
 
-    public GUI() {
-
+    public ServerGui() {
+        controller = null;
     }
 
     @Override
@@ -28,7 +31,9 @@ public class GUI extends Application implements UserInterface {
 
     @Override
     public void message(String message) {
-
+        if(controller != null) {
+            controller.showMessage(message);
+        }
     }
 
     @Override
@@ -44,7 +49,13 @@ public class GUI extends Application implements UserInterface {
      */
     public void changeScreen(String title, String fxmlResource) throws IOException {
         window.setTitle(title);
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource(fxmlResource));
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlResource));
+        Parent root = loader.load();
+
+        if(fxmlResource.contains("main")) {
+            controller = (MainController) loader.getController();
+        }
+
         window.setScene(new Scene(root));
         window.show();
     }
@@ -60,6 +71,6 @@ public class GUI extends Application implements UserInterface {
         ServerController.getInstance().setUi(this);
         this.window = window;
 
-        changeScreen("Qwirkle", "ss/qwirkle/server/views/" + viewPath);
+        changeScreen("Qwirkle", "ss/qwirkle/client/views/" + viewPath);
     }
 }
