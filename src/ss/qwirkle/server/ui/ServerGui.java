@@ -56,8 +56,6 @@ public class ServerGui extends Application implements UserInterface {
             controller = (MainController) loader.getController();
         }
 
-        ServerController.getInstance().getUi().message("test");
-
         window.setScene(new Scene(root));
         window.show();
     }
