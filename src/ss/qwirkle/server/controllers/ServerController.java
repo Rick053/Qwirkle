@@ -73,6 +73,13 @@ public class ServerController {
         } catch (NumberFormatException nfe) {
             this.port = -1;
         }
+        try {
+            this.port = Integer.parseInt(cli.getMaxConnections());
+        } catch (NumberFormatException nfe) {
+            this.port = -1;
+        }
+        this.name = cli.getName();
+
 
         if((port == -1) || (maxConnections == -1)) {
             showSetup = true;

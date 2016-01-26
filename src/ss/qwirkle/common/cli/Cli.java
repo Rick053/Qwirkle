@@ -21,6 +21,7 @@ public class Cli {
     private String nickname;
     private String ip;
     private String port;
+    private String maxConnections;
 
     public Cli(String[] args, int type) {
 
@@ -28,23 +29,22 @@ public class Cli {
         this.type = type;
         //server
         if (type == 0) {
-            options.addOption("h", "help", false, "show help.");
-            options.addOption("t", "tui", false, "run as tui");
-            options.addOption("g", "gui", false, "run as gui");
             options.addOption("n", "name", false, "server name");
             options.addOption("p", "port", false, "port to listen on");
+            options.addOption("m", "maxconnections", false, "maximum connections on the server");
 
         }
 
         //client
         if (type == 1) {
-            options.addOption("h", "help", false, "show help.");
             options.addOption("n", "nickname", false, "the nickname ingame.");
             options.addOption("ip", "ip", false, "server ip, used to connect to the server.");
-            options.addOption("t", "tui", false, "run as tui");
-            options.addOption("g", "gui", false, "run as gui");
             options.addOption("p", "port", false, "port to connect to");
         }
+        options.addOption("t", "tui", false, "run as tui");
+        options.addOption("g", "gui", false, "run as gui");
+        options.addOption("h", "help", false, "show help.");
+
 
     }
 
@@ -66,11 +66,9 @@ public class Cli {
 
             if (cmd.hasOption("p"))
                 this.port = cmd.getOptionValue("p");
+            if (cmd.hasOption("m"))
+                this.maxConnections = cmd.getOptionValue("m");
 
-            if (cmd.hasOption("v")) {
-                log.log(Level.INFO, "Using cli argument -v=" + cmd.getOptionValue("v"));
-                // Whatever you want to do with the setting goes here
-            }
 
         } catch (ParseException e) {
             log.log(Level.SEVERE, "Failed to parse comand line properties", e);
@@ -137,6 +135,10 @@ public class Cli {
 
     public String getPort() {
         return port;
+    }
+
+    public String getMaxConnections() {
+        return maxConnections;
     }
 }
 

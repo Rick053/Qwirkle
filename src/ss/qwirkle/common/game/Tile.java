@@ -1,24 +1,34 @@
 package ss.qwirkle.common.game;
 
-public class Tile {
+import java.util.HashMap;
+import java.util.Map;
 
-    public static final String BLACK = "\u001B[30m";
-    public static final String RED = "\u001B[31m";
-    public static final String GREEN = "\u001B[32m";
-    public static final String YELLOW = "\u001B[33m";
-    public static final String BLUE = "\u001B[34m";
-    public static final String PURPLE = "\u001B[35m";
-    public static final String CYAN = "\u001B[36m";
-    public static final String WHITE = "\u001B[37m";
+public class Tile {
+    public static final Map<Character,String> colorMap;
+    public static final Map<Character,String> iconMap;
+    static {
+        colorMap = new HashMap<>();
+        colorMap.put('0',"");
+        colorMap.put('A',"\u001B[31m");
+        colorMap.put('B',"\u001B[36m");
+        colorMap.put('C',"\u001B[33m");
+        colorMap.put('D',"\u001B[32m");
+        colorMap.put('E',"\u001B[34m");
+        colorMap.put('F',"\u001B[35m");
+    }
+    static {
+        iconMap = new HashMap<>();
+        iconMap.put('0',"\u25A1");
+        iconMap.put('A',"\u2665");
+        iconMap.put('B',"\u274C");
+        iconMap.put('C',"\u25C6");
+        iconMap.put('D',"\u25A0");
+        iconMap.put('E',"\u2737");
+        iconMap.put('F',"\u271A");
+    }
     //Reset code
     public static final String RESET = "\u001B[0m";
 
-    public static final String SQUARE = "\u25A0";
-    public static final String CROSS = "\u274C";
-    public static final String PLUS = "\u271A";
-    public static final String STAR = "\u2737";
-    public static final String CIRCLE = "";
-    public static final String DIAMOND = "";
 
     /**
      * Chars for the shape and colours:
@@ -61,8 +71,11 @@ public class Tile {
 
     @Override
     public String toString() {
-        //TODO implement tostring for the tile
         return String.valueOf(this.getColour() + this.getShape());
+    }
+
+    public String toIconString(){
+        return String.valueOf(colorMap.get(this.getColour()) + iconMap.get(this.getShape()) + RESET);
     }
 
     /*
