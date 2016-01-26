@@ -124,4 +124,8 @@ public class ClientController {
     public void setPlayer(Player player) {
         this.player = player;
     }
+
+    public Player getPlayer() {
+        return player;
+    }
 }

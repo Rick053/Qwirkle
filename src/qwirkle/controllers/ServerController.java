@@ -127,6 +127,12 @@ public class ServerController {
      */
     public void removeHandler(ClientHandler clientHandler) {
         this.handlers.remove(clientHandler);
+
+        if(clientHandler.getPlayer() != null) {
+            lobby_2.remove(clientHandler.getPlayer());
+            lobby_3.remove(clientHandler.getPlayer());
+            lobby_4.remove(clientHandler.getPlayer());
+        }
     }
 
     /**
