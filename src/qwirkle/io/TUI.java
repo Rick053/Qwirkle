@@ -106,4 +106,8 @@ public class TUI implements UserInterface {
 
         return answer;
     }
+
+    public PrintColorWriter getWriter() {
+        return this.writer;
+    }
 }
