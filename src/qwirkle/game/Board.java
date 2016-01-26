@@ -139,10 +139,12 @@ public class Board {
 
     }
     public HashSet<Tile> getPossibleMoves(Tile tile ){
-        for (Tile tile:getEmptyNeighbours()) {
+        for (Tile t:getEmptyNeighbours()) {
             int x = tile.getCol();
             int y = tile.getRow();
         }
+
+        return new HashSet<>(); //Todo just to remove the errors
     }
 
     public boolean isLegitTile(Tile tile, int x, int y){
@@ -178,6 +180,6 @@ public class Board {
     }
 
     public boolean isPossibleMove(Move move){
-
+        return false;   //TODO not implemented yet, just for errors
     }
 }
