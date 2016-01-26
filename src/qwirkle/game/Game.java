@@ -216,6 +216,32 @@ public class Game {
 
 
     /**
+     * Change tiles in the users hand for a random set of new ones.
+     * @param toChange - list of tiles to change
+     * @param player - The player to change tiles for
+     */
+    public void changeTiles(List<Tile> toChange, Player player) {
+        String sendTiles = "";
+
+        for(Tile oldTile : toChange) {
+            player.getHand().remove(oldTile);
+
+            Tile newTile = drawFromBag();
+            sendTiles += newTile.toChars() + Protocol.Server.Settings.DELIMITER;
+
+            player.getHand().add(newTile);
+        }
+
+        sendTiles = sendTiles.substring(0, sendTiles.length() - 1);
+
+        if(player instanceof HumanPlayer) {
+            ((HumanPlayer) player).getHandler().sendAddToHand(sendTiles);
+        }
+    }
+
+
+
+    /**
      * Returns the bag of Tiles
      *
      * @return Bag of Tiles
