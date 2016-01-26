@@ -3,6 +3,7 @@ package qwirkle.game;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -102,4 +103,5 @@ public class Board {
         //TODO create check
         return true;
     }
+
 }
