@@ -80,8 +80,14 @@ public class ServerController {
         this.communication.start();
     }
 
-    private void setup() {
+    public Game getGameFor(Player player) {
+        for(Game g : games) {
+            if(g.getPlayers().contains(player)) {
+                return g;
+            }
+        }
 
+        return null;
     }
 
     /**
