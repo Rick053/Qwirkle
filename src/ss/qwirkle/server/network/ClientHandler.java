@@ -29,6 +29,8 @@ public class ClientHandler extends Thread{
             ServerController.getInstance().log("error", e.getMessage());
             shutdown();
         }
+
+        System.out.println("New ClientHandler created");
     }
 
     @Override
@@ -47,6 +49,7 @@ public class ClientHandler extends Thread{
     }
 
     private void parseMessage(String msg) {
+        System.out.println("Incoming message: " + msg);
         String[] params = msg.split(String.valueOf(Protocol.Server.Settings.DELIMITER));
         String command = params[0];
         params = Arrays.copyOfRange(params, 1, params.length);

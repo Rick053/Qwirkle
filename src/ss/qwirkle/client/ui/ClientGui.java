@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import ss.qwirkle.client.controllers.ClientController;
 import ss.qwirkle.common.ui.UserInterface;
 import ss.qwirkle.server.controllers.MainController;
 import ss.qwirkle.server.controllers.ServerController;
@@ -48,15 +49,15 @@ public class ClientGui extends Application implements UserInterface {
      * @throws IOException
      */
     public void changeScreen(String title, String fxmlResource) throws IOException {
-        window.setTitle(title);
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlResource));
         Parent root = loader.load();
 
         if(fxmlResource.contains("main")) {
-            controller = (MainController) loader.getController();
+            controller = loader.getController();
         }
 
         window.setScene(new Scene(root));
+        window.setTitle(title);
         window.show();
     }
 
@@ -67,10 +68,10 @@ public class ClientGui extends Application implements UserInterface {
      */
     @Override
     public void start(Stage window) throws IOException {
-        String viewPath = (ServerController.getInstance().showSetup()) ? "setup.fxml" : "main.fxml";
+        String viewPath = (ClientController.getInstance().showSetup()) ? "setup.fxml" : "main.fxml";
         ServerController.getInstance().setUi(this);
         this.window = window;
 
-        changeScreen("Qwirkle", "ss/qwirkle/server/views/" + viewPath);
+        changeScreen("Qwirkle", "ss/qwirkle/client/views/" + viewPath);
     }
 }

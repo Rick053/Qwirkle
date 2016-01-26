@@ -71,6 +71,6 @@ public class ServerGui extends Application implements UserInterface {
         ServerController.getInstance().setUi(this);
         this.window = window;
 
-        changeScreen("Qwirkle", "ss/qwirkle/client/views/" + viewPath);
+        changeScreen("Qwirkle", "ss/qwirkle/server/views/" + viewPath);
     }
 }
