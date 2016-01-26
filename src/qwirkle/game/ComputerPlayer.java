@@ -1,8 +1,5 @@
 package qwirkle.game;
 
-/**
- * Created by raoul on 26/01/16.
- */
 public class ComputerPlayer extends Player {
     @Override
     public Move determineMove() {
@@ -10,6 +7,6 @@ public class ComputerPlayer extends Player {
         board.getEmptyNeighbours();
 
 
-
+        return new Move();//TODO continue implementation, return is juts to remove errors
     }
 }
