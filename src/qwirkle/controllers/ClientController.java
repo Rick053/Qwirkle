@@ -1,5 +1,7 @@
 package qwirkle.controllers;
 
+import qwirkle.game.Game;
+import qwirkle.game.HumanPlayer;
 import qwirkle.game.Move;
 import qwirkle.game.Player;
 import qwirkle.io.TUI;
@@ -9,6 +11,8 @@ import qwirkle.validation.*;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Controller for the client
@@ -24,6 +28,7 @@ public class ClientController {
     private Client communication;
 
     private Player player;
+    private Game game;
 
     public ClientController() {
         ui = new TUI();
@@ -118,6 +123,19 @@ public class ClientController {
      * @param opponents
      */
     public void startGame(String[] opponents) {
+        List<Player> players = new ArrayList<>();
+        for(String opponent : opponents) {
+            Player p = new HumanPlayer(null);
+            p.setUsername(opponent);
+
+            players.add(p);
+        }
+
+        this.game = new Game(players);
+        Move m = player.determineMove();
+    }
+
+    public void getMove() {
         Move m = player.determineMove();
     }
 
