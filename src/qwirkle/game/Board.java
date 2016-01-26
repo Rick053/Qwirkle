@@ -6,12 +6,20 @@ import javafx.scene.layout.GridPane;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The board object
+ */
 public class Board {
 
     List<List<Tile>> boardList = new ArrayList<>();
     private int offSetX, offSetY;
     private boolean isEmpty;
 
+    /**
+     * Constructor
+     *
+     * @param size Initial size of the board
+     */
     public Board(int size){
         for (int i = 0; i < size; i++) {
             List<Tile> col = new ArrayList<>();
@@ -31,9 +39,9 @@ public class Board {
 
     /**
      * Add a new tile to the board.
-     * @param col
-     * @param row
-     * @param tile
+     * @param col The collum to add
+     * @param row The row to add
+     * @param tile The tile to be added
      */
     public void addTile(int col, int row, Tile tile){
         if (col + offSetX > boardList.size()) {
@@ -74,10 +82,18 @@ public class Board {
         offSetY = boardList.get(0).size() / 2;      //Update the Y offset
     }
 
+    /**
+     * Return the tiles
+     *
+     * @return Tiles
+     */
     public List<List<Tile>> getTiles() {
         return this.boardList;
     }
 
+    /**
+     * @return If the board is empty
+     */
     public boolean isEmpty() {
         return isEmpty;
     }

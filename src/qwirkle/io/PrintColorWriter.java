@@ -11,14 +11,14 @@ public class PrintColorWriter extends PrintWriter {
     }
 
     public void println(Color color, String string) {
-        print(color.getAnsiColor());
+        print(color.getUnicodeColor());
         print(string);
         println(ANSI_RESET);
         flush();
     }
 
     public void print(Color color, String string) {
-        print(color.getAnsiColor());
+        print(color.getUnicodeColor());
         print(string);
         print(ANSI_RESET);
         flush();

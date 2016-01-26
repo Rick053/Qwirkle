@@ -1,5 +1,8 @@
 package qwirkle.validation;
 
+/**
+ * Checks if a string is short enough
+ */
 public class MaxLength implements Validator {
 
     private int length;

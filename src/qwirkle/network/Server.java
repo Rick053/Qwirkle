@@ -11,6 +11,11 @@ public class Server extends Thread {
     private ServerSocket server;
     private boolean running;
 
+    /**
+     * Constructor
+     *
+     * @param port Port that the server listens on
+     */
     public Server(int port) {
         if(port < 0) {
             port = Protocol.Server.Settings.DEFAULT_PORT;

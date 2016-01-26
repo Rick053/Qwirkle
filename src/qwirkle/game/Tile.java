@@ -3,6 +3,9 @@ package qwirkle.game;
 import qwirkle.io.Color;
 import qwirkle.io.Shape;
 
+/**
+ * Tile class
+ */
 public class Tile {
 
     private Color color;
@@ -10,6 +13,9 @@ public class Tile {
 
     private int row, col;
 
+    /**
+     * Constructor
+     */
     public Tile() {
         this(Shape.EMPTY, Color.WHITE);
     }
@@ -19,14 +25,28 @@ public class Tile {
         this.shape = s;
     }
 
+    /**
+     * Sets the row of the tile
+     * @param row row location of the tile
+     */
     public void setRow(int row) {
         this.row = row;
     }
 
+    /**
+     * Sets the col of the tile
+     *
+     * @param col col location of the tile
+     */
     public void setCol(int col) {
         this.col = col;
     }
 
+    /**
+     * Convert tile to chars
+     *
+     * @return Chars
+     */
     public String toChars() {
         String tile = "";
 
@@ -95,10 +115,20 @@ public class Tile {
         return false;
     }
 
+    /**
+     * Returns shape of the tile
+     *
+     * @return Shape of the tile
+     */
     public Shape getShape() {
         return shape;
     }
 
+    /**
+     * Returns color of the tile
+     *
+     * @return Color of th tile
+     */
     public Color getColor() {
         return color;
     }
@@ -170,10 +200,16 @@ public class Tile {
         return new Tile(s, c);
     }
 
+    /**
+     * @return location in the row
+     */
     public int getRow() {
         return row;
     }
 
+    /**
+     * @return location in the col
+     */
     public int getCol() {
         return col;
     }

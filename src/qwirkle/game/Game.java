@@ -8,6 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Main game class
+ */
 public class Game {
 
     private List<Player> players;
@@ -18,9 +21,9 @@ public class Game {
 
     int currentPlayer;
 
-    public Board getBoard() {
-        return board;
-    }
+    /**
+     * Enum that contains the different states of the game
+     */
 
     public enum End {
 
@@ -44,6 +47,11 @@ public class Game {
         }
     }
 
+    /**
+     * Constructor
+     *
+     * @param players Amount of players
+     */
     public Game(List<Player> players) {
         this.board = new Board(13);
         this.players = players;
@@ -64,6 +72,12 @@ public class Game {
         start();
     }
 
+    /**
+     * Adds first move from player
+     *
+     * @param m move
+     * @param p player
+     */
     public void addFirstMove(Move m, Player p) {
         this.first_moves.put(p, m);
 
@@ -72,6 +86,15 @@ public class Game {
         }
     }
 
+    public Board getBoard() {
+        return board;
+    }
+
+    /**
+     * Check who has the best first move
+     *
+     *
+     */
     public void checkFirstMoves() {
         Move best = null;
 
@@ -109,6 +132,9 @@ public class Game {
         }
     }
 
+    /**
+     * Start a game
+     */
     private void start() {
         String[] ps = new String[players.size()];
         for(int i = 0; i < players.size(); i++) {
@@ -126,6 +152,11 @@ public class Game {
         }
     }
 
+    /**
+     * End a game
+     *
+     * @param reason Way the game ended
+     */
     public void end(End reason) {
         for(int i = 0; i < players.size(); i++) {
             if(players.get(i) instanceof HumanPlayer) {
@@ -136,6 +167,11 @@ public class Game {
         }
     }
 
+    /**
+     * Returns the high score
+     *
+     * @return high score
+     */
     public Player getHighScore() {
         Player highest = null;
 
@@ -148,6 +184,11 @@ public class Game {
         return highest;
     }
 
+    /**
+     * Returns the bag of Tiles
+     *
+     * @return Bag of Tiles
+     */
     public List<Tile> getBagOfTiles() {
         return bagOfTiles;
     }

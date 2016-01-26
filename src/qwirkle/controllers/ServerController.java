@@ -13,6 +13,9 @@ import qwirkle.validation.Validator;
 import java.lang.reflect.Array;
 import java.util.*;
 
+/**
+ * Controller for the Server
+ */
 public class ServerController {
 
     private static ServerController instance = null;
@@ -27,6 +30,10 @@ public class ServerController {
     private List<Player> lobby_2, lobby_3, lobby_4;
     private List<Game> games;
 
+    /**
+     * Constructor
+     *
+     */
     public ServerController() {
         ui = new TUI();
         handlers = new ArrayList<>();
@@ -39,6 +46,11 @@ public class ServerController {
         games = new ArrayList<>();
     }
 
+    /**
+     * Gets the controller instance
+     *
+     * @return ServerController
+     */
     public static ServerController getInstance() {
         if(instance == null) {
             instance = new ServerController();
@@ -47,6 +59,11 @@ public class ServerController {
         return instance;
     }
 
+    /**
+     * Gets the UI
+     *
+     * @return Userinterface
+     */
     public TUI getUI() {
         return ui;
     }
@@ -67,26 +84,58 @@ public class ServerController {
 
     }
 
+    /**
+     * Returns max connections
+     *
+     * @return maxConnections
+     */
     public int maxConnections() {
         return max_connections;
     }
 
+    /**
+     * Returns the handlers
+     *
+     * @return Handlers
+     */
     public ArrayList<ClientHandler> getHandlers() {
         return handlers;
     }
 
+    /**
+     * Add a handler
+     *
+     * @param client client to be added to the handler.
+     */
     public void addHandler(ClientHandler client) {
         this.handlers.add(client);
     }
 
+    /**
+     * Returns the server name
+     *
+     * @return serverName
+     */
     public String getServerName() {
         return serverName;
     }
 
+    /**
+     * Removes a handler from the handlers
+     *
+     * @param clientHandler handler for the client
+     */
     public void removeHandler(ClientHandler clientHandler) {
         this.handlers.remove(clientHandler);
     }
 
+    /**
+     * Joins handler to the lobby
+     *
+     * @param param Number of players
+     * @param handler The handler that wants to join
+     * @return The amount of players the player has to wait for
+     */
     public int joinLobby(String param, ClientHandler handler) {
         //Todo create this method
         Game g;

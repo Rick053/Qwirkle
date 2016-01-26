@@ -3,6 +3,9 @@ package qwirkle.game;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * TODO
+ */
 public abstract class Player {
 
     private String username;

@@ -10,6 +10,9 @@ import qwirkle.validation.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+/**
+ * Controller for the client
+ */
 public class ClientController {
 
     private static ClientController instance = null;
@@ -34,6 +37,11 @@ public class ClientController {
         return instance;
     }
 
+    /**
+     * Returns the UI
+     *
+     * @return Userinterface
+     */
     public TUI getUI() {
         return ui;
     }
@@ -43,6 +51,12 @@ public class ClientController {
         getUsername();
     }
 
+
+    /**
+     * Gets Server Info
+     *
+     *
+     */
     public void getServerInfo() {
         IPAddress ipval = new IPAddress("The IP address you entered was not valid.");
         server_ip = ui.getValidatedInput("Server IP: ", new Validator[] {ipval});
@@ -64,6 +78,9 @@ public class ClientController {
         this.communication.start();
     }
 
+    /**
+     * Gets the Username
+     */
     public void getUsername() {
         MaxLength ml = new MaxLength(15, "The username cannot be long than 15 characters");
         this.username = ui.getValidatedInput("What's your username?", new Validator[] {ml});

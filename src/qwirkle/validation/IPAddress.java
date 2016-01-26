@@ -2,6 +2,9 @@ package qwirkle.validation;
 
 import qwirkle.utils.Utils;
 
+/**
+ * Checks if string is an IPAdress
+ */
 public class IPAddress implements Validator {
 
     private String error;

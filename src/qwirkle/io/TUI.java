@@ -5,11 +5,17 @@ import qwirkle.validation.Validator;
 import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
 
+/**
+ * Class that makes a Textual user interface
+ */
 public class TUI implements UserInterface {
 
     private PrintColorWriter writer;
     private Scanner scanner;
 
+    /**
+     * Constructor
+     */
     public TUI() {
         try {
             writer = new PrintColorWriter(System.out);
@@ -20,11 +26,17 @@ public class TUI implements UserInterface {
         scanner = new Scanner(System.in);
     }
 
+    /**
+     * @param message The message to be shown
+     */
     @Override
     public void message(String message) {
         System.out.println(message);
     }
 
+    /**
+     * @param message The error message to be shown
+     */
     public void error(String message) {
         writer.println(Color.RED, message);
     }
@@ -56,6 +68,11 @@ public class TUI implements UserInterface {
         return false;
     }
 
+    /**
+     * Get input from the user
+     * @param message Input message
+     * @return Answer
+     */
     @Override
     public String getInput(String message) {
         message(message);
@@ -64,6 +81,12 @@ public class TUI implements UserInterface {
         return answer;
     }
 
+    /**
+     * Get input from the user
+     * @param message Input Message
+     * @param validators Validators to validate the input
+     * @return Answer
+     */
     public String getValidatedInput(String message, Validator[] validators) {
         String answer = null;
         boolean validated = true;
