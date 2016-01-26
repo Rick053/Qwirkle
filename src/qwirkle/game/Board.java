@@ -1,5 +1,8 @@
 package qwirkle.game;
 
+import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,5 +80,10 @@ public class Board {
 
     public boolean isEmpty() {
         return isEmpty;
+    }
+
+    public boolean moveAllowed(Move move) {
+        //TODO create check
+        return true;
     }
 }

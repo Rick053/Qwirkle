@@ -2,11 +2,19 @@ package qwirkle.network;
 
 import qwirkle.controllers.ServerController;
 import qwirkle.game.Game;
+import qwirkle.game.Move;
 import qwirkle.game.Player;
 
 import java.io.*;
 import java.net.Socket;
+import java.nio.charset.Charset;
 import java.util.Arrays;
+
+import qwirkle.game.Tile;
+import qwirkle.network.Protocol.Server.Settings;
+import qwirkle.utils.Utils;
+
+import javax.rmi.CORBA.Util;
 
 public class ClientHandler extends Thread {
 
@@ -17,6 +25,30 @@ public class ClientHandler extends Thread {
     private boolean running;
     private Player player;
     private String username;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public enum ErrorCodes {
+
+        NOTYOURTURN("4"), INVALIDMOVE("7"), NAMETAKEN("4");
+
+        private String code;
+
+        ErrorCodes(String code) {
+            this.code = code;
+        }
+
+        public String getCode() {
+            return code;
+        }
+
+        @Override
+        public String toString() {
+            return this.getCode();
+        }
+    }
 
     public ClientHandler(Socket s) {
         this.socket = s;
@@ -66,10 +98,38 @@ public class ClientHandler extends Thread {
 
         switch (command) {
             case Protocol.Client.HALLO:
-                sendHello();
+                if(ServerController.getInstance().isUnique(params[0])) {
+                    sendHello();
+                    this.username = params[0];
+                } else {
+                    sendError(ErrorCodes.NAMETAKEN);
+                }
                 break;
             case Protocol.Client.REQUESTGAME:
                 sendWaitFor(ServerController.getInstance().joinLobby(params[0], this));
+                break;
+            case Protocol.Client.MAKEMOVE:
+                if(player.getGame().getBoard().isEmpty()) {
+                    //This is a first move.
+                    String[] stones = params[0].split(Character.toString(Settings.DELIMITER));
+                    Move move = new Move();
+
+                    for(String stone : stones) {
+                        String[] parts = stone.split(Character.toString(Settings.DELIMITER2));
+
+                        Tile t = Tile.fromChars(parts[0]);
+
+                        move.addTile(t, Utils.toInt(parts[1]), Utils.toInt(parts[2]));
+                    }
+
+                    if(player.moveAllowed(move) && player.getGame().getBoard().moveAllowed(move)) {
+                        player.getGame().addFirstMove(move, player);
+                    } else {
+                        sendError(ErrorCodes.INVALIDMOVE);
+                    }
+                } else {
+
+                }
                 break;
         }
     }
@@ -93,19 +153,38 @@ public class ClientHandler extends Thread {
 
 
     private void sendWaitFor(int players) {
-        String cmd = Protocol.Server.OKWAITFOR + Protocol.Server.Settings.DELIMITER + players;
+        String cmd = Protocol.Server.OKWAITFOR + Settings.DELIMITER + players;
         sendMessage(cmd);
     }
 
     public void sendStartGame(String[] players) {
-        String cmd = Protocol.Server.STARTGAME + Protocol.Server.Settings.DELIMITER + players;
+        String playerString = "";
+
+        for(String player : players) {
+            playerString += player + Settings.DELIMITER;
+        }
+
+        playerString = playerString.substring(0, playerString.length() - 1);
+
+        String cmd = Protocol.Server.STARTGAME + Settings.DELIMITER + playerString;
         sendMessage(cmd);
     }
 
 
     public void sendEnd(Game.End reason, String winner) {
-        String cmd = Protocol.Server.GAME_END + Protocol.Server.Settings.DELIMITER + reason +
+        String cmd = Protocol.Server.GAME_END + Settings.DELIMITER + reason +
                 Protocol.Server.Settings.DELIMITER + winner;
+        sendMessage(cmd);
+    }
+
+    public void sendError(ErrorCodes code) {
+        String cmd = Protocol.Server.ERROR + Settings.DELIMITER + code;
+        sendMessage(cmd);
+    }
+
+    public void sendMove(Move move, Player current, Player next) {
+        String cmd = Protocol.Server.MOVE + Settings.DELIMITER + current.toString() + Settings.DELIMITER + next.toString() +
+                move.toString();
         sendMessage(cmd);
     }
 

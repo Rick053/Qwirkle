@@ -1,5 +1,6 @@
 package qwirkle.game;
 
+import qwirkle.network.ClientHandler;
 import qwirkle.utils.Utils;
 
 import java.util.ArrayList;
@@ -16,6 +17,10 @@ public class Game {
     private Map<Player, Move> first_moves;
 
     int currentPlayer;
+
+    public Board getBoard() {
+        return board;
+    }
 
     public enum End {
 
@@ -71,9 +76,36 @@ public class Game {
         Move best = null;
 
         for(int i = 0; i < players.size(); i++) {
-//            if(best == null || best.) {
-//
-//            }
+            if(best == null || best.getTiles().size() > first_moves.get(players.get(i)).getTiles().size()) {
+                best = first_moves.get(players.get(i));
+            }
+        }
+
+        for(int i = 0; i < players.size(); i++) {
+            if(first_moves.get(players.get(i)) != best) {
+                if (players.get(i) instanceof HumanPlayer) {
+                    ((HumanPlayer) players.get(i)).getHandler().sendError(ClientHandler.ErrorCodes.NOTYOURTURN);
+                } else {
+                    //TODO computer player
+                }
+            } else {
+                currentPlayer = players.indexOf(players.get(i));
+            }
+
+            int nextPlayer = currentPlayer + 1 % players.size();
+            sendMove(best, players.get(currentPlayer), players.get(nextPlayer));
+        }
+    }
+
+    private void sendMove(Move best, Player current, Player next) {
+        for(int i = 0; i < players.size(); i++) {
+            Player p = players.get(i);
+
+            if(p instanceof HumanPlayer) {
+                ((HumanPlayer) p).getHandler().sendMove(best, current, next);
+            } else {
+                //TODO computer player
+            }
         }
     }
 
@@ -81,12 +113,14 @@ public class Game {
         String[] ps = new String[players.size()];
         for(int i = 0; i < players.size(); i++) {
             ps[i] = players.get(i).toString();
+            System.out.println(players.get(i).toString());
         }
 
         for(int i = 0; i < players.size(); i++) {
             if(players.get(i) instanceof HumanPlayer) {
                 ((HumanPlayer) players.get(i)).getHandler().sendStartGame(ps);
             } else {
+                //TODO computer player
                 players.get(i).determineMove();
             }
         }
@@ -96,6 +130,8 @@ public class Game {
         for(int i = 0; i < players.size(); i++) {
             if(players.get(i) instanceof HumanPlayer) {
                 ((HumanPlayer) players).getHandler().sendEnd(reason, getHighScore().toString());
+            } else {
+                //TODO computer player
             }
         }
     }

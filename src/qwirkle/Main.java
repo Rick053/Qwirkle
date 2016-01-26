@@ -6,6 +6,7 @@ import qwirkle.game.Tile;
 import qwirkle.io.PrintColorWriter;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Main {

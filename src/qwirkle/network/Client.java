@@ -1,11 +1,18 @@
 package qwirkle.network;
 
 import qwirkle.controllers.ClientController;
+import qwirkle.game.HumanPlayer;
+import qwirkle.game.Move;
+import qwirkle.game.Player;
+import qwirkle.game.Tile;
+import qwirkle.utils.Utils;
 
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Client extends Thread {
 
@@ -81,6 +88,7 @@ public class Client extends Thread {
                 switch (params[0]) {
                     case "1":
                         //Not your turn
+                        ClientController.getInstance().getUI().error("It wasn't your turn.");
                         break;
                     case "2":
                         //Not Your Stone
@@ -108,6 +116,9 @@ public class Client extends Thread {
                         break;
                     case "7":
                         //Invalid Move
+                        ClientController.getInstance().getUI().error("The move you tried to make wasn't valid.");
+
+                        //TODO get a new move
                         break;
                     case "8":
                         //General
@@ -119,6 +130,9 @@ public class Client extends Thread {
                 r = new Runnable() {
                     @Override
                     public void run() {
+                        Player p = new HumanPlayer(null);
+                        p.setUsername(ClientController.getInstance().getName());
+                        ClientController.getInstance().setPlayer(p);
                         ClientController.getInstance().startLobby();
                     }
                 };
@@ -132,8 +146,44 @@ public class Client extends Thread {
                 r = new Runnable() {
                     @Override
                     public void run() {
-                        String[] opponents = params[0].split(Character.toString(Protocol.Server.Settings.DELIMITER2));
+                        List<String> opps = new ArrayList<>();
+
+                        for(String player : params) {
+                            opps.add(player);
+                        }
+
+                        String[] opponents = opps.toArray(new String[opps.size()]);
+
                         ClientController.getInstance().startGame(opponents);
+                    }
+                };
+
+                thread(r);
+                break;
+            case Protocol.Server.MOVE:
+                r = new Runnable() {
+                    @Override
+                    public void run() {
+                        String current = params[0];
+                        String next = params[1];
+
+                        //It is not our own move.
+                        if(!current.equals(ClientController.getInstance().getName())) {
+                            String[] stones = params[2].split(Character.toString(Protocol.Server.Settings.DELIMITER));
+                            Move move = new Move();
+
+                            for(String stone : stones) {
+                                String[] parts = stone.split(Character.toString(Protocol.Server.Settings.DELIMITER2));
+
+                                Tile t = Tile.fromChars(parts[0]);
+
+                                move.addTile(t, Utils.toInt(parts[1]), Utils.toInt(parts[2]));
+                            }
+
+                            if(next.equals(ClientController.getInstance().getName())) { //It is our turn now
+                                System.out.println("Our turn"); //TODO debug
+                            }
+                        }
                     }
                 };
 

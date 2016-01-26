@@ -1,5 +1,6 @@
 package qwirkle.game;
 
+import qwirkle.controllers.ClientController;
 import qwirkle.network.ClientHandler;
 
 public class HumanPlayer extends Player {
@@ -7,8 +8,11 @@ public class HumanPlayer extends Player {
     private ClientHandler handler;
 
     public HumanPlayer(ClientHandler handler) {
-        handler.setPlayer(this);
         this.handler = handler;
+
+        if(handler != null) {
+            handler.setPlayer(this);
+        }
     }
 
     public ClientHandler getHandler() {
@@ -16,7 +20,11 @@ public class HumanPlayer extends Player {
     }
 
     @Override
-    public void determineMove() {
+    public Move determineMove() {
+        ClientController controller = ClientController.getInstance();
 
+        controller.getUI().message("Choose a tile to place on the board.");
+
+        return new Move(); //TODO
     }
 }

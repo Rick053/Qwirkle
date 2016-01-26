@@ -37,6 +37,10 @@ public abstract class Player {
         this.game = g;
     }
 
+    public Game getGame() {
+        return this.game;
+    }
+
     public void setUsername(String name) {
         this.username = name;
     }
@@ -54,5 +58,17 @@ public abstract class Player {
         return this.username;
     }
 
-    public abstract void determineMove();
+    public abstract Move determineMove();
+
+    public boolean moveAllowed(Move move) {
+        List<Tile> list = move.getTiles();
+
+        for(int i = 0; i < list.size(); i++) {
+            if(!hand.contains(list.get(i))) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }

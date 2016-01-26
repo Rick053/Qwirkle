@@ -1,5 +1,7 @@
 package qwirkle.controllers;
 
+import qwirkle.game.Move;
+import qwirkle.game.Player;
 import qwirkle.io.TUI;
 import qwirkle.network.Client;
 import qwirkle.utils.Utils;
@@ -17,6 +19,8 @@ public class ClientController {
 
     private TUI ui;
     private Client communication;
+
+    private Player player;
 
     public ClientController() {
         ui = new TUI();
@@ -65,6 +69,10 @@ public class ClientController {
         this.username = ui.getValidatedInput("What's your username?", new Validator[] {ml});
         this.communication.sendHello(username);
     }
+
+    public String getName() {
+        return this.username;
+    }
 //
 //    public void pause() {
 //        try {
@@ -93,6 +101,10 @@ public class ClientController {
      * @param opponents
      */
     public void startGame(String[] opponents) {
+        Move m = player.determineMove();
+    }
 
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 }

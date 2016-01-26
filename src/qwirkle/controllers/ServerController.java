@@ -10,8 +10,8 @@ import qwirkle.utils.Utils;
 import qwirkle.validation.Numeric;
 import qwirkle.validation.Validator;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.lang.reflect.Array;
+import java.util.*;
 
 public class ServerController {
 
@@ -35,6 +35,8 @@ public class ServerController {
         lobby_2 = new ArrayList<>();
         lobby_3 = new ArrayList<>();
         lobby_4 = new ArrayList<>();
+
+        games = new ArrayList<>();
     }
 
     public static ServerController getInstance() {
@@ -90,11 +92,14 @@ public class ServerController {
         Game g;
         int waitingFor = 0;
 
+        Player p = new HumanPlayer(handler);
+        p.setUsername(handler.getUsername());
+
         switch (param) {
             default:
             case "0":
             case "2":
-                lobby_2.add(new HumanPlayer(handler));
+                lobby_2.add(p);
                 waitingFor = 2 - lobby_2.size();
 
                 if(lobby_2.size() == 2) {
@@ -106,7 +111,7 @@ public class ServerController {
                 //Todo start game with new computer player
                 break;
             case "3":
-                lobby_3.add(new HumanPlayer(handler));
+                lobby_3.add(p);
                 waitingFor = 3 - lobby_3.size();
 
                 if(lobby_3.size() == 3) {
@@ -116,7 +121,7 @@ public class ServerController {
                 }
                 break;
             case "4":
-                lobby_4.add(new HumanPlayer(handler));
+                lobby_4.add(p);
                 waitingFor = 4 - lobby_4.size();
 
                 if(lobby_4.size() == 4) {
@@ -127,5 +132,15 @@ public class ServerController {
         }
 
         return waitingFor;
+    }
+
+    public boolean isUnique(String name) {
+        for(int i = 0; i < handlers.size(); i++) {
+            if(handlers.get(i).getUsername() != null && handlers.get(i).getUsername().equals(name)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
