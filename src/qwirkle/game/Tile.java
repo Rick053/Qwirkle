@@ -24,6 +24,11 @@ public class Tile {
         this.color = c;
         this.shape = s;
     }
+    public Tile(int col, int row) {
+        this();
+        this.row = row;
+        this.col = col;
+    }
 
     public boolean isEmpty() {
         return this.shape == Shape.EMPTY;
