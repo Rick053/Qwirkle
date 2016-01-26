@@ -25,6 +25,10 @@ public class Tile {
         this.shape = s;
     }
 
+    public boolean isEmpty() {
+        return this.shape == Shape.EMPTY;
+    }
+
     /**
      * Sets the row of the tile
      * @param row row location of the tile
