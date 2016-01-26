@@ -148,29 +148,29 @@ public class Board {
     public boolean isLegitTile(Tile tile, int x, int y){
         for(int i =7; i<1;i--) {
             if(getTile(x,y+1).isEmpty()) break;
-            if((getTile(x,y+1).getColor()==tile.getColor())&&(getTile(x,y+1).getShape()!=tile.getShape())||
-                    ((getTile(x,y+1).getColor()!=tile.getColor())&&(getTile(x,y+1).getShape()==tile.getShape()))){
+            if((getTile(x,y+1).getColor()==tile.getColor())&&(getTile(x,y+1).getShape()==tile.getShape())||
+                    ((getTile(x,y+1).getColor()!=tile.getColor())&&(getTile(x,y+1).getShape()!=tile.getShape()))){
                 return false;
             }
         }
         for(int i =7; i<1;i++) {
             if(getTile(x,y+1).isEmpty()) break;
-            if((getTile(x,y+1).getColor()==tile.getColor())&&(getTile(x,y+1).getShape()!=tile.getShape())||
-                    ((getTile(x,y+1).getColor()!=tile.getColor())&&(getTile(x,y+1).getShape()==tile.getShape()))){
+            if((getTile(x,y+1).getColor()==tile.getColor())&&(getTile(x,y+1).getShape()==tile.getShape())||
+                    ((getTile(x,y+1).getColor()!=tile.getColor())&&(getTile(x,y+1).getShape()!=tile.getShape()))){
                 return false;
             }
         }
         for(int i =1; i<7;i--) {
             if(getTile(x+i,y).isEmpty()) break;
-            if((getTile(x+i,y).getColor()==tile.getColor())&&(getTile(x+i,y).getShape()!=tile.getShape())||
-                    ((getTile(x+i,y).getColor()!=tile.getColor())&&(getTile(x+i,y).getShape()==tile.getShape()))){
+            if((getTile(x+i,y).getColor()==tile.getColor())&&(getTile(x+i,y).getShape()==tile.getShape())||
+                    ((getTile(x+i,y).getColor()!=tile.getColor())&&(getTile(x+i,y).getShape()!=tile.getShape()))){
                 return false;
             }
         }
         for(int i =1; i<7;i++) {
             if(getTile(x+i,y).isEmpty()) break;
-            if((getTile(x+i,y).getColor()==tile.getColor())&&(getTile(x+i,y).getShape()!=tile.getShape())||
-                    ((getTile(x+i,y).getColor()!=tile.getColor())&&(getTile(x+i,y).getShape()==tile.getShape()))){
+            if((getTile(x+i,y).getColor()==tile.getColor())&&(getTile(x+i,y).getShape()==tile.getShape())||
+                    ((getTile(x+i,y).getColor()!=tile.getColor())&&(getTile(x+i,y).getShape()!=tile.getShape()))){
                 return false;
             }
         }
