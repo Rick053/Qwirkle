@@ -8,7 +8,9 @@ import qwirkle.game.Player;
 import java.io.*;
 import java.net.Socket;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import qwirkle.game.Tile;
 import qwirkle.network.Protocol.Server.Settings;
@@ -29,9 +31,6 @@ public class ClientHandler extends Thread {
     private Player player;
     private String username;
 
-    public Player getPlayer() {
-        return player;
-    }
 
     public enum ErrorCodes {
 
@@ -127,6 +126,7 @@ public class ClientHandler extends Thread {
                 sendWaitFor(ServerController.getInstance().joinLobby(params[0], this));
                 break;
             case Protocol.Client.MAKEMOVE:
+                //TODO check logic
                 if(player.getGame().getBoard().isEmpty()) {
                     //This is a first move.
                     String[] stones = params[0].split(Character.toString(Settings.DELIMITER));
@@ -147,6 +147,20 @@ public class ClientHandler extends Thread {
                     }
                 } else {
 
+                }
+                break;
+            case Protocol.Client.CHANGESTONE:
+                List<Tile> toChange = new ArrayList<>();
+
+                for(String tile : params) {
+                    Tile t = Tile.fromChars(tile);
+                    toChange.add(t);
+                }
+
+                Game g = ServerController.getInstance().getGameFor(getPlayer());
+
+                if(g != null) {
+                    g.changeTiles(toChange, getPlayer());
                 }
                 break;
         }
@@ -233,6 +247,11 @@ public class ClientHandler extends Thread {
     public void sendAddToHand(String toAdd) {
         String cmd = Protocol.Server.ADDTOHAND + Settings.DELIMITER + toAdd;
         sendMessage(cmd);
+    }
+
+
+    public Player getPlayer() {
+        return player;
     }
 
     /**
