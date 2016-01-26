@@ -2,6 +2,9 @@ package qwirkle.validation;
 
 import qwirkle.utils.Utils;
 
+/**
+ * Check if value is in range
+ */
 public class InRange implements Validator {
 
     private int low, high;

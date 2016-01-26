@@ -7,6 +7,9 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.util.Arrays;
 
+/**
+ * Client thread for networking
+ */
 public class Client extends Thread {
 
     private BufferedWriter out;
@@ -32,6 +35,10 @@ public class Client extends Thread {
         }
     }
 
+    /**
+     * Send message
+     * @param message message to send
+     */
     public void sendMessage(String message) {
         try {
             out.write(message + System.lineSeparator());
@@ -42,11 +49,19 @@ public class Client extends Thread {
         }
     }
 
+    /**
+     * Send first hello message
+     * @param username Username of the player
+     */
     public void sendHello(String username) {
         String cmd = Protocol.Client.HALLO + Protocol.Server.Settings.DELIMITER + username;
         sendMessage(cmd);
     }
 
+    /**
+     * Request a game with a specified amount of players
+     * @param numOfPlayers amount of players
+     */
     public void requestGame(String numOfPlayers) {
         String cmd = Protocol.Client.REQUESTGAME + Protocol.Server.Settings.DELIMITER + numOfPlayers;
         sendMessage(cmd);
@@ -66,6 +81,11 @@ public class Client extends Thread {
         }
     }
 
+    /**
+     * Parse message so it can be send
+     *
+     * @param msg the message
+     */
     private void parseMessage(String msg) {
         //TODO debug message
         System.out.println(msg);

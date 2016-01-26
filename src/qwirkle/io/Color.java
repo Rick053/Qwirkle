@@ -1,5 +1,8 @@
 package qwirkle.io;
 
+/**
+ * Color enum that has all the Unicode colors for the Qwirkle game
+ */
 public enum Color {
 
     BLACK("\u001B[30m"),
@@ -12,13 +15,16 @@ public enum Color {
     CYAN("\u001B[36m"),
     WHITE("\u001B[37m");
 
-    private String ansiColor;
+    private String unicodeColor;
 
-    Color(String ansiColor) {
-        this.ansiColor = ansiColor;
+    Color(String unicodeColor) {
+        this.unicodeColor = unicodeColor;
     }
 
-    public String getAnsiColor() {
-        return ansiColor;
+    /**
+     * @return Color in a unicode string
+     */
+    public String getUnicodeColor() {
+        return unicodeColor;
     }
 }

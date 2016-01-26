@@ -1,5 +1,8 @@
 package qwirkle.io;
 
+/**
+ * Enum that contains all shapes for the Qwirkle game
+ */
 public enum Shape {
 
     SQUARE("\u25A0"),
@@ -17,10 +20,15 @@ public enum Shape {
         this.unicode = unicode;
     }
 
+    /**
+     * @return the color in unicode
+     */
     public String getUnicode() {
         return unicode;
     }
-
+    /**
+     * @return the color in unicode
+     */
     @Override
     public String toString() {
         return this.getUnicode();

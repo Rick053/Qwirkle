@@ -1,5 +1,8 @@
 package qwirkle.validation;
 
+/**
+ * Checks if a string is numeric
+ */
 public class Numeric implements Validator {
 
     private String error;

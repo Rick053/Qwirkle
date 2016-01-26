@@ -8,6 +8,9 @@ import java.io.*;
 import java.net.Socket;
 import java.util.Arrays;
 
+/**
+ * Client handler that handles connections with clients
+ */
 public class ClientHandler extends Thread {
 
     private BufferedReader in;
@@ -18,6 +21,9 @@ public class ClientHandler extends Thread {
     private Player player;
     private String username;
 
+    /**
+     * @param s Socket where client is on
+     */
     public ClientHandler(Socket s) {
         this.socket = s;
 
@@ -56,6 +62,11 @@ public class ClientHandler extends Thread {
         }
     }
 
+    /**
+     * Parse message so it can be send
+     *
+     * @param msg The message to be send
+     */
     private void parseMessage(String msg) {
         System.out.println(msg); //TODO remove debug
         String[] msg_split = msg.split(String.valueOf(Protocol.Server.Settings.DELIMITER));
@@ -74,6 +85,11 @@ public class ClientHandler extends Thread {
         }
     }
 
+    /**
+     * Send the message
+     *
+     * @param message The message to be send
+     */
     private void sendMessage(String message) {
         try {
             out.write(message + System.lineSeparator());
@@ -85,6 +101,9 @@ public class ClientHandler extends Thread {
         }
     }
 
+    /**
+     * Send hellom, the first message
+     */
     public void sendHello() {
         String cmd = Protocol.Server.HALLO + Protocol.Server.Settings.DELIMITER +
                 ServerController.getInstance().getServerName();
@@ -92,27 +111,51 @@ public class ClientHandler extends Thread {
     }
 
 
+    /**
+     * Send to the client that you have to wait for an amount of players
+     *
+     * @param players Players the client has to wait for
+     */
     private void sendWaitFor(int players) {
         String cmd = Protocol.Server.OKWAITFOR + Protocol.Server.Settings.DELIMITER + players;
         sendMessage(cmd);
     }
 
+    /**
+     * Notify the player that the game starts
+     *
+     * @param players All the players
+     */
     public void sendStartGame(String[] players) {
         String cmd = Protocol.Server.STARTGAME + Protocol.Server.Settings.DELIMITER + players;
         sendMessage(cmd);
     }
 
 
+    /**
+     * Notify the player that the game has ended including why and the winner
+     *
+     * @param reason Why the game has ended
+     * @param winner Winner of the game
+     */
     public void sendEnd(Game.End reason, String winner) {
         String cmd = Protocol.Server.GAME_END + Protocol.Server.Settings.DELIMITER + reason +
                 Protocol.Server.Settings.DELIMITER + winner;
         sendMessage(cmd);
     }
 
+    /**
+     * Set the player for the handler
+     *
+     * @param p player
+     */
     public void setPlayer(Player p) {
         this.player = p;
     }
 
+    /**
+     * Shutdown cleanly
+     */
     private void shutdown() {
         try {
             in.close();

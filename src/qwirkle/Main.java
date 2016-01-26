@@ -8,16 +8,29 @@ import qwirkle.io.PrintColorWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+/**
+ * Main class
+ */
 public class Main {
 
     private static final String CHECK_MARK = "\u2713";
     private static final String ERROR_MARK = "\u2717";
 
+    /**
+     * constructor
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         ClientController client = ClientController.getInstance();
         client.run();
     }
 
+    /**
+     * Prints the board to the screen
+     *
+     * @param b Board object
+     */
     public void printBoard(Board b) {
         int spacing = 5;
 
