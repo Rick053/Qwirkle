@@ -29,6 +29,10 @@ public class ClientHandler extends Thread {
     private Player player;
     private String username;
 
+    public Player getPlayer() {
+        return player;
+    }
+
     public enum ErrorCodes {
 
         NOTYOURTURN("4"), INVALIDMOVE("7"), NAMETAKEN("4");
@@ -91,6 +95,7 @@ public class ClientHandler extends Thread {
             } catch (IOException e) {
                 //TODO error logs
                 System.out.println(e.getMessage());
+                running = false;
                 shutdown();
             }
         }
@@ -222,6 +227,11 @@ public class ClientHandler extends Thread {
     public void sendMove(Move move, Player current, Player next) {
         String cmd = Protocol.Server.MOVE + Settings.DELIMITER + current.toString() + Settings.DELIMITER + next.toString() +
                 move.toString();
+        sendMessage(cmd);
+    }
+
+    public void sendAddToHand(String toAdd) {
+        String cmd = Protocol.Server.ADDTOHAND + Settings.DELIMITER + toAdd;
         sendMessage(cmd);
     }
 

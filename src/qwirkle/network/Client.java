@@ -209,6 +209,12 @@ public class Client extends Thread {
 
                 thread(r);
                 break;
+            case Protocol.Server.ADDTOHAND:
+                for(String tile : params) {
+                    Tile t = Tile.fromChars(tile);
+                    ClientController.getInstance().getPlayer().addToHand(t);
+                }
+                break;
         }
     }
 

@@ -1,12 +1,10 @@
 package qwirkle.game;
 
 import qwirkle.network.ClientHandler;
+import qwirkle.network.Protocol;
 import qwirkle.utils.Utils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Main game class
@@ -69,7 +67,34 @@ public class Game {
 
         first_moves = new HashMap<>();
 
+        initHands();
         start();
+    }
+
+    private void initHands() {
+        for(int i = 0; i < players.size(); i++) {
+            String toAdd = "";
+
+            for(int j = 0; j < 6; j++) {
+                Tile t = drawFromBag();
+                toAdd += t.toChars() + Protocol.Server.Settings.DELIMITER;
+                players.get(i).addToHand(t);
+            }
+
+            toAdd = toAdd.substring(0, toAdd.length() - 1);
+
+            if(players.get(i) instanceof HumanPlayer) {
+                ((HumanPlayer) players.get(i)).getHandler().sendAddToHand(toAdd);
+            }
+        }
+    }
+
+    private Tile drawFromBag() {
+        int rand = (new Random()).nextInt(bagOfTiles.size());
+        Tile t = bagOfTiles.get(rand);
+        bagOfTiles.remove(t);
+
+        return t;
     }
 
     /**

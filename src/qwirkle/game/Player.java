@@ -24,6 +24,12 @@ public abstract class Player {
         this.hand.add(t);
     }
 
+    public void addToHand(Tile[] tiles) {
+        for(Tile tile : tiles) {
+            this.hand.add(tile);
+        }
+    }
+
     public void removeFromHand(Tile t) {
         this.hand.remove(t);
     }
