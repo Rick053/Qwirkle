@@ -209,6 +209,12 @@ public class Game {
         return highest;
     }
 
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+
     /**
      * Returns the bag of Tiles
      *

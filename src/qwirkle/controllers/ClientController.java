@@ -132,6 +132,8 @@ public class ClientController {
         }
 
         this.game = new Game(players);
+
+        //We need to make a first move.
         Move m = player.determineMove();
     }
 
