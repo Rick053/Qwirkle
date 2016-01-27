@@ -1,0 +1,2 @@
+moves don't have to be in a single column or row
+you get stuck if you can't place any tiles but choose to try.

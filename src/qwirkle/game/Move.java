@@ -69,9 +69,10 @@ public class Move {
 
         for(int i = 0; i < tiles.size(); i++) {
             move += tiles.get(i).toChars() + Protocol.Server.Settings.DELIMITER2;
+            move += tiles.get(i).getCol() + Protocol.Server.Settings.DELIMITER2;
+            move += tiles.get(i).getRow() + Protocol.Server.Settings.DELIMITER2;
         }
 
-        move = move.substring(0, move.length() - 1);
         return move;
     }
 }

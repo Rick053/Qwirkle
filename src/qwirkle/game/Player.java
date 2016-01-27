@@ -1,5 +1,7 @@
 package qwirkle.game;
 
+import qwirkle.controllers.ServerController;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +18,7 @@ public abstract class Player {
 
     private int score;
 
-    private Move last_move;
+    private Move lastMove;
 
     private Board board_copy;
 
@@ -85,12 +87,12 @@ public abstract class Player {
         return true;
     }
 
-    public Move getLast_move() {
-        return last_move;
+    public Move getLastMove() {
+        return lastMove;
     }
 
-    public void setLast_move(Move last_move) {
-        this.last_move = last_move;
+    public void setLastMove(Move lastMove) {
+        this.lastMove = lastMove;
     }
 
     public Board getBoardCopy() {
@@ -103,5 +105,14 @@ public abstract class Player {
 
     public void removeFromHand(Move m) {
         m.getTiles().forEach(this::removeFromHand);
+    }
+
+    public void makeMove(Move move) {
+        Game g = ServerController.getInstance().getGameFor(this);
+        int points = g.getBoard().countScore(move);
+        addScore(points);
+
+        g.getBoard().makeMove(move);
+        g.sendMove(move, g.getPlayers().get(g.currentPlayer), g.getNextPlayer());
     }
 }

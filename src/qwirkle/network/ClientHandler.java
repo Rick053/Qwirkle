@@ -31,7 +31,6 @@ public class ClientHandler extends Thread {
     private Player player;
     private String username;
 
-
     public enum ErrorCodes {
 
         NOTYOURTURN("4"), INVALIDMOVE("7"), NAMETAKEN("4");
@@ -115,7 +114,7 @@ public class ClientHandler extends Thread {
 
         switch (command) {
             case Protocol.Client.HALLO:
-                if(ServerController.getInstance().isUnique(params[0])) {
+                if (ServerController.getInstance().isUnique(params[0])) {
                     sendHello();
                     this.username = params[0];
                 } else {
@@ -127,38 +126,36 @@ public class ClientHandler extends Thread {
                 break;
             case Protocol.Client.MAKEMOVE:
                 //TODO check logic
-                if(player.getGame().getBoard().isEmpty()) {
+                if (player.getGame().getBoard().isEmpty()) {
                     //This is a first move.
-                    Move move = new Move();
+                    Move move = getMoveFromString(params);
 
-                    for(String stone : params) {
-                        String[] parts = stone.split(Character.toString(Settings.DELIMITER2));
-
-                        Tile t = Tile.fromChars(parts[0]);
-
-                        move.addTile(t, Utils.toInt(parts[1]), Utils.toInt(parts[2]));
-                    }
-
-                    if(player.moveAllowed(move) && player.getGame().getBoard().moveAllowed(move)) {
+                    if (player.moveAllowed(move) && player.getGame().getBoard().moveAllowed(move)) {
                         player.getGame().addFirstMove(move, player);
                     } else {
                         sendError(ErrorCodes.INVALIDMOVE);
                     }
                 } else {
+                    Move move = getMoveFromString(params);
 
+                    if (player.moveAllowed(move) && player.getGame().getBoard().moveAllowed(move)) {
+                        player.makeMove(move);
+                    } else {
+                        sendError(ErrorCodes.INVALIDMOVE);
+                    }
                 }
                 break;
             case Protocol.Client.CHANGESTONE:
                 List<Tile> toChange = new ArrayList<>();
 
-                for(String tile : params) {
+                for (String tile : params) {
                     Tile t = Tile.fromChars(tile);
                     toChange.add(t);
                 }
 
                 Game g = ServerController.getInstance().getGameFor(getPlayer());
 
-                if(g != null) {
+                if (g != null) {
                     g.changeTiles(toChange, getPlayer());
                 }
                 break;
@@ -275,5 +272,26 @@ public class ClientHandler extends Thread {
             //TODO errors
             System.out.println(e.getMessage());
         }
+    }
+
+    /**
+     * Get a move from a string.
+     * @param tiles
+     * @return move
+     */
+    public Move getMoveFromString(String[] tiles) {
+        Move move = new Move();
+
+        for(String stone : tiles) {
+            String[] parts = stone.split(Character.toString(Settings.DELIMITER2));
+
+            Tile t = Tile.fromChars(parts[0]);
+
+            if(t != null) {
+                move.addTile(t, Utils.toInt(parts[1]), Utils.toInt(parts[2]));
+            }
+        }
+
+        return move;
     }
 }

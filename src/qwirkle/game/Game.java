@@ -15,7 +15,7 @@ public class Game {
     private Board board;
 
     private List<Tile> bagOfTiles;
-    private Map<Player, Move> first_moves;
+    private Map<Player, Move> firstMoves;
 
     int currentPlayer;
 
@@ -72,7 +72,7 @@ public class Game {
             }
         }
 
-        first_moves = new HashMap<>();
+        firstMoves = new HashMap<>();
     }
 
     public void initHands() {
@@ -108,9 +108,9 @@ public class Game {
      * @param p player
      */
     public void addFirstMove(Move m, Player p) {
-        this.first_moves.put(p, m);
+        this.firstMoves.put(p, m);
 
-        if(first_moves.size() == players.size()) {  //All players submitted a first move
+        if(firstMoves.size() == players.size()) {  //All players submitted a first move
             checkFirstMoves();
         }
     }
@@ -128,13 +128,13 @@ public class Game {
         Move best = null;
 
         for(int i = 0; i < players.size(); i++) {
-            if(best == null || best.getTiles().size() > first_moves.get(players.get(i)).getTiles().size()) {
-                best = first_moves.get(players.get(i));
+            if(best == null || best.getTiles().size() > firstMoves.get(players.get(i)).getTiles().size()) {
+                best = firstMoves.get(players.get(i));
             }
         }
 
         for(int i = 0; i < players.size(); i++) {
-            if(first_moves.get(players.get(i)) != best) {
+            if(firstMoves.get(players.get(i)) != best) {
                 if (players.get(i) instanceof HumanPlayer) {
                     ((HumanPlayer) players.get(i)).getHandler().sendError(ClientHandler.ErrorCodes.NOTYOURTURN);
                 } else {
@@ -142,6 +142,7 @@ public class Game {
                 }
             } else {
                 currentPlayer = players.indexOf(players.get(i));
+                players.get(currentPlayer).makeMove(best);
             }
 
             int nextPlayer = currentPlayer + 1 % players.size();
@@ -149,7 +150,7 @@ public class Game {
         }
     }
 
-    private void sendMove(Move best, Player current, Player next) {
+    public void sendMove(Move best, Player current, Player next) {
         for(int i = 0; i < players.size(); i++) {
             Player p = players.get(i);
 

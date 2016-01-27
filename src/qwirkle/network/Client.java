@@ -202,18 +202,9 @@ public class Client extends Thread {
                         String current = params[0];
                         String next = params[1];
 
+                        String[] tiles = Arrays.copyOfRange(params, 2, params.length);
                         //It is not our own move.
-                        String[] stones = params[2].split(Character.toString(Protocol.Server.Settings.DELIMITER));
-                        Move move = new Move();
-
-                        for(String stone : stones) {
-                            String[] parts = stone.split(Character.toString(Protocol.Server.Settings.DELIMITER2));
-
-                            Tile t = Tile.fromChars(parts[0]);
-
-                            //row col
-                            move.addTile(t, Utils.toInt(parts[1]), Utils.toInt(parts[2]));
-                        }
+                        Move move = getMoveFromString(tiles);
 
                         ClientController.getInstance().getGame().getBoard().makeMove(move);
 
@@ -249,9 +240,31 @@ public class Client extends Thread {
             if (in != null) in.close();
             if (out != null) out.close();
             if (socket != null) socket.close();
+            System.exit(0);
         } catch (IOException e) {
             //TODO errors
             System.out.println(e.getMessage());
         }
+    }
+
+    /**
+     * Get a move from a string.
+     * @param tiles
+     * @return move
+     */
+    public Move getMoveFromString(String[] tiles) {
+        Move move = new Move();
+
+        for(String stone : tiles) {
+            String[] parts = stone.split(Character.toString(Protocol.Server.Settings.DELIMITER2));
+
+            Tile t = Tile.fromChars(parts[0]);
+
+            if(t != null) {
+                move.addTile(t, Utils.toInt(parts[1]), Utils.toInt(parts[2]));
+            }
+        }
+
+        return move;
     }
 }

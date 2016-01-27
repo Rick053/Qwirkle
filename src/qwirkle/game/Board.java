@@ -479,4 +479,9 @@ public class Board {
     public int getOffSetY() {
         return offSetY;
     }
+
+    public int countScore(Move move) {
+        //TODO create score counter.
+        return 0;
+    }
 }

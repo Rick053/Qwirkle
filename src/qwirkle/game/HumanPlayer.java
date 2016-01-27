@@ -47,12 +47,12 @@ public class HumanPlayer extends Player {
     @Override
     public Move determineMove(Board b) {
         ClientController controller = ClientController.getInstance();
-        Move m = new Move();
 
+        setLastMove(new Move());
         setBoardCopy(b);
 
         if(b.isEmpty()) {
-            m = makeMove(b);
+            setLastMove(makeMove(b));
         } else {
             Validator range = new InRange(1, 3, "Not a valid action.");
             String input = controller.getUI().getValidatedInput("Choose Action: 1. Make Move, 2. Change tiles, 3. Skip",
@@ -61,19 +61,19 @@ public class HumanPlayer extends Player {
             switch (input) {
                 default:
                 case "1":   //Make a move
-                    m = makeMove(b);
+                    setLastMove(makeMove(b));
                     break;
                 case "2":   //Change tiles
-//                    m = changeTiles();
-                    m.setType(Move.Type.CHANGE);
+//                    setLastMove(changeTiles());
+                    getLastMove().setType(Move.Type.CHANGE);
                     break;
                 case "3":   //Skip turn
-                    m.setType(Move.Type.SKIP);
+                    getLastMove().setType(Move.Type.SKIP);
                     break;
             }
         }
 
-        return new Move();
+        return getLastMove();
     }
 
     private Move makeMove(Board b) {
@@ -129,7 +129,7 @@ public class HumanPlayer extends Player {
         Tile target = possibilities.get(Utils.toInt(l));
 
         getBoardCopy().addTile(target.getCol(), target.getRow(), chosenTile);
-        m.addTile(chosenTile, target.getCol(), target.getRow());
+        getLastMove().addTile(chosenTile, target.getCol(), target.getRow());
     }
 
     private void showHand() {
