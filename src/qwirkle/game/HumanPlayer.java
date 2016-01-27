@@ -50,7 +50,7 @@ public class HumanPlayer extends Player {
         setLastMove(new Move());
         setBoardCopy(b);
 
-        if(b.isEmpty()) {
+        if (b.isEmpty()) {
             setLastMove(makeMove(b));
         } else {
             Validator range = new InRange(1, 3, "Not a valid action.");
@@ -85,8 +85,8 @@ public class HumanPlayer extends Player {
             Validator range = new InRange(1, 3, "Not a valid action.");
             action = controller.getUI()
                     .getValidatedInput("What do you want to do?" +
-                            " [1. Place Tile, 2. Submit Move, 3. Reset] ",
-                    new Validator[]{range});
+                                    " [1. Place Tile, 2. Submit Move, 3. Reset] ",
+                            new Validator[]{range});
 
             if (action.equals("1")) {
                 placeTile(move, b);
@@ -114,7 +114,7 @@ public class HumanPlayer extends Player {
                     "Your choice was not a valid tile in your hand.");
             String c = controller.getUI().
                     getValidatedInput("Choose a tile to place: ",
-                    new Validator[]{num, range});
+                            new Validator[]{num, range});
             int choice = Utils.toInt(c);
 
             chosenTile = getHand().get(choice);

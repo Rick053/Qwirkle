@@ -35,8 +35,8 @@ public class Board {
             List<Tile> row = new ArrayList<>();
 
             for (int j = 0; j < size; j++) {
-                //Place empty tiles on all of the spots
                 row.add(new Tile(j - getOffsetX(), i - getOffSetY()));
+                //Place empty tiles on all of the spots
             }
 
             boardList.add(row);
@@ -77,10 +77,10 @@ public class Board {
     /**
      * Check if a value exceeds the size of the board, and add new rows/columns to expand.
      *
-     * @param value     value to be checked
-     * @param offset    offset used
-     * @param size      size
-     * @param checkrows checkrows
+     * @param value
+     * @param offset
+     * @param size
+     * @param checkrows
      */
     private void checkSize(int value, int offset, int size, boolean checkrows) {
         if (value + offset > size || value + offset < 0) {
@@ -110,12 +110,13 @@ public class Board {
     /**
      * Return the tile at a specific location.
      *
-     * @param col colum of the tile
-     * @param row row of the tile
-     * @return a list of tiles
+     * @param col
+     * @param row
+     * @return
      */
     public Tile getTile(int col, int row) {
-        if ((this.sizeX <= col + offSetX || this.sizeY <= row + offSetY || row + offSetY < 0 || col + offSetX < 0)) {
+        if (this.sizeX <= col + offSetX || this.sizeY <= row + offSetY
+                || row + offSetY < 0 || col + offSetX < 0) {
             return null;
         }
 
@@ -159,7 +160,7 @@ public class Board {
     /**
      * Get the number of rows.
      *
-     * @return a list of tiles
+     * @return
      */
     public int getRowCount() {
         return boardList.size();
@@ -189,10 +190,10 @@ public class Board {
         sizeY += 2;
         offSetY = sizeY / 2; //Update the Y offset
         for (int i = 0; i < boardList.get(0).size(); i++) {
-            row.add(new Tile((i - offSetX), 0 - offSetY));
+            row.add(new Tile(i - offSetX, 0 - offSetY));
         }
         for (int i = 0; i < boardList.get(0).size(); i++) {
-            row2.add(new Tile((i - offSetX), sizeY - offSetY));
+            row2.add(new Tile(i - offSetX, sizeY - offSetY));
         }
         boardList.add(0, row);  //Add extra row at the top
         boardList.add(row2);     //Add extra row at the bottom
@@ -203,7 +204,7 @@ public class Board {
      * Get a column of tiles.
      *
      * @param t the tile to get a column for
-     * @return the column of the tile
+     * @return
      */
     public ArrayList<Tile> getColumn(Tile t) {
         int col = t.getCol();
@@ -234,9 +235,9 @@ public class Board {
     }
 
     /**
-     * Get the number of columns
+     * Get the number of columns.
      *
-     * @return the number of columns
+     * @return
      */
     public int getColumnCount() {
         return boardList.get(0).size();
@@ -250,11 +251,11 @@ public class Board {
     }
 
     /**
-     * Check if a space on the board is free
+     * Check if a space on the board is free.
      *
-     * @param col colum of the board
-     * @param row crow of the board
-     * @return return true if the board is full
+     * @param col
+     * @param row
+     * @return
      */
     public boolean isFree(int col, int row) {
         Tile t = getTile(col, row);
@@ -264,14 +265,17 @@ public class Board {
     /**
      * Check if a move is allowed.
      *
-     * @param m move
-     * @return true if allowed else false
+     * @param m
+     * @return
      */
-
     public boolean moveAllowed(Move m) {
+        Board b = deepCopy();
+
         for (Tile t : m.getTiles()) {
-            if (!tileAllowed(t, t.getCol(), t.getRow())) {
+            if (!b.tileAllowed(t, t.getCol(), t.getRow())) {
                 return false;
+            } else {
+                b.addTile(t.getCol(), t.getRow(), t);
             }
         }
 
@@ -281,7 +285,7 @@ public class Board {
     /**
      * Add a move to the board.
      *
-     * @param m move
+     * @param m
      */
     public void makeMove(Move m) {
         for (Tile t : m.getTiles()) {
@@ -292,7 +296,7 @@ public class Board {
     /**
      * Create a copy of the board.
      *
-     * @return copy
+     * @return
      */
     public Board deepCopy() {
         return new Board(boardList);
@@ -307,19 +311,23 @@ public class Board {
                 if (!t.isEmpty()) {
                     if (getTile(x, y + 1) != null && getTile(x, y + 1).isEmpty()) {
 //                        emptyTiles.add(getTile(x, y + 1));
-                        emptyTiles.add(new Tile(getTile(x, y + 1).getCol(), getTile(x, y + 1).getRow()));
+                        emptyTiles.add(new Tile(getTile(x, y + 1).getCol(),
+                                getTile(x, y + 1).getRow()));
                     }
                     if (getTile(x, y - 1) != null && getTile(x, y - 1).isEmpty()) {
 //                        emptyTiles.add(getTile(x, y - 1));
-                        emptyTiles.add(new Tile(getTile(x, y - 1).getCol(), getTile(x, y - 1).getRow()));
+                        emptyTiles.add(new Tile(getTile(x, y - 1).getCol(),
+                                getTile(x, y - 1).getRow()));
                     }
                     if (getTile(x - 1, y) != null && getTile(x - 1, y).isEmpty()) {
 //                        emptyTiles.add(getTile(x - 1, y));
-                        emptyTiles.add(new Tile(getTile(x - 1, y).getCol(), getTile(x - 1, y).getRow()));
+                        emptyTiles.add(new Tile(getTile(x - 1, y).getCol(),
+                                getTile(x - 1, y).getRow()));
                     }
                     if (getTile(x + 1, y) != null && getTile(x + 1, y).isEmpty()) {
 //                        emptyTiles.add(getTile(x + 1, y));
-                        emptyTiles.add(new Tile(getTile(x + 1, y).getCol(), getTile(x + 1, y).getRow()));
+                        emptyTiles.add(new Tile(getTile(x + 1, y).getCol(),
+                                getTile(x + 1, y).getRow()));
                     }
                 }
             }
@@ -342,7 +350,7 @@ public class Board {
             possibilities.add(getTile(0, 0));
         } else {
             for (Tile t : neighbours) {
-                if (tileAllowed(t, t.getCol(), t.getRow())) {
+                if (tileAllowed(tile, t.getCol(), t.getRow())) {
                     possibilities.add(t);
                 }
             }
@@ -374,7 +382,7 @@ public class Board {
     }
 
     /**
-     * Check if a set of tiles (row or column) follows the qwirkle rules
+     * Check if a set of tiles (row or column) follows the qwirkle rules.
      *
      * @param set
      * @return boolean
@@ -408,7 +416,7 @@ public class Board {
     }
 
     /**
-     * Check if the shapes of the tile set match
+     * Check if the shapes of the tile set match.
      *
      * @param set
      * @return boolean
@@ -426,7 +434,7 @@ public class Board {
     }
 
     /**
-     * Check if the colors of the tile set match
+     * Check if the colors of the tile set match.
      *
      * @param set
      * @return boolean
@@ -444,7 +452,7 @@ public class Board {
     }
 
     /**
-     * Check if the colors are unique within a set of tiles
+     * Check if the colors are unique within a set of tiles.
      *
      * @param set
      * @return boolean
@@ -464,7 +472,7 @@ public class Board {
     }
 
     /**
-     * Check if the shapes are unique within a set of tiles
+     * Check if the shapes are unique within a set of tiles.
      *
      * @param set
      * @return

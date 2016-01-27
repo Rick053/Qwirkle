@@ -274,18 +274,19 @@ public class ClientHandler extends Thread {
 
     /**
      * Get a move from a string.
+     *
      * @param tiles
      * @return move
      */
     public Move getMoveFromString(String[] tiles) {
         Move move = new Move();
 
-        for(String stone : tiles) {
+        for (String stone : tiles) {
             String[] parts = stone.split(Character.toString(Settings.DELIMITER2));
 
             Tile t = Tile.fromChars(parts[0]);
 
-            if(t != null) {
+            if (t != null) {
                 move.addTile(t, Utils.toInt(parts[1]), Utils.toInt(parts[2]));
             }
         }

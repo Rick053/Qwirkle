@@ -110,7 +110,7 @@ public class Game {
     public void addFirstMove(Move m, Player p) {
         this.firstMoves.put(p, m);
 
-        if(firstMoves.size() == players.size()) {  //All players submitted a first move
+        if (firstMoves.size() == players.size()) {  //All players submitted a first move
             checkFirstMoves();
         }
     }
@@ -125,14 +125,15 @@ public class Game {
     public void checkFirstMoves() {
         Move best = null;
 
-        for(int i = 0; i < players.size(); i++) {
-            if(best == null || best.getTiles().size() > firstMoves.get(players.get(i)).getTiles().size()) {
+        for (int i = 0; i < players.size(); i++) {
+            if (best == null || best.getTiles().size()
+                    > firstMoves.get(players.get(i)).getTiles().size()) {
                 best = firstMoves.get(players.get(i));
             }
         }
 
-        for(int i = 0; i < players.size(); i++) {
-            if(firstMoves.get(players.get(i)) != best) {
+        for (int i = 0; i < players.size(); i++) {
+            if (firstMoves.get(players.get(i)) != best) {
                 if (players.get(i) instanceof HumanPlayer) {
                     ((HumanPlayer) players.get(i)).getHandler()
                             .sendError(ClientHandler.ErrorCodes.NOTYOURTURN);
@@ -150,7 +151,7 @@ public class Game {
     }
 
     public void sendMove(Move best, Player current, Player next) {
-        for(int i = 0; i < players.size(); i++) {
+        for (int i = 0; i < players.size(); i++) {
             Player p = players.get(i);
 
             if (p instanceof HumanPlayer) {
