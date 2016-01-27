@@ -173,10 +173,10 @@ public class Board {
         sizeY += 2;
         offSetY = sizeY / 2; //Update the Y offset
         for (int i = 0; i < boardList.get(0).size(); i++) {
-            row.add(new Tile((i-offSetX,0-offSetY));
+            row.add(new Tile((i-offSetX),0-offSetY));
         }
         for (int i = 0; i < boardList.get(0).size(); i++) {
-            row2.add(new Tile((i-offSetX,sizeY-offSetY));
+            row2.add(new Tile((i-offSetX),sizeY-offSetY));
         }
         boardList.add(0, row);  //Add extra row at the top
         boardList.add(row2);     //Add extra row at the bottom
