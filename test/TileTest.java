@@ -54,7 +54,7 @@ public class TileTest {
         Tile t3 = Tile.fromChars("AB");
         Tile t4 = Tile.fromChars("BA");
 
-        assertTrue(t1.equals(t2));
+        assertFalse(t1.equals(t2));
         assertFalse(t1.equals(t3));
         assertFalse(t1.equals(t4));
         assertFalse(t1.equals(new Object()));

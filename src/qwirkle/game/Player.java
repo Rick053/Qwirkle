@@ -67,7 +67,7 @@ public abstract class Player {
         return this.username;
     }
 
-    public abstract Move determineMove();
+    public abstract Move determineMove(Board b);
 
     public boolean moveAllowed(Move move) {
         List<Tile> list = move.getTiles();
