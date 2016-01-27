@@ -45,12 +45,4 @@ public class BoardTest {
         ArrayList<Tile> column = board.getRow(t);
         assertTrue(column.contains(t2));
     }
-
-    @Test
-    public void testGetNeighbours() {
-        Tile t = Tile.fromChars("AA");
-        Tile t2 = Tile.fromChars("AB");
-
-        board.addTile(0, 0, t);
-    }
 }
