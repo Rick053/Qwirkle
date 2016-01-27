@@ -147,7 +147,7 @@ public class TUI implements UserInterface {
                 Tile toShow = null;
 
                 for(Tile option : options) {
-                    if(tile.matches(option)) {
+                    if(tile.matches(option) && tile.isEmpty()) {
                         toShow = option;
                     }
                 }

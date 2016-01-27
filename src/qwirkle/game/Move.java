@@ -33,7 +33,7 @@ public class Move {
      * @param row Row location
      * @param col Col location
      */
-    public void addTile(Tile t, int row, int col) {
+    public void addTile(Tile t, int col, int row) {
         t.setRow(row);
         t.setCol(col);
 

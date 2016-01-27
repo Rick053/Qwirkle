@@ -37,8 +37,10 @@ public class BoardTest {
         Tile t = Tile.fromChars("AA");
         Tile t2 = Tile.fromChars("AB");
 
-        board.addTile(0, 1, t);
-        board.addTile(1, 1, t2);
+        board.addTile(0, 0, t);
+        board.addTile(0, 1, t2);
+        board.addTile(1, 1, Tile.fromChars("AC"));
+        board.addTile(2, 1, Tile.fromChars("AD"));
 
         ArrayList<Tile> column = board.getRow(t);
         assertTrue(column.contains(t2));
@@ -46,6 +48,9 @@ public class BoardTest {
 
     @Test
     public void testGetNeighbours() {
+        Tile t = Tile.fromChars("AA");
+        Tile t2 = Tile.fromChars("AB");
 
+        board.addTile(0, 0, t);
     }
 }
