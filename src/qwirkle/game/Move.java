@@ -12,11 +12,18 @@ public class Move {
 
     private List<Tile> tiles;
 
+    private Type type;
+
+    private enum Type {
+        MOVE, CHANGE, SKIP
+    }
+
     /**
      * Constructor
      */
     public Move() {
         this.tiles = new ArrayList<>();
+        this.type = Type.MOVE;
     }
 
     /**
@@ -31,6 +38,14 @@ public class Move {
         t.setCol(col);
 
         tiles.add(t);
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public Type getType() {
+        return this.type;
     }
 
     /**
