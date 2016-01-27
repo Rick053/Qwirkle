@@ -11,7 +11,6 @@ import qwirkle.validation.Numeric;
 import qwirkle.validation.Validator;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 
@@ -113,20 +112,19 @@ public class HumanPlayer extends Player {
             chosenTile = getHand().get(choice);
 
             possibilities = b.getPossibleMoves(chosenTile, m);
-            System.out.println("possibilities : " + possibilities);
             //TODO if the user has no tiles which can be placed, he cannot continue the game from here.
             if(possibilities.size() == 0) {
                 ClientController.getInstance().getUI().error("You can't place that tile on the current board.");
             }
         } while (possibilities.size() == 0 && chosenTile != null);
 
+        System.out.println(getBoardCopy().getTiles());
         controller.getUI().printBoardWithOptions(b, possibilities);
         Validator locations = new InRange(0, possibilities.size(), "You can't place a tile there");
         Validator num = new Numeric("Please enter a number");
         String l = controller.getUI().getValidatedInput("Where do you want to place your tile? ", new Validator[]{locations, num});
 
         Tile target = possibilities.get(Utils.toInt(l));
-        System.out.println(target.getCol() + " - " + target.getRow());
 
         getBoardCopy().addTile(target.getCol(), target.getRow(), chosenTile);
         m.addTile(chosenTile, target.getCol(), target.getRow());

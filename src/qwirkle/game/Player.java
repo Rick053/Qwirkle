@@ -29,7 +29,7 @@ public abstract class Player {
     }
 
     public void addToHand(Tile[] tiles) {
-        for(Tile tile : tiles) {
+        for (Tile tile : tiles) {
             this.hand.add(tile);
         }
     }
@@ -76,8 +76,8 @@ public abstract class Player {
     public boolean moveAllowed(Move move) {
         List<Tile> list = move.getTiles();
 
-        for(int i = 0; i < list.size(); i++) {
-            if(!hand.contains(list.get(i))) {
+        for (int i = 0; i < list.size(); i++) {
+            if (!hand.contains(list.get(i))) {
                 return false;
             }
         }
