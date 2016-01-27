@@ -126,17 +126,24 @@ public class TUI implements UserInterface {
 
         for(List<Tile> row : board) {
             for(Tile tile : row) {
-                if(options.contains(tile)) {
-                    writer.print(Color.GREEN, Integer.toString(options.indexOf(tile)));
-                } else {
+                Tile toShow = null;
+
+                for(Tile option : options) {
+                    if(options.contains(tile)) {
+                        toShow = option;
+                    }
+                }
+
+                if(toShow == null) {
                     writer.print(tile.getColor(), tile.getShape().toString());
+                } else {
+                    writer.print(Color.GREEN, Integer.toString(options.indexOf(toShow)));
                 }
             }
 
-            writer.println("");
+            System.out.println("");
         }
 
-        writer.println("");
-        writer.println("");
+        System.out.println("");
     }
 }

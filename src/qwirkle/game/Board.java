@@ -35,7 +35,7 @@ public class Board {
             List<Tile> row = new ArrayList<>();
 
             for (int j = 0; j < size; j++) {
-                row.add(new Tile(j,i));//Place empty tiles on all of the spots
+                row.add(new Tile(j - getOffsetX(), i - getOffSetY()));//Place empty tiles on all of the spots
             }
 
             boardList.add(row);
@@ -215,7 +215,7 @@ public class Board {
 
     public boolean isFree(int col, int row) {
         Tile t = getTile(col, row);
-        return t.isEmpty();
+        return t == null || t.isEmpty();
     }
 
     public boolean moveAllowed(Move m) {
@@ -232,6 +232,10 @@ public class Board {
         if (!isFree(col, row)) {
             return false;
         }
+
+        Tile testTile = new Tile(t.getShape(), t.getColor());
+        testTile.setCol(col);
+        testTile.setRow(row);
 
         List<Tile> rowList = getRow(t);
         List<Tile> colList = getColumn(t);
@@ -284,16 +288,18 @@ public class Board {
                 int x = t.getCol();
                 int y = t.getRow();
                 if(!t.isEmpty()) {
-                    if (getTile(x, y + 1).isEmpty()){
+                    System.out.println("Tile found: " + t.toString() + " x - " + x + " y - " + y);
+
+                    if (getTile(x, y + 1) != null && getTile(x, y + 1).isEmpty()){
                         emptyTiles.add(getTile(x, y + 1));
                     }
-                    if (getTile(x, y - 1).isEmpty()){
+                    if (getTile(x, y - 1) != null && getTile(x, y - 1).isEmpty()){
                         emptyTiles.add(getTile(x, y - 1));
                     }
-                    if (getTile(x - 1, y).isEmpty()){
+                    if (getTile(x - 1, y) != null && getTile(x - 1, y).isEmpty()){
                         emptyTiles.add(getTile(x - 1, y));
                     }
-                    if (getTile(x + 1, y).isEmpty()){
+                    if (getTile(x + 1, y) != null && getTile(x + 1, y).isEmpty()){
                         emptyTiles.add(getTile(x + 1, y));
                     }
                 }
@@ -305,24 +311,21 @@ public class Board {
     public List<Tile> getPossibleMoves(Tile tile){
         List<Tile> possibilities = new ArrayList<>();
 
+        HashSet<Tile> neighbours = getEmptyNeighbours();
+        System.out.println("Neighbours test " + neighbours);
+
         if(isEmpty()) {
-            possibilities.add(new Tile(0, 0));
+            addTile(0, 0, new Tile());
+            possibilities.add(getTile(0, 0));
         } else {
-            if(!isEmpty()) {
-                for (Tile t : getEmptyNeighbours()) {
-                    if(tileAllowed(t, t.getCol(), t.getRow())) {
+                for (Tile t : neighbours) {
+                    if(tileAllowed(tile, t.getCol(), t.getRow())) {
                         possibilities.add(t);
                     }
                 }
-            } else {
-                Tile t = new Tile();
-                t.setCol(0);
-                t.setRow(0);
-
-                possibilities.add(t);
-            }
         }
 
+        System.out.println(possibilities);
         return possibilities;
     }
 
