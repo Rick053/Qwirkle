@@ -59,7 +59,6 @@ public class HumanPlayer extends Player {
                             new Validator[]{});
 
             switch (input) {
-                default:
                 case "1":   //Make a move
                     setLastMove(makeMove(b));
                     break;
@@ -69,10 +68,6 @@ public class HumanPlayer extends Player {
                     break;
                 case "3":   //Skip turn
                     getLastMove().setType(Move.Type.SKIP);
-                    break;
-
-                case "1":   //Make a move
-                    m = makeMove(b);
                     break;
                 default:
             }

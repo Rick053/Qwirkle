@@ -92,7 +92,7 @@ public class ClientController {
 
         InetAddress server = null;
         try {
-            server = InetAddress.getByName(server_ip);
+            server = InetAddress.getByName(serverIp);
         } catch (UnknownHostException e) {
             //TODO error logs
             System.out.println(e.getMessage());
