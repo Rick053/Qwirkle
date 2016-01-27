@@ -152,6 +152,7 @@ public class ClientController {
         this.game = new Game(players);
 
         //We need to make a first move.
+        getUI().message("The player with the longest move will start.");
         Move m = player.determineMove(getGame().getBoard().deepCopy());
     }
 

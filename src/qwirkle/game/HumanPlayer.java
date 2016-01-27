@@ -87,7 +87,7 @@ public class HumanPlayer extends Player {
             if(action.equals("1")) {
                 placeTile(move, b);
             }
-        } while(action.equals("0") && action != null);
+        } while(action.equals("1") && action != null);
 
         return move;
     }
@@ -100,15 +100,37 @@ public class HumanPlayer extends Player {
         //TODO show board;
         showHand();
 
-        Validator num = new Numeric("Please enter a number");
-        Validator range = new InRange(0, getHand().size() - 1, "Your choice was not a valid tile in your hand.");
-        String c = controller.getUI().getValidatedInput("", new Validator[] {num, range});
-        int choice = Utils.toInt(c);
-//
-        Tile chosenTile = getHand().get(choice);
+        List<Tile> possibilities = new ArrayList<>();
+        Tile chosenTile = null;
 
-        List<Tile> possibilities = b.getPossibleMoves(chosenTile);
-        System.out.println(possibilities);
+        do {
+            //Pick a tile from your hand
+            Validator num = new Numeric("Please enter a number");
+            Validator range = new InRange(0, getHand().size() - 1, "Your choice was not a valid tile in your hand.");
+            String c = controller.getUI().getValidatedInput("Choose a tile to place: ", new Validator[] {num, range});
+            int choice = Utils.toInt(c);
+
+            chosenTile = getHand().get(choice);
+
+            possibilities = b.getPossibleMoves(chosenTile, m);
+            //TODO if the user has no tiles which can be placed, he cannot continue the game from here.
+            if(possibilities.size() == 0) {
+                ClientController.getInstance().getUI().error("You can't place that tile on the current board.");
+            }
+        } while (possibilities.size() == 0 && chosenTile != null);
+
+        if(possibilities.size() > 0 && chosenTile != null) {
+            controller.getUI().printBoardWithOptions(b, possibilities);
+            Validator locations = new InRange(0, possibilities.size(), "You can't place a tile there");
+            Validator num = new Numeric("Please enter a number");
+            String l = controller.getUI().getValidatedInput("Where do you want to place your tile? ", new Validator[]{locations, num});
+
+            Tile target = possibilities.get(Utils.toInt(l));
+            System.out.println(target.getCol() + " - " + target.getRow());
+            b.addTile(target.getCol(), target.getRow(), chosenTile);
+
+            m.addTile(chosenTile, target.getCol(), target.getRow());
+        }
     }
 
     private void showHand() {

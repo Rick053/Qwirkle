@@ -264,7 +264,7 @@ public class Board {
         return emptyTiles;
     }
 
-    public List<Tile> getPossibleMoves(Tile tile){
+    public List<Tile> getPossibleMoves(Tile tile, Move m){
         List<Tile> possibilities = new ArrayList<>();
 
         HashSet<Tile> neighbours = getEmptyNeighbours();
@@ -315,6 +315,12 @@ public class Board {
                 allowed = colorsMatch(set);
             } else {
                 allowed = false;
+            }
+
+            for(Tile t : set) {
+                if(t.isEmpty()) {
+                    allowed = false;
+                }
             }
         } else {
             //Only a single tile, so it is allowed.
