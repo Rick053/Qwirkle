@@ -47,6 +47,7 @@ public class Board {
         isEmpty = true;
     }
 
+    //TODO iterate over boardlist to create new tiles.
     public Board(List<List<Tile>> board) {
         sizeX = board.get(0).size();
         sizeY = board.size();
@@ -303,53 +304,25 @@ public class Board {
     public HashSet<Tile> getPossibleMoves(Tile tile){
         HashSet<Tile> possibilities = new HashSet<>();
 
-        if(!isEmpty()) {
-            for (Tile t : getEmptyNeighbours()) {
-                if(tileAllowed(t, t.getCol(), t.getRow())) {
-                    possibilities.add(t);
-                }
-            }
+        if(isEmpty()) {
+            possibilities.add(new Tile(0, 0));
         } else {
-            Tile t = new Tile();
-            t.setCol(0);
-            t.setRow(0);
+            if(!isEmpty()) {
+                for (Tile t : getEmptyNeighbours()) {
+                    if(tileAllowed(t, t.getCol(), t.getRow())) {
+                        possibilities.add(t);
+                    }
+                }
+            } else {
+                Tile t = new Tile();
+                t.setCol(0);
+                t.setRow(0);
 
-            possibilities.add(t);
+                possibilities.add(t);
+            }
         }
 
         return possibilities;
-    }
-
-    public boolean isLegitTile(Tile tile, int x, int y){
-        for(int i =7; i<1;i--) {
-            if(getTile(x,y+1).isEmpty()) break;
-            if((getTile(x,y+1).getColor()==tile.getColor())&&(getTile(x,y+1).getShape()==tile.getShape())||
-                    ((getTile(x,y+1).getColor()!=tile.getColor())&&(getTile(x,y+1).getShape()!=tile.getShape()))){
-                return false;
-            }
-        }
-        for(int i =1; i>7;i++) {
-            if(getTile(x,y+1).isEmpty()) break;
-            if((getTile(x,y+1).getColor()==tile.getColor())&&(getTile(x,y+1).getShape()==tile.getShape())||
-                    ((getTile(x,y+1).getColor()!=tile.getColor())&&(getTile(x,y+1).getShape()!=tile.getShape()))){
-                return false;
-            }
-        }
-        for(int i =7; i<1;i--) {
-            if(getTile(x+i,y).isEmpty()) break;
-            if((getTile(x+i,y).getColor()==tile.getColor())&&(getTile(x+i,y).getShape()==tile.getShape())||
-                    ((getTile(x+i,y).getColor()!=tile.getColor())&&(getTile(x+i,y).getShape()!=tile.getShape()))){
-                return false;
-            }
-        }
-        for(int i =1; i<7;i++) {
-            if(getTile(x+i,y).isEmpty()) break;
-            if((getTile(x+i,y).getColor()==tile.getColor())&&(getTile(x+i,y).getShape()==tile.getShape())||
-                    ((getTile(x+i,y).getColor()!=tile.getColor())&&(getTile(x+i,y).getShape()!=tile.getShape()))){
-                return false;
-            }
-        }
-        return true;
     }
 
     public boolean isPossibleMove(Move move){

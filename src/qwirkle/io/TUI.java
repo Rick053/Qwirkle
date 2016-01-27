@@ -1,8 +1,13 @@
 package qwirkle.io;
 
+import qwirkle.game.Board;
+import qwirkle.game.Tile;
 import qwirkle.validation.Validator;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -109,5 +114,26 @@ public class TUI implements UserInterface {
 
     public PrintColorWriter getWriter() {
         return this.writer;
+    }
+
+    public void printBoard(Board b) {
+        List<Tile> options = new ArrayList<>();
+        printBoardWithOptions(b, options);
+    }
+
+    public void printBoardWithOptions(Board b, List<Tile> options) {
+        List<List<Tile>> board = b.getTiles();
+
+        for(List<Tile> row : board) {
+            for(Tile tile : row) {
+                if(options.contains(tile)) {
+                    writer.print(Color.GREEN, Integer.toString(options.indexOf(tile)));
+                } else {
+                    writer.print(tile.getColor(), tile.getShape().toString());
+                }
+            }
+
+            writer.println("");
+        }
     }
 }
