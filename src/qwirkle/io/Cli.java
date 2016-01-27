@@ -6,11 +6,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Cli {
-    private static final Logger log = Logger.getLogger(Cli.class.getName());
+    private static final Logger LOG = Logger.getLogger(Cli.class.getName());
     private String[] args = null;
     private int type = 1;
     private Options options = new Options();
-    private String UI = "Gui";
+    private String ui = "Gui";
     private String name;
     private String nickname;
     private String ip;
@@ -53,23 +53,28 @@ public class Cli {
         try {
             cmd = parser.parse(options, args);
 
-            if (cmd.hasOption("h"))
+            if (cmd.hasOption("h")) {
                 help();
+            }
 
-            if (cmd.hasOption("t"))
-                this.UI = "TUI";
+            if (cmd.hasOption("t")) {
+                this.ui = "TUI";
+            }
 
-            if (cmd.hasOption("n"))
+            if (cmd.hasOption("n")) {
                 this.name = cmd.getOptionValue("n");
+            }
 
-            if (cmd.hasOption("p"))
+            if (cmd.hasOption("p")) {
                 this.port = cmd.getOptionValue("p");
-            if (cmd.hasOption("m"))
+            }
+            if (cmd.hasOption("m")) {
                 this.maxConnections = cmd.getOptionValue("m");
+            }
 
 
         } catch (ParseException e) {
-            log.log(Level.SEVERE, "Failed to parse comand line properties", e);
+            LOG.log(Level.SEVERE, "Failed to parse comand line properties", e);
             help();
         }
     }
@@ -81,25 +86,31 @@ public class Cli {
         try {
             cmd = parser.parse(options, args);
 
-            if (cmd.hasOption("h"))
+            if (cmd.hasOption("h")) {
                 help();
+            }
 
-            if (cmd.hasOption("i"))
+            if (cmd.hasOption("i")) {
                 this.ip = cmd.getOptionValue("i");
+            }
 
-            if (cmd.hasOption("t"))
-                this.UI = "TUI";
+            if (cmd.hasOption("t")) {
+                this.ui = "TUI";
+            }
 
-            if (cmd.hasOption("n"))
+            if (cmd.hasOption("n")) {
                 this.nickname = cmd.getOptionValue("n");
+            }
 
-            if (cmd.hasOption("p"))
+            if (cmd.hasOption("p")) {
                 this.port = cmd.getOptionValue("p");
+            }
 
-            if (cmd.hasOption("a"))
+            if (cmd.hasOption("a")) {
                 this.ai = true;
+            }
         } catch (ParseException e) {
-            log.log(Level.SEVERE, "Failed to parse comand line properties", e);
+            LOG.log(Level.SEVERE, "Failed to parse comand line properties", e);
             help();
         }
     }
@@ -113,8 +124,12 @@ public class Cli {
     }
 
     public void parse() {
-        if (type == 0) parseServer();
-        if (type == 1) parseClient();
+        if (type == 0) {
+            parseServer();
+        }
+        if (type == 1) {
+            parseClient();
+        }
     }
 
     public String getName() {
@@ -129,8 +144,8 @@ public class Cli {
         return ip;
     }
 
-    public String getUI() {
-        return UI;
+    public String getUi() {
+        return ui;
     }
 
     public String getPort() {

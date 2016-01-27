@@ -6,18 +6,20 @@ import qwirkle.validation.Validator;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
 
 /**
- * Class that makes a Textual user interface
+ * Class that makes a Textual user interface.
+ *
+ * SORRY FOR THE CHECKSTYLE ERRORS :)
+ *
  */
 public class TUI implements UserInterface {
 
     private PrintColorWriter writer;
     private Scanner scanner;
-    private static final String SPLASH =("\n" +
+    private static final String SPLASH = "\n" +
             "\n" +
             "          ````                           `.--.`                   `````.                            \n" +
             "      `:+ssyyss+-`                       :ooooo/.             .+syyyys+:`          `.`              \n" +
@@ -33,12 +35,9 @@ public class TUI implements UserInterface {
             "      .:+oooo+/:-/+o/` `-...``          `/+//:::---. -soo/-.``---------//-.`.+ssssso:.  `-://:--` .:\n" +
             "         ````      `.-                               .-.`                   .---......              \n" +
             "Made by: Rick van Gemert, Raoul Fasel\n\n" +
-            "####################################################################################################\n\n");
+            "####################################################################################################\n\n";
 
 
-    /**
-     * Constructor
-     */
     public TUI() {
         try {
             writer = new PrintColorWriter(System.out);
@@ -65,10 +64,12 @@ public class TUI implements UserInterface {
     }
 
     /**
-     * Show the user a prompt message followed by two answer options. A positive and a negative answer.
-     * @param message   - The message to show the user
-     * @param yes       - The positive button text
-     * @param no        - The negative button text
+     * Show the user a prompt message followed by two answer options.
+     * A positive and a negative answer.
+     *
+     * @param message - The message to show the user
+     * @param yes     - The positive button text
+     * @param no      - The negative button text
      * @return boolean
      */
     @Override
@@ -79,7 +80,7 @@ public class TUI implements UserInterface {
         do {
             answer = scanner.nextLine();
 
-            if(answer.equals(yes)) {
+            if (answer.equals(yes)) {
                 return true;
             } else if (answer.equals(no)) {
                 return false;
@@ -92,7 +93,8 @@ public class TUI implements UserInterface {
     }
 
     /**
-     * Get input from the user
+     * Get input from the user.
+     *
      * @param message Input message
      * @return Answer
      */
@@ -105,8 +107,9 @@ public class TUI implements UserInterface {
     }
 
     /**
-     * Get input from the user
-     * @param message Input Message
+     * Get input from the user.
+     *
+     * @param message    Input Message
      * @param validators Validators to validate the input
      * @return Answer
      */
@@ -119,7 +122,7 @@ public class TUI implements UserInterface {
             answer = getInput(message);
 
             for (Validator v : validators) {
-                if(!v.matches(answer)) {
+                if (!v.matches(answer)) {
                     validated = false;
 
                     writer.println(Color.RED, v.getMessage());
@@ -142,17 +145,17 @@ public class TUI implements UserInterface {
     public void printBoardWithOptions(Board b, List<Tile> options) {
         List<List<Tile>> board = b.getTiles();
 
-        for(List<Tile> row : board) {
-            for(Tile tile : row) {
+        for (List<Tile> row : board) {
+            for (Tile tile : row) {
                 Tile toShow = null;
 
-                for(Tile option : options) {
-                    if(tile.matches(option) && tile.isEmpty()) {
+                for (Tile option : options) {
+                    if (tile.matches(option) && tile.isEmpty()) {
                         toShow = option;
                     }
                 }
 
-                if(toShow == null) {
+                if (toShow == null) {
                     writer.print(tile.getColor(), tile.getShape().toString());
                 } else {
                     writer.print(Color.GREEN, Integer.toString(options.indexOf(toShow)));

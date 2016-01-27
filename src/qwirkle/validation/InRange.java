@@ -3,7 +3,7 @@ package qwirkle.validation;
 import qwirkle.utils.Utils;
 
 /**
- * Check if value is in range
+ * Check if value is in range.
  */
 public class InRange implements Validator {
 
@@ -18,13 +18,13 @@ public class InRange implements Validator {
 
     @Override
     public boolean matches(String data) {
-        if(!Utils.isNumeric(data)) {
+        if (!Utils.isNumeric(data)) {
             return false;
         }
 
         int d = Utils.toInt(data);
 
-        return (low <= d && d <= high);
+        return low <= d && d <= high;
     }
 
     @Override

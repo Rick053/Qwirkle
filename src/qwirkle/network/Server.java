@@ -12,15 +12,16 @@ public class Server extends Thread {
     private boolean running;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param port Port that the server listens on
      */
-    public Server(int port) {
-        if(port < 0) {
+    public Server(int p) {
+        int port = p;
+        if (port < 0) {
+            //TODO
             port = Protocol.Server.Settings.DEFAULT_PORT;
         }
-
         try {
             this.server = new ServerSocket(port);
         } catch (IOException e) {
@@ -35,11 +36,11 @@ public class Server extends Thread {
     public void run() {
         running = true;
 
-        while(running) {
+        while (running) {
             ServerController controller = ServerController.getInstance();
-            int max_connections = controller.maxConnections();
+            int maxConnections = controller.maxConnections();
 
-            if(max_connections != -1 || max_connections < controller.getHandlers().size()) {
+            if (maxConnections != -1 || maxConnections < controller.getHandlers().size()) {
                 try {
                     Socket s = server.accept();
                     ClientHandler client = new ClientHandler(s);

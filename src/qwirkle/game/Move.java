@@ -29,7 +29,7 @@ public class Move {
     /**
      * Add tile to the move.
      *
-     * @param t Tile to add
+     * @param t   Tile to add
      * @param row Row location
      * @param col Col location
      */
@@ -47,6 +47,7 @@ public class Move {
 
     /**
      * Return the type of the move.
+     *
      * @return
      */
 
@@ -67,7 +68,7 @@ public class Move {
     public String toString() {
         String move = "";
 
-        for(int i = 0; i < tiles.size(); i++) {
+        for (int i = 0; i < tiles.size(); i++) {
             move += tiles.get(i).toChars() + Protocol.Server.Settings.DELIMITER2;
             move += tiles.get(i).getCol() + Protocol.Server.Settings.DELIMITER2;
             move += tiles.get(i).getRow() + Protocol.Server.Settings.DELIMITER2;

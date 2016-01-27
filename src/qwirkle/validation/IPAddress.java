@@ -3,7 +3,7 @@ package qwirkle.validation;
 import qwirkle.utils.Utils;
 
 /**
- * Checks if string is an IPAdress
+ * Checks if string is an IPAdress.
  */
 public class IPAddress implements Validator {
 
@@ -17,14 +17,14 @@ public class IPAddress implements Validator {
     public boolean matches(String data) {
         String[] parts = data.split("\\.");
 
-        if(parts.length != 4) {
+        if (parts.length != 4) {
             return false;
         }
 
-        for(String part : parts) {
+        for (String part : parts) {
             int p = Utils.toInt(part);
 
-            if(p < 0 || p > 255) {
+            if (p < 0 || p > 255) {
                 return false;
             }
         }

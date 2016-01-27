@@ -16,14 +16,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Controller for the client
+ * Controller for the client.
  */
 public class ClientController {
 
     private static ClientController instance = null;
 
-    private String server_ip, username;
-    private int server_port;
+    private String serverIp, username;
+    private int serverPort;
 
     private TUI ui;
     private Client communication;
@@ -38,7 +38,7 @@ public class ClientController {
     }
 
     public static ClientController getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             instance = new ClientController();
         }
 
@@ -47,21 +47,21 @@ public class ClientController {
 
     public void setCli(Cli cli) {
         try {
-            this.server_port = Integer.parseInt(cli.getPort());
-                   } catch (NumberFormatException nfe) {
-                       this.server_port = -1;
+            this.serverPort = Integer.parseInt(cli.getPort());
+        } catch (NumberFormatException nfe) {
+            this.serverPort = -1;
         }
-        this.server_ip = cli.getIp();
-        if((server_port == -1) || (server_ip == null)) {
+        this.serverIp = cli.getIp();
+        if ((serverPort == -1) || (serverIp == null)) {
             showSetup = true;
         }
         this.username = cli.getNickname();
         this.ai = cli.isAi();
-            
+
     }
 
     /**
-     * Returns the UI
+     * Returns the UI.
      *
      * @return Userinterface
      */
@@ -70,23 +70,25 @@ public class ClientController {
     }
 
     public void run() {
-        if (showSetup) getServerInfo();
+        if (showSetup) {
+            getServerInfo();
+        }
+
         getUsername();
     }
 
 
     /**
-     * Gets Server Info
-     *
-     *
+     * Gets Server Info.
      */
     public void getServerInfo() {
         IPAddress ipval = new IPAddress("The IP address you entered was not valid.");
-        server_ip = ui.getValidatedInput("Server IP: ", new Validator[] {ipval});
+        serverIp = ui.getValidatedInput("Server IP: ", new Validator[]{ipval});
 
         Numeric num = new Numeric("The port you entered wasn't numeric");
-        String p = ui.getValidatedInput("What port would you like to connect to?", new Validator[] {num});
-        server_port = Utils.toInt(p);
+        String p = ui.getValidatedInput("What port would you like to connect to?",
+                new Validator[]{num});
+        serverPort = Utils.toInt(p);
 
         InetAddress server = null;
         try {
@@ -96,16 +98,16 @@ public class ClientController {
             System.out.println(e.getMessage());
         }
 
-        this.communication = new Client(server, server_port);
+        this.communication = new Client(server, serverPort);
         this.communication.start();
     }
 
     /**
-     * Gets the Username
+     * Gets the Username.
      */
     public void getUsername() {
         MaxLength ml = new MaxLength(15, "The username cannot be long than 15 characters");
-        this.username = ui.getValidatedInput("What's your username?", new Validator[] {ml});
+        this.username = ui.getValidatedInput("What's your username?", new Validator[]{ml});
         this.communication.sendHello(username);
     }
 
@@ -131,17 +133,20 @@ public class ClientController {
         Numeric num = new Numeric("The amount of players has to be numeric.");
         InRange range = new InRange(0, 4, "Only games with up to 4 players are supported.");
 
-        String numOfPlayers = ui.getValidatedInput("Number of opponents? [0..4]", new Validator[] {num, range});
+        String numOfPlayers = ui.getValidatedInput("Number of opponents? [0..4]",
+                new Validator[]{num, range});
+
         this.communication.requestGame(numOfPlayers);
     }
 
     /**
      * Start a new game.
-     * @param opponents
+     *
+     * @param opponents opponents
      */
     public void startGame(String[] opponents) {
         List<Player> players = new ArrayList<>();
-        for(String opponent : opponents) {
+        for (String opponent : opponents) {
             Player p = new HumanPlayer(null);
             p.setUsername(opponent);
 

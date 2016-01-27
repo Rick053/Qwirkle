@@ -11,49 +11,44 @@ import qwirkle.utils.Utils;
 import qwirkle.validation.Numeric;
 import qwirkle.validation.Validator;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 /**
- * Controller for the Server
+ * Controller for the Server.
  */
 public class ServerController {
 
     private static ServerController instance = null;
     private final ArrayList<ClientHandler> handlers;
 
-    private int server_port, max_connections;
+    private int serverPort, maxConnections;
 
     private TUI ui;
     private Server communication;
     private String serverName;
 
-    private List<Player> lobby_2, lobby_3, lobby_4;
+    private List<Player> lobby2, lobby3, lobby4;
     private List<Game> games;
 
-    /**
-     * Constructor
-     *
-     */
     public ServerController() {
         ui = new TUI();
         handlers = new ArrayList<>();
         serverName = "Server";
 
-        lobby_2 = new ArrayList<>();
-        lobby_3 = new ArrayList<>();
-        lobby_4 = new ArrayList<>();
+        lobby2 = new ArrayList<>();
+        lobby3 = new ArrayList<>();
+        lobby4 = new ArrayList<>();
 
         games = new ArrayList<>();
     }
 
     /**
-     * Gets the controller instance
+     * Gets the controller instance.
      *
      * @return ServerController
      */
     public static ServerController getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             instance = new ServerController();
         }
 
@@ -61,7 +56,7 @@ public class ServerController {
     }
 
     /**
-     * Gets the UI
+     * Gets the UI.
      *
      * @return Userinterface
      */
@@ -71,19 +66,21 @@ public class ServerController {
 
     public void run() {
         Numeric num = new Numeric("Please enter a number");
-        String p = ui.getValidatedInput("What port would you like to listen on?", new Validator[] {num});
-        server_port = Utils.toInt(p);
+        String p = ui.getValidatedInput("What port would you like to listen on?",
+                new Validator[]{num});
+        serverPort = Utils.toInt(p);
 
-        String mc = ui.getValidatedInput("Maximum number of connections allowed: ", new Validator[] {num});
-        max_connections = Utils.toInt(mc);
+        String mc = ui.getValidatedInput("Maximum number of connections allowed: ",
+                new Validator[]{num});
+        maxConnections = Utils.toInt(mc);
 
-        this.communication = new Server(server_port);
+        this.communication = new Server(serverPort);
         this.communication.start();
     }
 
     public Game getGameFor(Player player) {
-        for(Game g : games) {
-            if(g.getPlayers().contains(player)) {
+        for (Game g : games) {
+            if (g.getPlayers().contains(player)) {
                 return g;
             }
         }
@@ -92,16 +89,16 @@ public class ServerController {
     }
 
     /**
-     * Returns max connections
+     * Returns max connections.
      *
      * @return maxConnections
      */
     public int maxConnections() {
-        return max_connections;
+        return maxConnections;
     }
 
     /**
-     * Returns the handlers
+     * Returns the handlers.
      *
      * @return Handlers
      */
@@ -110,7 +107,7 @@ public class ServerController {
     }
 
     /**
-     * Add a handler
+     * Add a handler.
      *
      * @param client client to be added to the handler.
      */
@@ -119,7 +116,7 @@ public class ServerController {
     }
 
     /**
-     * Returns the server name
+     * Returns the server name.
      *
      * @return serverName
      */
@@ -128,24 +125,24 @@ public class ServerController {
     }
 
     /**
-     * Removes a handler from the handlers
+     * Removes a handler from the handlers.
      *
      * @param clientHandler handler for the client
      */
     public void removeHandler(ClientHandler clientHandler) {
         this.handlers.remove(clientHandler);
 
-        if(clientHandler.getPlayer() != null) {
-            lobby_2.remove(clientHandler.getPlayer());
-            lobby_3.remove(clientHandler.getPlayer());
-            lobby_4.remove(clientHandler.getPlayer());
+        if (clientHandler.getPlayer() != null) {
+            lobby2.remove(clientHandler.getPlayer());
+            lobby3.remove(clientHandler.getPlayer());
+            lobby4.remove(clientHandler.getPlayer());
         }
     }
 
     /**
-     * Joins handler to the lobby
+     * Joins handler to the lobby.
      *
-     * @param param Number of players
+     * @param param   Number of players
      * @param handler The handler that wants to join
      * @return The amount of players the player has to wait for
      */
@@ -158,14 +155,14 @@ public class ServerController {
         p.setUsername(handler.getUsername());
 
         switch (param) {
-            default:
+
             case "0":
             case "2":
-                lobby_2.add(p);
-                waitingFor = 2 - lobby_2.size();
+                lobby2.add(p);
+                waitingFor = 2 - lobby2.size();
 
-                if(lobby_2.size() == 2) {
-                    g = new Game(lobby_2);
+                if (lobby2.size() == 2) {
+                    g = new Game(lobby2);
                     games.add(g);
                 }
                 break;
@@ -173,27 +170,28 @@ public class ServerController {
                 //Todo start game with new computer player
                 break;
             case "3":
-                lobby_3.add(p);
-                waitingFor = 3 - lobby_3.size();
+                lobby3.add(p);
+                waitingFor = 3 - lobby3.size();
 
-                if(lobby_3.size() == 3) {
-                    g = new Game(lobby_3);
+                if (lobby3.size() == 3) {
+                    g = new Game(lobby3);
                     games.add(g);
 //                    g.start();
                 }
                 break;
             case "4":
-                lobby_4.add(p);
-                waitingFor = 4 - lobby_4.size();
+                lobby4.add(p);
+                waitingFor = 4 - lobby4.size();
 
-                if(lobby_4.size() == 4) {
-                    g = new Game(lobby_4);
+                if (lobby4.size() == 4) {
+                    g = new Game(lobby4);
                     games.add(g);
                 }
                 break;
+            default:
         }
 
-        if(g != null) {
+        if (g != null) {
             g.initHands();
             g.start();
         }
@@ -202,8 +200,9 @@ public class ServerController {
     }
 
     public boolean isUnique(String name) {
-        for(int i = 0; i < handlers.size(); i++) {
-            if(handlers.get(i).getUsername() != null && handlers.get(i).getUsername().equals(name)) {
+        for (int i = 0; i < handlers.size(); i++) {
+            if (handlers.get(i).getUsername() != null
+                    && handlers.get(i).getUsername().equals(name)) {
                 return false;
             }
         }

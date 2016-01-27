@@ -4,7 +4,7 @@ import qwirkle.io.Color;
 import qwirkle.io.Shape;
 
 /**
- * Tile class
+ * Tile class.
  */
 public class Tile {
 
@@ -13,9 +13,6 @@ public class Tile {
 
     private int row, col;
 
-    /**
-     * Constructor
-     */
     public Tile() {
         this(Shape.EMPTY, Color.WHITE);
     }
@@ -24,6 +21,7 @@ public class Tile {
         this.color = c;
         this.shape = s;
     }
+
     public Tile(int col, int row) {
         this();
         this.row = row;
@@ -35,7 +33,8 @@ public class Tile {
     }
 
     /**
-     * Sets the row of the tile
+     * Sets the row of the tile.
+     *
      * @param row row location of the tile
      */
     public void setRow(int row) {
@@ -43,7 +42,7 @@ public class Tile {
     }
 
     /**
-     * Sets the col of the tile
+     * Sets the col of the tile.
      *
      * @param col col location of the tile
      */
@@ -52,7 +51,7 @@ public class Tile {
     }
 
     /**
-     * Convert tile to chars
+     * Convert tile to chars.
      *
      * @return Chars
      */
@@ -61,7 +60,7 @@ public class Tile {
 
         char c, s;
 
-        switch(getColor()) {
+        switch (getColor()) {
             case RED:
                 c = 'A';
                 break;
@@ -84,7 +83,7 @@ public class Tile {
                 return null;
         }
 
-        switch(getShape()) {
+        switch (getShape()) {
             case CIRCLE:
                 s = 'A';
                 break;
@@ -128,11 +127,11 @@ public class Tile {
 
     @Override
     public String toString() {
-        return this.toChars() + "(" + col +", " + row + ")";
+        return this.toChars() + "(" + col + ", " + row + ")";
     }
 
     /**
-     * Returns shape of the tile
+     * Returns shape of the tile.
      *
      * @return Shape of the tile
      */
@@ -141,7 +140,7 @@ public class Tile {
     }
 
     /**
-     * Returns color of the tile
+     * Returns color of the tile.
      *
      * @return Color of th tile
      */
@@ -150,13 +149,14 @@ public class Tile {
     }
 
     /**
-     * Create a new tile from a string of two characters
-     * Characters are read in the following order: ColorShape
+     * Create a new tile from a string of two characters.
+     * Characters are read in the following order: ColorShape.
+     *
      * @param chars
-     * @return
+     * @return tile
      */
     public static Tile fromChars(String chars) {
-        if(chars.length() != 2) {
+        if (chars.length() != 2) {
             return null;
         }
 
@@ -167,7 +167,7 @@ public class Tile {
         char colorChar = chars.charAt(0);
         char shapeChar = chars.charAt(1);
 
-        switch(colorChar) {
+        switch (colorChar) {
             case 'A':
                 c = Color.RED;
                 break;
@@ -190,7 +190,7 @@ public class Tile {
                 c = Color.BLACK;
         }
 
-        switch(shapeChar) {
+        switch (shapeChar) {
             case 'A':
                 s = Shape.CIRCLE;
                 break;
@@ -236,6 +236,6 @@ public class Tile {
     }
 
     public boolean matches(Tile option) {
-        return (getCol() == option.getCol() && getRow() == option.getRow());
+        return (getCol() == option.getCol()) && (getRow() == option.getRow());
     }
 }

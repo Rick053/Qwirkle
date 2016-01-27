@@ -1,7 +1,7 @@
 package qwirkle.io;
 
 /**
- * Color enum that has all the Unicode colors for the Qwirkle game
+ * Color enum that has all the Unicode colors for the Qwirkle game.
  */
 public enum Color {
 
@@ -12,7 +12,6 @@ public enum Color {
     YELLOW("\u001B[33m"),
     BLUE("\u001B[34m"),
     PURPLE("\u001B[35m"),
-    CYAN("\u001B[36m"),
     WHITE("\u001B[37m");
 
     private String unicodeColor;

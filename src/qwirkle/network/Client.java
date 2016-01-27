@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Client thread for networking
+ * Client thread for networking.
  */
 public class Client extends Thread {
 
@@ -25,11 +25,11 @@ public class Client extends Thread {
 
     private boolean running;
 
-    public Client(InetAddress server_ip, int server_port) {
+    public Client(InetAddress serverIp, int serverPort) {
         running = true;
 
         try {
-            socket = new Socket(server_ip, server_port);
+            socket = new Socket(serverIp, serverPort);
 
             in = new BufferedReader(new InputStreamReader(
                     socket.getInputStream(), Protocol.Server.Settings.ENCODING));
@@ -40,13 +40,15 @@ public class Client extends Thread {
             System.out.println(e.getMessage());
             shutdown();
         } catch (IllegalArgumentException e) {
-            ClientController.getInstance().getUI().error("Could not connect to the server with the specified information.");
+            ClientController.getInstance().getUI()
+                    .error("Could not connect to the server with the specified information.");
             ClientController.getInstance().getServerInfo();
         }
     }
 
     /**
      * Send message.
+     *
      * @param message message to send
      */
     public void sendMessage(String message) {
@@ -61,6 +63,7 @@ public class Client extends Thread {
 
     /**
      * Send first hello message.
+     *
      * @param username Username of the player
      */
     public void sendHello(String username) {
@@ -70,17 +73,20 @@ public class Client extends Thread {
 
     /**
      * Request a game with a specified amount of players.
+     *
      * @param numOfPlayers amount of players
      */
     public void requestGame(String numOfPlayers) {
-        String cmd = Protocol.Client.REQUESTGAME + Protocol.Server.Settings.DELIMITER + numOfPlayers;
+        String cmd = Protocol.Client.REQUESTGAME
+                + Protocol.Server.Settings.DELIMITER + numOfPlayers;
         sendMessage(cmd);
     }
 
 
     /**
      * Send a move to the server. At this point the move is not final.
-     * @param m
+     *
+     * @param m move
      */
     public void sendMove(Move m) {
         String cmd = Protocol.Client.MAKEMOVE + Protocol.Server.Settings.DELIMITER + m.toString();
@@ -89,9 +95,9 @@ public class Client extends Thread {
 
     @Override
     public void run() {
-        while(running) {
+        while (running) {
             try {
-                if(in != null) {
+                if (in != null) {
                     String msg = in.readLine();
                     parseMessage(msg);
                 }
@@ -104,16 +110,16 @@ public class Client extends Thread {
     }
 
     /**
-     * Parse message so it can be send
+     * Parse message so it can be send.
      *
      * @param msg the message
      */
     private void parseMessage(String msg) {
         //TODO debug message
         System.out.println(msg);
-        String[] msg_split = msg.split(String.valueOf(Protocol.Server.Settings.DELIMITER));
-        String command = msg_split[0];
-        final String[] params = Arrays.copyOfRange(msg_split, 1, msg_split.length);
+        String[] msgSplit = msg.split(String.valueOf(Protocol.Server.Settings.DELIMITER));
+        String command = msgSplit[0];
+        final String[] params = Arrays.copyOfRange(msgSplit, 1, msgSplit.length);
 
         Runnable r;
 
@@ -136,7 +142,8 @@ public class Client extends Thread {
                         r = new Runnable() {
                             @Override
                             public void run() {
-                                ClientController.getInstance().getUI().error("The username was already taken.");
+                                ClientController.getInstance().getUI()
+                                        .error("The username was already taken.");
                                 ClientController.getInstance().getUsername();
                             }
                         };
@@ -151,7 +158,8 @@ public class Client extends Thread {
                         break;
                     case "7":
                         //Invalid Move
-                        ClientController.getInstance().getUI().error("The move you tried to make wasn't valid.");
+                        ClientController.getInstance().getUI()
+                                .error("The move you tried to make wasn't valid.");
 
                         //TODO get a new move
                         break;
@@ -175,7 +183,8 @@ public class Client extends Thread {
                 thread(r);
                 break;
             case Protocol.Server.OKWAITFOR:
-                ClientController.getInstance().getUI().message("Waiting for " + params[0] + " players...");
+                ClientController.getInstance().getUI()
+                        .message("Waiting for " + params[0] + " players...");
                 break;
             case Protocol.Server.STARTGAME:
                 r = new Runnable() {
@@ -183,7 +192,7 @@ public class Client extends Thread {
                     public void run() {
                         List<String> opps = new ArrayList<>();
 
-                        for(String player : params) {
+                        for (String player : params) {
                             opps.add(player);
                         }
 
@@ -208,12 +217,13 @@ public class Client extends Thread {
 
                         ClientController.getInstance().getGame().getBoard().makeMove(move);
 
-                        if(current.equals(ClientController.getInstance().getName())) {
+                        if (current.equals(ClientController.getInstance().getName())) {
                             //It was our turn, and it was valid. Remove tiles from hand.
                             ClientController.getInstance().getPlayer().removeFromHand(move);
                         }
 
-                        if(next.equals(ClientController.getInstance().getName())) { //It is our turn now
+                        if (next.equals(ClientController
+                                .getInstance().getName())) { //It is our turn now
                             ClientController.getInstance().getMove();
                         }
                     }
@@ -222,7 +232,7 @@ public class Client extends Thread {
                 thread(r);
                 break;
             case Protocol.Server.ADDTOHAND:
-                for(String tile : params) {
+                for (String tile : params) {
                     Tile t = Tile.fromChars(tile);
                     ClientController.getInstance().getPlayer().addToHand(t);
                 }

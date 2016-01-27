@@ -1,7 +1,7 @@
 package qwirkle.validation;
 
 /**
- * Checks if a string is short enough
+ * Checks if a string is short enough.
  */
 public class MaxLength implements Validator {
 
@@ -15,7 +15,7 @@ public class MaxLength implements Validator {
 
     @Override
     public boolean matches(String data) {
-        return (data.length() < length);
+        return data.length() < length;
     }
 
     @Override

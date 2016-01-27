@@ -1,12 +1,12 @@
 package qwirkle.utils;
 
 /**
- * Utility class
+ * Utility class.
  */
 public class Utils {
 
     /**
-     * Check if data is numeric
+     * Check if data is numeric.
      *
      * @param data String that needs to be checked
      * @return True or false
@@ -22,7 +22,7 @@ public class Utils {
     }
 
     /**
-     * Convert string to in or give execptions
+     * Convert string to in or give execptions.
      *
      * @param data String that contains int
      * @return converted int
@@ -40,7 +40,7 @@ public class Utils {
     }
 
     /**
-     * Convert to chars
+     * Convert to chars.
      *
      * @param color Color type
      * @param shape Shape Type
@@ -50,21 +50,45 @@ public class Utils {
         String tile = "";
 
         switch (color) {
-            case 0: tile += "A"; break;
-            case 1: tile += "B"; break;
-            case 2: tile += "C"; break;
-            case 3: tile += "D"; break;
-            case 4: tile += "E"; break;
-            case 5: tile += "F"; break;
+            case 0:
+                tile += "A";
+                break;
+            case 1:
+                tile += "B";
+                break;
+            case 2:
+                tile += "C";
+                break;
+            case 3:
+                tile += "D";
+                break;
+            case 4:
+                tile += "E";
+                break;
+            case 5:
+                tile += "F";
+                break;
         }
 
         switch (shape) {
-            case 0: tile += "A"; break;
-            case 1: tile += "B"; break;
-            case 2: tile += "C"; break;
-            case 3: tile += "D"; break;
-            case 4: tile += "E"; break;
-            case 5: tile += "F"; break;
+            case 0:
+                tile += "A";
+                break;
+            case 1:
+                tile += "B";
+                break;
+            case 2:
+                tile += "C";
+                break;
+            case 3:
+                tile += "D";
+                break;
+            case 4:
+                tile += "E";
+                break;
+            case 5:
+                tile += "F";
+                break;
         }
 
         return tile;

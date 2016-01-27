@@ -4,7 +4,6 @@ import qwirkle.controllers.ClientController;
 import qwirkle.controllers.ServerController;
 import qwirkle.io.Color;
 import qwirkle.io.PrintColorWriter;
-import qwirkle.network.Client;
 import qwirkle.network.ClientHandler;
 import qwirkle.utils.Utils;
 import qwirkle.validation.InRange;
@@ -16,27 +15,27 @@ import java.util.List;
 
 
 /**
- * Human player
+ * Human player.
  */
 public class HumanPlayer extends Player {
 
     private ClientHandler handler;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param handler handler for the player
      */
     public HumanPlayer(ClientHandler handler) {
         this.handler = handler;
 
-        if(handler != null) {
+        if (handler != null) {
             handler.setPlayer(this);
         }
     }
 
     /**
-     * Returns the players handler
+     * Returns the players handler.
      *
      * @return Handler
      */
@@ -55,8 +54,9 @@ public class HumanPlayer extends Player {
             setLastMove(makeMove(b));
         } else {
             Validator range = new InRange(1, 3, "Not a valid action.");
-            String input = controller.getUI().getValidatedInput("Choose Action: 1. Make Move, 2. Change tiles, 3. Skip",
-                    new Validator[] {});
+            String input = controller.getUI()
+                    .getValidatedInput("Choose Action: 1. Make Move, 2. Change tiles, 3. Skip",
+                            new Validator[]{});
 
             switch (input) {
                 default:
@@ -70,6 +70,11 @@ public class HumanPlayer extends Player {
                 case "3":   //Skip turn
                     getLastMove().setType(Move.Type.SKIP);
                     break;
+
+                case "1":   //Make a move
+                    m = makeMove(b);
+                    break;
+                default:
             }
         }
 
@@ -83,15 +88,17 @@ public class HumanPlayer extends Player {
 
         do {
             Validator range = new InRange(1, 3, "Not a valid action.");
-            action = controller.getUI().getValidatedInput("What do you want to do? [1. Place Tile, 2. Submit Move, 3. Reset] ",
-                    new Validator[] {range});
+            action = controller.getUI()
+                    .getValidatedInput("What do you want to do?" +
+                            " [1. Place Tile, 2. Submit Move, 3. Reset] ",
+                    new Validator[]{range});
 
-            if(action.equals("1")) {
+            if (action.equals("1")) {
                 placeTile(move, b);
             } else if (action.equals("3")) {
                 setBoardCopy(ClientController.getInstance().getGame().getBoard().deepCopy());
             }
-        } while((action.equals("1") || action.equals("3")) && action != null);
+        } while ((action.equals("1") || action.equals("3")) && action != null);
 
         return move;
     }
@@ -108,23 +115,30 @@ public class HumanPlayer extends Player {
         do {
             //Pick a tile from your hand
             Validator num = new Numeric("Please enter a number");
-            Validator range = new InRange(0, getHand().size() - 1, "Your choice was not a valid tile in your hand.");
-            String c = controller.getUI().getValidatedInput("Choose a tile to place: ", new Validator[] {num, range});
+            Validator range = new InRange(0, getHand().size() - 1,
+                    "Your choice was not a valid tile in your hand.");
+            String c = controller.getUI().
+                    getValidatedInput("Choose a tile to place: ",
+                    new Validator[]{num, range});
             int choice = Utils.toInt(c);
 
             chosenTile = getHand().get(choice);
 
             possibilities = b.getPossibleMoves(chosenTile, m);
-            //TODO if the user has no tiles which can be placed, he cannot continue the game from here.
-            if(possibilities.size() == 0) {
-                ClientController.getInstance().getUI().error("You can't place that tile on the current board.");
+            //TODO if the user has no tiles which can be placed,
+            // he cannot continue the game from here.
+            if (possibilities.size() == 0) {
+                ClientController.getInstance().getUI()
+                        .error("You can't place that tile on the current board.");
             }
         } while (possibilities.size() == 0 && chosenTile != null);
 
         controller.getUI().printBoardWithOptions(b, possibilities);
         Validator locations = new InRange(0, possibilities.size(), "You can't place a tile there");
         Validator num = new Numeric("Please enter a number");
-        String l = controller.getUI().getValidatedInput("Where do you want to place your tile? ", new Validator[]{locations, num});
+        String l = controller.getUI()
+                .getValidatedInput("Where do you want to place your tile? ",
+                        new Validator[]{locations, num});
 
         Tile target = possibilities.get(Utils.toInt(l));
 
@@ -137,17 +151,21 @@ public class HumanPlayer extends Player {
 
         writer.println(Color.GREEN, "Your current hand:");
 
-        for(int i = 0; i < getHand().size(); i++) {
+        for (int i = 0; i < getHand().size(); i++) {
             writer.print(Color.WHITE, Integer.toString(i));
-            if (i< (getHand().size()-1)) writer.print(" - ");
+            if (i < (getHand().size() - 1)) {
+                writer.print(" - ");
+            }
         }
 
         writer.println("");
 
-        for(int i = 0; i < getHand().size(); i++) {
+        for (int i = 0; i < getHand().size(); i++) {
             Tile t = getHand().get(i);
             writer.print(t.getColor(), t.getShape().toString());
-            if (i< (getHand().size()-1)) writer.print(" - ");
+            if (i < (getHand().size() - 1)) {
+                writer.print(" - ");
+            }
         }
 
         System.out.println("");

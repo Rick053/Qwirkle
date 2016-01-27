@@ -1,7 +1,7 @@
 package qwirkle.io;
 
 /**
- * Enum that contains all shapes for the Qwirkle game
+ * Enum that contains all shapes for the Qwirkle game.
  */
 public enum Shape {
 
@@ -26,6 +26,7 @@ public enum Shape {
     public String getUnicode() {
         return unicode;
     }
+
     /**
      * @return the color in unicode
      */

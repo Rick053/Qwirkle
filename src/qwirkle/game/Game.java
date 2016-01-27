@@ -7,7 +7,7 @@ import qwirkle.utils.Utils;
 import java.util.*;
 
 /**
- * Main game class
+ * Main game class.
  */
 public class Game {
 
@@ -20,7 +20,7 @@ public class Game {
     int currentPlayer;
 
     /**
-     * Enum that contains the different states of the game
+     * Enum that contains the different states of the game.
      */
 
     public enum End {
@@ -46,7 +46,7 @@ public class Game {
     }
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param players Amount of players
      */
@@ -54,8 +54,8 @@ public class Game {
         this.board = new Board(13);
         this.players = players;
 
-        if(players != null) {
-            for(Player p : players) {
+        if (players != null) {
+            for (Player p : players) {
                 p.setGame(this);
             }
         }
@@ -63,8 +63,8 @@ public class Game {
         this.bagOfTiles = new ArrayList<>();
         this.currentPlayer = -1;
 
-        for(int color = 0; color < 6; color++) {
-            for(int shape = 0; shape < 6; shape++) {
+        for (int color = 0; color < 6; color++) {
+            for (int shape = 0; shape < 6; shape++) {
                 String chars = Utils.toChars(color, shape);
                 bagOfTiles.add(Tile.fromChars(chars));
                 bagOfTiles.add(Tile.fromChars(chars));
@@ -76,10 +76,10 @@ public class Game {
     }
 
     public void initHands() {
-        for(int i = 0; i < players.size(); i++) {
+        for (int i = 0; i < players.size(); i++) {
             String toAdd = "";
 
-            for(int j = 0; j < 6; j++) {
+            for (int j = 0; j < 6; j++) {
                 Tile t = drawFromBag();
                 toAdd += t.toChars() + Protocol.Server.Settings.DELIMITER;
                 players.get(i).addToHand(t);
@@ -87,7 +87,7 @@ public class Game {
 
             toAdd = toAdd.substring(0, toAdd.length() - 1);
 
-            if(players.get(i) instanceof HumanPlayer) {
+            if (players.get(i) instanceof HumanPlayer) {
                 ((HumanPlayer) players.get(i)).getHandler().sendAddToHand(toAdd);
             }
         }
@@ -102,7 +102,7 @@ public class Game {
     }
 
     /**
-     * Adds first move from player
+     * Adds first move from player.
      *
      * @param m move
      * @param p player
@@ -120,9 +120,7 @@ public class Game {
     }
 
     /**
-     * Check who has the best first move
-     *
-     *
+     * Check who has the best first move.
      */
     public void checkFirstMoves() {
         Move best = null;
@@ -136,7 +134,8 @@ public class Game {
         for(int i = 0; i < players.size(); i++) {
             if(firstMoves.get(players.get(i)) != best) {
                 if (players.get(i) instanceof HumanPlayer) {
-                    ((HumanPlayer) players.get(i)).getHandler().sendError(ClientHandler.ErrorCodes.NOTYOURTURN);
+                    ((HumanPlayer) players.get(i)).getHandler()
+                            .sendError(ClientHandler.ErrorCodes.NOTYOURTURN);
                 } else {
                     //TODO computer player
                 }
@@ -154,7 +153,7 @@ public class Game {
         for(int i = 0; i < players.size(); i++) {
             Player p = players.get(i);
 
-            if(p instanceof HumanPlayer) {
+            if (p instanceof HumanPlayer) {
                 ((HumanPlayer) p).getHandler().sendMove(best, current, next);
                 changeTiles(best.getTiles(), current);
             } else {
@@ -164,17 +163,17 @@ public class Game {
     }
 
     /**
-     * Start a game
+     * Start a game.
      */
     public void start() {
         String[] ps = new String[players.size()];
-        for(int i = 0; i < players.size(); i++) {
+        for (int i = 0; i < players.size(); i++) {
             ps[i] = players.get(i).toString();
             System.out.println(players.get(i).toString());
         }
 
-        for(int i = 0; i < players.size(); i++) {
-            if(players.get(i) instanceof HumanPlayer) {
+        for (int i = 0; i < players.size(); i++) {
+            if (players.get(i) instanceof HumanPlayer) {
                 ((HumanPlayer) players.get(i)).getHandler().sendStartGame(ps);
             } else {
                 //TODO computer player
@@ -184,13 +183,13 @@ public class Game {
     }
 
     /**
-     * End a game
+     * End a game.
      *
      * @param reason Way the game ended
      */
     public void end(End reason) {
-        for(int i = 0; i < players.size(); i++) {
-            if(players.get(i) instanceof HumanPlayer) {
+        for (int i = 0; i < players.size(); i++) {
+            if (players.get(i) instanceof HumanPlayer) {
                 ((HumanPlayer) players).getHandler().sendEnd(reason, getHighScore().toString());
             } else {
                 //TODO computer player
@@ -199,15 +198,15 @@ public class Game {
     }
 
     /**
-     * Returns the high score
+     * Returns the high score.
      *
      * @return high score
      */
     public Player getHighScore() {
         Player highest = null;
 
-        for(int i = 0; i < players.size(); i++) {
-            if(highest == null || players.get(i).getScore() > highest.getScore()) {
+        for (int i = 0; i < players.size(); i++) {
+            if (highest == null || players.get(i).getScore() > highest.getScore()) {
                 highest = players.get(i);
             }
         }
@@ -223,13 +222,14 @@ public class Game {
 
     /**
      * Change tiles in the users hand for a random set of new ones.
+     *
      * @param toChange - list of tiles to change
-     * @param player - The player to change tiles for
+     * @param player   - The player to change tiles for
      */
     public void changeTiles(List<Tile> toChange, Player player) {
         String sendTiles = "";
 
-        for(Tile oldTile : toChange) {
+        for (Tile oldTile : toChange) {
             player.getHand().remove(oldTile);
 
             Tile newTile = drawFromBag();
@@ -240,7 +240,7 @@ public class Game {
 
         sendTiles = sendTiles.substring(0, sendTiles.length() - 1);
 
-        if(player instanceof HumanPlayer) {
+        if (player instanceof HumanPlayer) {
             ((HumanPlayer) player).getHandler().sendAddToHand(sendTiles);
         }
     }
@@ -253,7 +253,7 @@ public class Game {
 
 
     /**
-     * Returns the bag of Tiles
+     * Returns the bag of Tiles.
      *
      * @return Bag of Tiles
      */

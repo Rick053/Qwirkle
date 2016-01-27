@@ -14,9 +14,10 @@ public class Test {
         char[] chars = new char[]{'A', 'B', 'C', 'D', 'E', 'F'};
         List<Tile> hand = new ArrayList<>();
 
-        for(int i = 0; i < chars.length; i++) {
-            for(int j = 0; j < chars.length; j++) {
-                hand.add(Tile.fromChars(Character.toString(chars[i]) + Character.toString(chars[j])));
+        for (int i = 0; i < chars.length; i++) {
+            for (int j = 0; j < chars.length; j++) {
+                hand.add(Tile.fromChars(Character
+                        .toString(chars[i]) + Character.toString(chars[j])));
             }
         }
 

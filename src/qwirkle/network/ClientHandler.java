@@ -4,21 +4,18 @@ import qwirkle.controllers.ServerController;
 import qwirkle.game.Game;
 import qwirkle.game.Move;
 import qwirkle.game.Player;
-
-import java.io.*;
-import java.net.Socket;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import qwirkle.game.Tile;
 import qwirkle.network.Protocol.Server.Settings;
 import qwirkle.utils.Utils;
 
-import javax.rmi.CORBA.Util;
+import java.io.*;
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
- * Client handler that handles connections with clients
+ * Client handler that handles connections with clients.
  */
 
 public class ClientHandler extends Thread {
@@ -84,7 +81,7 @@ public class ClientHandler extends Thread {
         while (running) {
             try {
                 String s = in.readLine();
-                if(s != null) {
+                if (s != null) {
                     parseMessage(s);
                 } else {
                     shutdown();
@@ -100,15 +97,15 @@ public class ClientHandler extends Thread {
     }
 
     /**
-     * Parse message so it can be send
+     * Parse message so it can be send.
      *
      * @param msg The message to be send
      */
     private void parseMessage(String msg) {
         System.out.println(msg); //TODO remove debug
-        String[] msg_split = msg.split(String.valueOf(Protocol.Server.Settings.DELIMITER));
-        String command = msg_split[0];
-        final String[] params = Arrays.copyOfRange(msg_split, 1, msg_split.length);
+        String[] msgSplit = msg.split(String.valueOf(Protocol.Server.Settings.DELIMITER));
+        String command = msgSplit[0];
+        final String[] params = Arrays.copyOfRange(msgSplit, 1, msgSplit.length);
 
         Runnable r;
 
@@ -163,7 +160,7 @@ public class ClientHandler extends Thread {
     }
 
     /**
-     * Send the message
+     * Send the message.
      *
      * @param message The message to be send
      */
@@ -179,7 +176,7 @@ public class ClientHandler extends Thread {
     }
 
     /**
-     * Send hellom, the first message
+     * Send hellom, the first message.
      */
     public void sendHello() {
         String cmd = Protocol.Server.HALLO + Protocol.Server.Settings.DELIMITER +
@@ -189,7 +186,7 @@ public class ClientHandler extends Thread {
 
 
     /**
-     * Send to the client that you have to wait for an amount of players
+     * Send to the client that you have to wait for an amount of players.
      *
      * @param players Players the client has to wait for
      */
@@ -199,15 +196,15 @@ public class ClientHandler extends Thread {
     }
 
     /**
-     * Notify the player that the game starts
+     * Notify the player that the game starts.
      *
      * @param players All the players
      */
     public void sendStartGame(String[] players) {
         String playerString = "";
 
-        for(String player : players) {
-            playerString += player + Settings.DELIMITER;
+        for (String p : players) {
+            playerString += p + Settings.DELIMITER;
         }
 
         playerString = playerString.substring(0, playerString.length() - 1);
@@ -218,7 +215,7 @@ public class ClientHandler extends Thread {
 
 
     /**
-     * Notify the player that the game has ended including why and the winner
+     * Notify the player that the game has ended including why and the winner.
      *
      * @param reason Why the game has ended
      * @param winner Winner of the game
@@ -235,7 +232,8 @@ public class ClientHandler extends Thread {
     }
 
     public void sendMove(Move move, Player current, Player next) {
-        String cmd = Protocol.Server.MOVE + Settings.DELIMITER + current.toString() + Settings.DELIMITER + next.toString() +
+        String cmd = Protocol.Server.MOVE
+                + Settings.DELIMITER + current.toString() + Settings.DELIMITER + next.toString() +
                 move.toString();
         sendMessage(cmd);
     }
@@ -251,7 +249,7 @@ public class ClientHandler extends Thread {
     }
 
     /**
-     * Set the player for the handler
+     * Set the player for the handler.
      *
      * @param p player
      */
@@ -260,7 +258,7 @@ public class ClientHandler extends Thread {
     }
 
     /**
-     * Shutdown cleanly
+     * Shutdown cleanly.
      */
     private void shutdown() {
         try {

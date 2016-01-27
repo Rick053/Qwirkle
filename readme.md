@@ -18,5 +18,9 @@ Made by: Rick van Gemert, Raoul Fasel
 This is a Qwirkle game written in java.
 
 #Running it
+NOTE!
+This program was written using Java 8 and language level 8
+This program depends on the apache commons library.(this library is included)
+
 
 The main classes are the Server.java and Client.java. Running either of these will start a server or client respectively.

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * TODO
+ * TODO.
  */
 public abstract class Player {
 
@@ -20,7 +20,7 @@ public abstract class Player {
 
     private Move lastMove;
 
-    private Board board_copy;
+    private Board boardCopy;
 
     public Player() {
         hand = new ArrayList<>();
@@ -60,8 +60,8 @@ public abstract class Player {
         this.username = name;
     }
 
-    public void addScore(int score) {
-        this.score += score;
+    public void addScore(int s) {
+        this.score += s;
     }
 
     public int getScore() {
@@ -96,11 +96,11 @@ public abstract class Player {
     }
 
     public Board getBoardCopy() {
-        return board_copy;
+        return boardCopy;
     }
 
-    public void setBoardCopy(Board board_copy) {
-        this.board_copy = board_copy;
+    public void setBoardCopy(Board boardCopy) {
+        this.boardCopy = boardCopy;
     }
 
     public void removeFromHand(Move m) {
