@@ -47,7 +47,7 @@ public class Cli {
     }
 
     public void parseServer() {
-        CommandLineParser parser = new BasicParser();
+        CommandLineParser parser = new DefaultParser();
 
         CommandLine cmd = null;
         try {
@@ -75,7 +75,7 @@ public class Cli {
     }
 
     public void parseClient() {
-        CommandLineParser parser = new BasicParser();
+        CommandLineParser parser = new DefaultParser();
 
         CommandLine cmd = null;
         try {

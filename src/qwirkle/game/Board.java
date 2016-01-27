@@ -114,21 +114,6 @@ public class Board {
         return boardList.get(row + offSetY).get(col + offSetX);
     }
 
-    /**
-     * Add extra rows to the board to make more space
-     */
-    public void addRows(){
-        List<Tile> row = new ArrayList<>();
-        for (int i = 0; i < boardList.get(0).size(); i++) {
-            row.add(new Tile());
-        }
-        boardList.add(0, row);  //Add extra row at the top
-        boardList.add(row);     //Add extra row at the bottom
-
-        sizeY += 2;
-        offSetY = sizeY / 2; //Update the X offset
-    }
-
     public ArrayList<Tile> getRow(Tile t) {
         int col = t.getCol();
         int row = t.getRow();
@@ -165,13 +150,37 @@ public class Board {
      * Add extra rows to the board to make more space
      */
     public void addColumns(){
-        for (int j = 0; j < boardList.size(); j++){
-            boardList.get(j).add(0, new Tile());    //Add column left
-            boardList.get(j).add(new Tile());       //Add column right
-        }
 
         sizeX += 2;
-        offSetX = sizeX / 2;      //Update the Y offset
+        offSetX = sizeX / 2;      //Update the x offset
+
+
+        for (int j = 0; j < boardList.size(); j++){
+            boardList.get(j).add(0, new Tile(0-offSetX,j-offSetY));    //Add column left
+            boardList.get(j).add(new Tile(sizeX-offSetX,j-offSetY));       //Add column right
+        }
+
+    }
+
+    /**
+     * Add extra rows to the board to make more space
+     */
+    public void addRows(){
+        List<Tile> row = new ArrayList<>();
+        List<Tile> row2 = new ArrayList<>();
+
+
+        sizeY += 2;
+        offSetY = sizeY / 2; //Update the Y offset
+        for (int i = 0; i < boardList.get(0).size(); i++) {
+            row.add(new Tile((i-offSetX,0-offSetY));
+        }
+        for (int i = 0; i < boardList.get(0).size(); i++) {
+            row2.add(new Tile((i-offSetX,sizeY-offSetY));
+        }
+        boardList.add(0, row);  //Add extra row at the top
+        boardList.add(row2);     //Add extra row at the bottom
+
     }
 
     public ArrayList<Tile> getColumn(Tile t) {
