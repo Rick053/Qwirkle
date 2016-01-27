@@ -234,4 +234,8 @@ public class Tile {
     public int getCol() {
         return col;
     }
+
+    public boolean matches(Tile option) {
+        return (getCol() == option.getCol() && getRow() == option.getRow());
+    }
 }
