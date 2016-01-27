@@ -118,7 +118,7 @@ public class HumanPlayer extends Player {
 
         for(int i = 0; i < getHand().size(); i++) {
             writer.print(Color.WHITE, Integer.toString(i));
-            writer.print(" - ");
+            if (i< (getHand().size()-1)) writer.print(" - ");
         }
 
         writer.println("");
@@ -126,7 +126,7 @@ public class HumanPlayer extends Player {
         for(int i = 0; i < getHand().size(); i++) {
             Tile t = getHand().get(i);
             writer.print(t.getColor(), t.getShape().toString());
-            writer.print(" - ");
+            if (i< (getHand().size()-1)) writer.print(" - ");
         }
 
         writer.println("");
