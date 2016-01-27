@@ -17,6 +17,23 @@ public class TUI implements UserInterface {
 
     private PrintColorWriter writer;
     private Scanner scanner;
+    private static final String SPLASH =("\n" +
+            "\n" +
+            "          ````                           `.--.`                   `````.                            \n" +
+            "      `:+ssyyss+-`                       :ooooo/.             .+syyyys+:`          `.`              \n" +
+            "    `+yyyyysssyyyo-                      `:+oooo+:          .  :hhhhy+.      `.:+oyys/              \n" +
+            "   -yyyyyo/-..:syys:     ``..` ````..-::::. .--:-`      `.`:/` -hhhhs+``   `-/ohhhhho:              \n" +
+            "  -yyyyy+:     `syyo:/+oosss/-.+::+syyy+o/:///++///----syyyyo- -hhhho+oyyys+/.-hhhhh+.  `-:/:-.     \n" +
+            "  oyyyyy/.      +yyy+:oyyyyo:`oyo`-syys+-./yyyy+++oyyoyyhhhhy/ -yhhh+oyhyo+:` -hhhhy+``/yyssshys:`  \n" +
+            " `syyyyy+.     `syyy+-.syyys/+yyyo/yyyo/  -yyyyo/.-yyyyyyyssy+.-yhhyshhs/.    -yhhhs/`ohs+-`:yyyy/  \n" +
+            "  oyyyyyy/``:+osyyyy/. :yyyy+yyyyysyyy+:  :yyyyo:  /yyyyo/-..-:-yhhyhhhhs:    -yhhho/:yho:-+yyyys+` \n" +
+            "  -yyyyyyyysyyyyyyyo/  `+yyyys+syyyyyy/.  /yyyys/  `oyyy+.     -yyyy+syhhy+`  -yhhy+-/yyyyyyyyyo++- \n" +
+            "   :yyyyyyyyyyyyyys/`   .oyyy+:.+yyyys/`  +yyyyy/`  .syyy/`    .yyyy+:/syyys- -yyyy+`.syyyyso++oss/ \n" +
+            "    .+yyyyyyyyyyyys+.   :ooooo/:/+++++/:-.syyyyys/`  :yyyyo:` .+yyyys/`:ysoo/:/yyys/  .+syyyyssooo/.\n" +
+            "      .:+oooo+/:-/+o/` `-...``          `/+//:::---. -soo/-.``---------//-.`.+ssssso:.  `-://:--` .:\n" +
+            "         ````      `.-                               .-.`                   .---......              \n" +
+            "Made by: Rick van Gemert, Raoul Fasel\n");
+
 
     /**
      * Constructor
@@ -27,22 +44,7 @@ public class TUI implements UserInterface {
         } catch (UnsupportedEncodingException e) {
             System.out.println(e.getMessage());
         }
-        System.out.print("\n" +
-                "\n" +
-                "          ````                           `.--.`                   `````.                            \n" +
-                "      `:+ssyyss+-`                       :ooooo/.             .+syyyys+:`          `.`              \n" +
-                "    `+yyyyysssyyyo-                      `:+oooo+:          .  :hhhhy+.      `.:+oyys/              \n" +
-                "   -yyyyyo/-..:syys:     ``..` ````..-::::. .--:-`      `.`:/` -hhhhs+``   `-/ohhhhho:              \n" +
-                "  -yyyyy+:     `syyo:/+oosss/-.+::+syyy+o/:///++///----syyyyo- -hhhho+oyyys+/.-hhhhh+.  `-:/:-.     \n" +
-                "  oyyyyy/.      +yyy+:oyyyyo:`oyo`-syys+-./yyyy+++oyyoyyhhhhy/ -yhhh+oyhyo+:` -hhhhy+``/yyssshys:`  \n" +
-                " `syyyyy+.     `syyy+-.syyys/+yyyo/yyyo/  -yyyyo/.-yyyyyyyssy+.-yhhyshhs/.    -yhhhs/`ohs+-`:yyyy/  \n" +
-                "  oyyyyyy/``:+osyyyy/. :yyyy+yyyyysyyy+:  :yyyyo:  /yyyyo/-..-:-yhhyhhhhs:    -yhhho/:yho:-+yyyys+` \n" +
-                "  -yyyyyyyysyyyyyyyo/  `+yyyys+syyyyyy/.  /yyyys/  `oyyy+.     -yyyy+syhhy+`  -yhhy+-/yyyyyyyyyo++- \n" +
-                "   :yyyyyyyyyyyyyys/`   .oyyy+:.+yyyys/`  +yyyyy/`  .syyy/`    .yyyy+:/syyys- -yyyy+`.syyyyso++oss/ \n" +
-                "    .+yyyyyyyyyyyys+.   :ooooo/:/+++++/:-.syyyyys/`  :yyyyo:` .+yyyys/`:ysoo/:/yyys/  .+syyyyssooo/.\n" +
-                "      .:+oooo+/:-/+o/` `-...``          `/+//:::---. -soo/-.``---------//-.`.+ssssso:.  `-://:--` .:\n" +
-                "         ````      `.-                               .-.`                   .---......              \n" +
-                "Made by: Rick van Gemert, Raoul Fasel\n");
+        System.out.print(SPLASH);
         scanner = new Scanner(System.in);
     }
 
