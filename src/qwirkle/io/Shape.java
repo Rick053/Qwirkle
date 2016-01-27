@@ -6,7 +6,7 @@ package qwirkle.io;
 public enum Shape {
 
     SQUARE("\u25A0"),
-    CROSS("\u274C"),
+    CROSS("\u2A2F"),
     PLUS("\u271A"),
     STAR("\u2605"),
     CIRCLE("\u25CF"),
