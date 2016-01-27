@@ -292,7 +292,6 @@ public class Board {
         return possibilities;
     }
 
-
     public boolean tileAllowed(Tile t, int col, int row) {
         if (!isFree(col, row)) {
             return false;
