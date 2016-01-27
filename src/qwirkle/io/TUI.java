@@ -135,5 +135,8 @@ public class TUI implements UserInterface {
 
             writer.println("");
         }
+
+        writer.println("");
+        writer.println("");
     }
 }

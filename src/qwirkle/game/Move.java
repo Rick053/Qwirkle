@@ -14,7 +14,7 @@ public class Move {
 
     private Type type;
 
-    private enum Type {
+    public enum Type {
         MOVE, CHANGE, SKIP
     }
 

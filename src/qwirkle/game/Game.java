@@ -176,7 +176,7 @@ public class Game {
                 ((HumanPlayer) players.get(i)).getHandler().sendStartGame(ps);
             } else {
                 //TODO computer player
-                players.get(i).determineMove();
+                players.get(i).determineMove(getBoard().deepCopy());
             }
         }
     }

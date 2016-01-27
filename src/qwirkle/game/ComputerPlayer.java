@@ -2,7 +2,7 @@ package qwirkle.game;
 
 public class ComputerPlayer extends Player {
     @Override
-    public Move determineMove() {
+    public Move determineMove(Board b) {
         Board board = getGame().getBoard();
         board.getEmptyNeighbours();
 

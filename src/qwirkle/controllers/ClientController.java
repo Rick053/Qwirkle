@@ -134,11 +134,11 @@ public class ClientController {
         this.game = new Game(players);
 
         //We need to make a first move.
-        Move m = player.determineMove();
+        Move m = player.determineMove(getGame().getBoard().deepCopy());
     }
 
     public void getMove() {
-        Move m = player.determineMove();
+        Move m = player.determineMove(getGame().getBoard().deepCopy());
     }
 
     public void setPlayer(Player player) {

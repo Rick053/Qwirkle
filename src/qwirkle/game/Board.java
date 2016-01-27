@@ -55,6 +55,7 @@ public class Board {
         offSetX = sizeX/ 2;
 
         boardList = board;
+        isEmpty = true;
     }
 
     /**
@@ -272,7 +273,7 @@ public class Board {
         }
     }
 
-    private Board deepCopy() {
+    public Board deepCopy() {
         return new Board(boardList);
     }
 
