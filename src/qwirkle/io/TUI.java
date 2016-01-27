@@ -32,7 +32,8 @@ public class TUI implements UserInterface {
             "    .+yyyyyyyyyyyys+.   :ooooo/:/+++++/:-.syyyyys/`  :yyyyo:` .+yyyys/`:ysoo/:/yyys/  .+syyyyssooo/.\n" +
             "      .:+oooo+/:-/+o/` `-...``          `/+//:::---. -soo/-.``---------//-.`.+ssssso:.  `-://:--` .:\n" +
             "         ````      `.-                               .-.`                   .---......              \n" +
-            "Made by: Rick van Gemert, Raoul Fasel\n");
+            "Made by: Rick van Gemert, Raoul Fasel\n\n" +
+            "####################################################################################################\n\n");
 
 
     /**
