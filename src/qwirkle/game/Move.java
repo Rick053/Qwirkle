@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The addition of one or more tiles to the board
+ * The addition of one or more tiles to the board.
  */
 public class Move {
 
@@ -19,7 +19,7 @@ public class Move {
     }
 
     /**
-     * Constructor
+     * Constructor.
      */
     public Move() {
         this.tiles = new ArrayList<>();
@@ -27,7 +27,7 @@ public class Move {
     }
 
     /**
-     * Add tile to the move
+     * Add tile to the move.
      *
      * @param t Tile to add
      * @param row Row location
@@ -44,12 +44,18 @@ public class Move {
         this.type = type;
     }
 
+
+    /**
+     * Return the type of the move.
+     * @return
+     */
+
     public Type getType() {
         return this.type;
     }
 
     /**
-     * Returns all the tiles in the move
+     * Returns all the tiles in the move.
      *
      * @return Tiles
      */
@@ -65,7 +71,7 @@ public class Move {
             move += tiles.get(i).toChars() + Protocol.Server.Settings.DELIMITER2;
         }
 
-        move.substring(0, move.length() - 1);
+        move = move.substring(0, move.length() - 1);
         return move;
     }
 }

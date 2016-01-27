@@ -100,4 +100,8 @@ public abstract class Player {
     public void setBoardCopy(Board board_copy) {
         this.board_copy = board_copy;
     }
+
+    public void removeFromHand(Move m) {
+        m.getTiles().forEach(this::removeFromHand);
+    }
 }

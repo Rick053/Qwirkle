@@ -46,7 +46,7 @@ public class Client extends Thread {
     }
 
     /**
-     * Send message
+     * Send message.
      * @param message message to send
      */
     public void sendMessage(String message) {
@@ -60,7 +60,7 @@ public class Client extends Thread {
     }
 
     /**
-     * Send first hello message
+     * Send first hello message.
      * @param username Username of the player
      */
     public void sendHello(String username) {
@@ -69,11 +69,21 @@ public class Client extends Thread {
     }
 
     /**
-     * Request a game with a specified amount of players
+     * Request a game with a specified amount of players.
      * @param numOfPlayers amount of players
      */
     public void requestGame(String numOfPlayers) {
         String cmd = Protocol.Client.REQUESTGAME + Protocol.Server.Settings.DELIMITER + numOfPlayers;
+        sendMessage(cmd);
+    }
+
+
+    /**
+     * Send a move to the server. At this point the move is not final.
+     * @param m
+     */
+    public void sendMove(Move m) {
+        String cmd = Protocol.Client.MAKEMOVE + Protocol.Server.Settings.DELIMITER + m.toString();
         sendMessage(cmd);
     }
 
@@ -193,22 +203,27 @@ public class Client extends Thread {
                         String next = params[1];
 
                         //It is not our own move.
-                        if(!current.equals(ClientController.getInstance().getName())) {
-                            String[] stones = params[2].split(Character.toString(Protocol.Server.Settings.DELIMITER));
-                            Move move = new Move();
+                        String[] stones = params[2].split(Character.toString(Protocol.Server.Settings.DELIMITER));
+                        Move move = new Move();
 
-                            for(String stone : stones) {
-                                String[] parts = stone.split(Character.toString(Protocol.Server.Settings.DELIMITER2));
+                        for(String stone : stones) {
+                            String[] parts = stone.split(Character.toString(Protocol.Server.Settings.DELIMITER2));
 
-                                Tile t = Tile.fromChars(parts[0]);
+                            Tile t = Tile.fromChars(parts[0]);
 
-                                //row col
-                                move.addTile(t, Utils.toInt(parts[1]), Utils.toInt(parts[2]));
-                            }
+                            //row col
+                            move.addTile(t, Utils.toInt(parts[1]), Utils.toInt(parts[2]));
+                        }
 
-                            if(next.equals(ClientController.getInstance().getName())) { //It is our turn now
-                                System.out.println("Our turn"); //TODO debug
-                            }
+                        ClientController.getInstance().getGame().getBoard().makeMove(move);
+
+                        if(current.equals(ClientController.getInstance().getName())) {
+                            //It was our turn, and it was valid. Remove tiles from hand.
+                            ClientController.getInstance().getPlayer().removeFromHand(move);
+                        }
+
+                        if(next.equals(ClientController.getInstance().getName())) { //It is our turn now
+                            ClientController.getInstance().getMove();
                         }
                     }
                 };

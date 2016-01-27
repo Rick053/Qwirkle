@@ -153,11 +153,13 @@ public class ClientController {
 
         //We need to make a first move.
         getUI().message("The player with the longest move will start.");
-        Move m = player.determineMove(getGame().getBoard().deepCopy());
+
+        getMove();
     }
 
     public void getMove() {
         Move m = player.determineMove(getGame().getBoard().deepCopy());
+        communication.sendMove(m);
     }
 
     public void setPlayer(Player player) {

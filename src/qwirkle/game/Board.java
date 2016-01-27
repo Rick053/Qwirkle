@@ -263,9 +263,13 @@ public class Board {
      * @return
      */
     public boolean moveAllowed(Move m) {
+        Board b = deepCopy();
+
         for(Tile t : m.getTiles()) {
-            if(!tileAllowed(t, t.getCol(), t.getRow())) {
+            if(!b.tileAllowed(t, t.getCol(), t.getRow())) {
                 return false;
+            } else {
+                b.addTile(t.getCol(), t.getRow(), t);
             }
         }
 

@@ -129,10 +129,9 @@ public class ClientHandler extends Thread {
                 //TODO check logic
                 if(player.getGame().getBoard().isEmpty()) {
                     //This is a first move.
-                    String[] stones = params[0].split(Character.toString(Settings.DELIMITER));
                     Move move = new Move();
 
-                    for(String stone : stones) {
+                    for(String stone : params) {
                         String[] parts = stone.split(Character.toString(Settings.DELIMITER2));
 
                         Tile t = Tile.fromChars(parts[0]);

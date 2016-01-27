@@ -4,6 +4,7 @@ import qwirkle.controllers.ClientController;
 import qwirkle.controllers.ServerController;
 import qwirkle.io.Color;
 import qwirkle.io.PrintColorWriter;
+import qwirkle.network.Client;
 import qwirkle.network.ClientHandler;
 import qwirkle.utils.Utils;
 import qwirkle.validation.InRange;
@@ -81,14 +82,16 @@ public class HumanPlayer extends Player {
         Move move = new Move();
 
         do {
-            Validator range = new InRange(1, 2, "Not a valid action.");
-            action = controller.getUI().getValidatedInput("What do you want to do? [1. Place Tile, 2. Submit Move] ",
+            Validator range = new InRange(1, 3, "Not a valid action.");
+            action = controller.getUI().getValidatedInput("What do you want to do? [1. Place Tile, 2. Submit Move, 3. Reset] ",
                     new Validator[] {range});
 
             if(action.equals("1")) {
                 placeTile(move, b);
+            } else if (action.equals("3")) {
+                setBoardCopy(ClientController.getInstance().getGame().getBoard().deepCopy());
             }
-        } while(action.equals("1") && action != null);
+        } while((action.equals("1") || action.equals("3")) && action != null);
 
         return move;
     }
@@ -118,7 +121,6 @@ public class HumanPlayer extends Player {
             }
         } while (possibilities.size() == 0 && chosenTile != null);
 
-        System.out.println(getBoardCopy().getTiles());
         controller.getUI().printBoardWithOptions(b, possibilities);
         Validator locations = new InRange(0, possibilities.size(), "You can't place a tile there");
         Validator num = new Numeric("Please enter a number");

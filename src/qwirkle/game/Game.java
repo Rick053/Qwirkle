@@ -155,6 +155,7 @@ public class Game {
 
             if(p instanceof HumanPlayer) {
                 ((HumanPlayer) p).getHandler().sendMove(best, current, next);
+                changeTiles(best.getTiles(), current);
             } else {
                 //TODO computer player
             }
@@ -243,6 +244,11 @@ public class Game {
         }
     }
 
+    public Player getNextPlayer() {
+        currentPlayer = currentPlayer + 1 % players.size();
+
+        return players.get(currentPlayer);
+    }
 
 
     /**
