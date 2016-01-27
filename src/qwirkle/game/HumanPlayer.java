@@ -12,6 +12,7 @@ import qwirkle.validation.Validator;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 
 /**
@@ -106,7 +107,7 @@ public class HumanPlayer extends Player {
 //
         Tile chosenTile = getHand().get(choice);
 
-        HashSet<Tile> possibilities = b.getPossibleMoves(chosenTile);
+        List<Tile> possibilities = b.getPossibleMoves(chosenTile);
         System.out.println(possibilities);
     }
 
