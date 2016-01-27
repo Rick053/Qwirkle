@@ -16,6 +16,8 @@ public abstract class Player {
 
     private int score;
 
+    private Move last_move;
+
     public Player() {
         hand = new ArrayList<>();
     }
@@ -79,5 +81,13 @@ public abstract class Player {
         }
 
         return true;
+    }
+
+    public Move getLast_move() {
+        return last_move;
+    }
+
+    public void setLast_move(Move last_move) {
+        this.last_move = last_move;
     }
 }

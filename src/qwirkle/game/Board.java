@@ -302,8 +302,8 @@ public class Board {
         return emptyTiles;
     }
 
-    public HashSet<Tile> getPossibleMoves(Tile tile){
-        HashSet<Tile> possibilities = new HashSet<>();
+    public List<Tile> getPossibleMoves(Tile tile){
+        List<Tile> possibilities = new ArrayList<>();
 
         if(isEmpty()) {
             possibilities.add(new Tile(0, 0));
