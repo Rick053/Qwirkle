@@ -2,6 +2,7 @@ package qwirkle.game;
 
 import qwirkle.controllers.ClientController;
 import qwirkle.controllers.ServerController;
+import qwirkle.io.Color;
 import qwirkle.io.PrintColorWriter;
 import qwirkle.network.ClientHandler;
 import qwirkle.utils.Utils;
@@ -9,8 +10,8 @@ import qwirkle.validation.InRange;
 import qwirkle.validation.Numeric;
 import qwirkle.validation.Validator;
 
-import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 
 /**
@@ -44,23 +45,26 @@ public class HumanPlayer extends Player {
 
     @Override
     public Move determineMove() {
-        ClientController controller = ClientController.getInstance();
-        String action;
+        if(true) {
+            ClientController controller = ClientController.getInstance();
+            String action;
+            Move move = new Move();
 
-        do {
-            Validator range = new InRange(0, 1, "Not a valid action.");
-            action = controller.getUI().getValidatedInput("What do you want to do? [0. Place Tile, 1. Submit Move] ",
-                    new Validator[] {range});
+            do {
+                Validator range = new InRange(0, 1, "Not a valid action.");
+                action = controller.getUI().getValidatedInput("What do you want to do? [0. Place Tile, 1. Submit Move] ",
+                        new Validator[] {range});
 
-            if(action.equals("0")) {
-                placeTile();
-            }
-        } while(action.equals("0") && action != null);
+                if(action.equals("0")) {
+                    placeTile(move);
+                }
+            } while(action.equals("0") && action != null);
+        }
 
         return new Move();
     }
 
-    private void placeTile() {
+    private void placeTile(Move m) {
         ServerController controller = ServerController.getInstance();
 
         //TODO show board;
@@ -72,19 +76,30 @@ public class HumanPlayer extends Player {
         int choice = Utils.toInt(c);
 //
         Tile chosenTile = getHand().get(choice);
-//        ArrayList<Point> possibilities = getGame().getBoard().findOptionsFor(chosenTile);
+
+        HashSet<Tile> possibilities = getGame().getBoard().getPossibleMoves(chosenTile);
+        System.out.println(possibilities);
     }
 
     private void showHand() {
         PrintColorWriter writer = ClientController.getInstance().getUI().getWriter();
 
+        writer.println(Color.GREEN, "Your current hand:");
+
+        for(int i = 0; i < getHand().size(); i++) {
+            writer.print(Color.WHITE, Integer.toString(i));
+            writer.print(" - ");
+        }
+
+        writer.println("");
+
         for(int i = 0; i < getHand().size(); i++) {
             Tile t = getHand().get(i);
-            writer.print(i + ": ");
             writer.print(t.getColor(), t.getShape().toString());
             writer.print(" - ");
         }
 
+        writer.println("");
         writer.println("");
     }
 }

@@ -150,7 +150,7 @@ public class ServerController {
      */
     public int joinLobby(String param, ClientHandler handler) {
         //Todo create this method
-        Game g;
+        Game g = null;
         int waitingFor = 0;
 
         Player p = new HumanPlayer(handler);
@@ -190,6 +190,11 @@ public class ServerController {
                     games.add(g);
                 }
                 break;
+        }
+
+        if(g != null) {
+            g.initHands();
+            g.start();
         }
 
         return waitingFor;

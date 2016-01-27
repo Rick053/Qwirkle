@@ -112,16 +112,23 @@ public class Tile {
 
     @Override
     public boolean equals(Object obj) {
+        boolean s = super.equals(obj);
+
         if (obj instanceof Tile) {
             Tile toCompare = (Tile) obj;
 
             if (this.color == toCompare.getColor() &&
-                    this.shape == toCompare.getShape()) {
+                    this.shape == toCompare.getShape() && s) {
                 return true;
             }
         }
 
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return this.toChars() + "(" + col +", " + row + ")";
     }
 
     /**
@@ -207,6 +214,11 @@ public class Tile {
         }
 
         return new Tile(s, c);
+    }
+
+    public Tile toNew() {
+        Tile t = new Tile(getShape(), getColor());
+        return t;
     }
 
     /**

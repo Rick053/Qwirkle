@@ -53,6 +53,10 @@ public class Game {
     public Game(List<Player> players) {
         this.board = new Board(13);
         this.players = players;
+
+        for(Player p : players) {
+            p.setGame(this);
+        }
         this.bagOfTiles = new ArrayList<>();
         this.currentPlayer = -1;
 
@@ -66,12 +70,9 @@ public class Game {
         }
 
         first_moves = new HashMap<>();
-
-        initHands();
-        start();
     }
 
-    private void initHands() {
+    public void initHands() {
         for(int i = 0; i < players.size(); i++) {
             String toAdd = "";
 
@@ -160,7 +161,7 @@ public class Game {
     /**
      * Start a game
      */
-    private void start() {
+    public void start() {
         String[] ps = new String[players.size()];
         for(int i = 0; i < players.size(); i++) {
             ps[i] = players.get(i).toString();

@@ -148,4 +148,8 @@ public class ClientController {
     public Player getPlayer() {
         return player;
     }
+
+    public Game getGame() {
+        return game;
+    }
 }

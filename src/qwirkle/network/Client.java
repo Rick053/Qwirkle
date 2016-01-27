@@ -39,6 +39,9 @@ public class Client extends Thread {
             //TODO error logs
             System.out.println(e.getMessage());
             shutdown();
+        } catch (IllegalArgumentException e) {
+            ClientController.getInstance().getUI().error("Could not connect to the server with the specified information.");
+            ClientController.getInstance().getServerInfo();
         }
     }
 
@@ -78,8 +81,10 @@ public class Client extends Thread {
     public void run() {
         while(running) {
             try {
-                String msg = in.readLine();
-                parseMessage(msg);
+                if(in != null) {
+                    String msg = in.readLine();
+                    parseMessage(msg);
+                }
             } catch (IOException e) {
                 //TODO errors
                 running = false;
@@ -197,6 +202,7 @@ public class Client extends Thread {
 
                                 Tile t = Tile.fromChars(parts[0]);
 
+                                //row col
                                 move.addTile(t, Utils.toInt(parts[1]), Utils.toInt(parts[2]));
                             }
 
@@ -225,9 +231,9 @@ public class Client extends Thread {
 
     private void shutdown() {
         try {
-            in.close();
-            out.close();
-            socket.close();
+            if (in != null) in.close();
+            if (out != null) out.close();
+            if (socket != null) socket.close();
         } catch (IOException e) {
             //TODO errors
             System.out.println(e.getMessage());
