@@ -31,6 +31,9 @@ public class Board {
     public Board(int size){
         this.sizeX = this.sizeY = size;
 
+        offSetX = sizeX / 2;
+        offSetY = sizeY / 2;
+
         for (int i = 0; i < size; i++) {
             List<Tile> row = new ArrayList<>();
 
@@ -40,9 +43,6 @@ public class Board {
 
             boardList.add(row);
         }
-
-        offSetX = sizeX / 2;
-        offSetY = sizeY / 2;
 
         isEmpty = true;
     }
@@ -228,49 +228,6 @@ public class Board {
         return true;
     }
 
-    public boolean tileAllowed(Tile t, int col, int row) {
-        if (!isFree(col, row)) {
-            return false;
-        }
-
-        Tile testTile = new Tile(t.getShape(), t.getColor());
-        testTile.setCol(col);
-        testTile.setRow(row);
-
-        List<Tile> rowList = getRow(t);
-        List<Tile> colList = getColumn(t);
-
-        return setAllowed(rowList) && setAllowed(colList);
-    }
-
-    public boolean setAllowed(List<Tile> set) {
-        boolean allowed = false;
-        Color color = set.get(0).getColor();
-        Shape shape = set.get(0).getShape();
-
-        for(Tile t : set) {
-            boolean shapeMatch, colourMatch;
-            shapeMatch = colourMatch = false;
-
-            if(t.getShape() == shape) {
-                shapeMatch = true;
-            }
-
-            if(t.getColor() == color) {
-                colourMatch = true;
-            }
-
-            if((shapeMatch && !colourMatch) || (!shapeMatch && colourMatch)) {
-                allowed = true;
-            } else {
-                allowed = false;
-                break;
-            }
-        }
-
-        return allowed;
-    }
-
     public void makeMove(Move m) {
         for(Tile t : m.getTiles()) {
             addTile(t.getCol(), t.getRow(), t);
@@ -288,7 +245,6 @@ public class Board {
                 int x = t.getCol();
                 int y = t.getRow();
                 if(!t.isEmpty()) {
-                    System.out.println("Tile found: " + t.toString() + " x - " + x + " y - " + y);
 
                     if (getTile(x, y + 1) != null && getTile(x, y + 1).isEmpty()){
                         emptyTiles.add(getTile(x, y + 1));
@@ -312,10 +268,8 @@ public class Board {
         List<Tile> possibilities = new ArrayList<>();
 
         HashSet<Tile> neighbours = getEmptyNeighbours();
-        System.out.println("Neighbours test " + neighbours);
 
         if(isEmpty()) {
-            addTile(0, 0, new Tile());
             possibilities.add(getTile(0, 0));
         } else {
                 for (Tile t : neighbours) {
@@ -325,9 +279,103 @@ public class Board {
                 }
         }
 
-        System.out.println(possibilities);
+        System.out.println("Poss: " + possibilities);
         return possibilities;
     }
+
+
+    public boolean tileAllowed(Tile t, int col, int row) {
+        if (!isFree(col, row)) {
+            return false;
+        }
+
+        Tile testTile = new Tile(t.getShape(), t.getColor());
+        testTile.setCol(col);
+        testTile.setRow(row);
+
+        List<Tile> rowList = getRow(testTile);
+        List<Tile> colList = getColumn(testTile);
+
+        System.out.println("Row: " + rowList);
+        System.out.println("Column: " + colList);
+
+        return setAllowed(rowList) && setAllowed(colList);
+    }
+
+    public boolean setAllowed(List<Tile> set) {
+        boolean allowed = false;
+
+        List<Color> colors = new ArrayList<>();
+        List<Shape> shapes = new ArrayList<>();
+
+        if(set.size() > 1) {
+            if(uniqueColors(set)) { //Colors are unique, so shape has to match
+                allowed = shapesMatch(set);
+            } else if (uniqueShapes(set)) {
+                allowed = colorsMatch(set);
+            } else {
+                allowed = false;
+            }
+        } else {
+            //Only a single tile, so it is allowed.
+            allowed = true;
+        }
+
+        return allowed;
+    }
+
+    private boolean shapesMatch(List<Tile> set) {
+        Shape s = set.get(0).getShape();
+
+        for(Tile t : set) {
+            if(s != t.getShape()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private boolean colorsMatch(List<Tile> set) {
+        Color s = set.get(0).getColor();
+
+        for(Tile t : set) {
+            if(s != t.getColor()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public boolean uniqueColors(List<Tile> set) {
+        List<Color> colors = new ArrayList<>();
+
+        for(Tile t : set) {
+            if(colors.contains(t.getColor())) {
+                return false;
+            } else {
+                colors.add(t.getColor());
+            }
+        }
+
+        return true;
+    }
+
+    public boolean uniqueShapes(List<Tile> set) {
+        List<Shape> shapes = new ArrayList<>();
+
+        for(Tile t : set) {
+            if(shapes.contains(t.getShape())) {
+                return false;
+            } else {
+                shapes.add(t.getShape());
+            }
+        }
+
+        return true;
+    }
+
 
     public boolean isPossibleMove(Move move){
         return false;   //TODO not implemented yet, just for errors
@@ -339,20 +387,5 @@ public class Board {
 
     public int getOffSetY() {
         return offSetY;
-    }
-
-    public void printBoard() {
-        System.out.println("");
-
-        for(int i = 0; i < sizeX; i++) {
-            for(int j = 0; j < sizeY; j++) {
-                Tile t = getTile(i - offSetX, j - offSetY);
-                System.out.print(t.toString() + " - ");
-            }
-
-            System.out.println("");
-        }
-
-        System.out.println("");
     }
 }
