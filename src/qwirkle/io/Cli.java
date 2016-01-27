@@ -16,6 +16,7 @@ public class Cli {
     private String ip;
     private String port;
     private String maxConnections;
+    private boolean ai;
 
     public Cli(String[] args, int type) {
 
@@ -34,7 +35,10 @@ public class Cli {
             options.addOption("n", "nickname", false, "the nickname ingame.");
             options.addOption("ip", "ip", false, "server ip, used to connect to the server.");
             options.addOption("p", "port", false, "port to connect to");
+            options.addOption("a", "ai", false, "Start client as a computer player");
+
         }
+
         options.addOption("t", "tui", false, "run as tui");
         options.addOption("g", "gui", false, "run as gui");
         options.addOption("h", "help", false, "show help.");
@@ -92,6 +96,8 @@ public class Cli {
             if (cmd.hasOption("p"))
                 this.port = cmd.getOptionValue("p");
 
+            if (cmd.hasOption("a"))
+                this.ai = true;
         } catch (ParseException e) {
             log.log(Level.SEVERE, "Failed to parse comand line properties", e);
             help();
@@ -133,6 +139,10 @@ public class Cli {
 
     public String getMaxConnections() {
         return maxConnections;
+    }
+
+    public boolean isAi() {
+        return ai;
     }
 }
 

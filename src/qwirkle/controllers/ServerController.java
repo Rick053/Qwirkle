@@ -3,6 +3,7 @@ package qwirkle.controllers;
 import qwirkle.game.Game;
 import qwirkle.game.HumanPlayer;
 import qwirkle.game.Player;
+import qwirkle.io.Cli;
 import qwirkle.io.TUI;
 import qwirkle.network.ClientHandler;
 import qwirkle.network.Server;
@@ -208,5 +209,9 @@ public class ServerController {
         }
 
         return true;
+    }
+
+    public void setCli(Cli cli) {
+
     }
 }
