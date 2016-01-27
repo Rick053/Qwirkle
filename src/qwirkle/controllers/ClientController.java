@@ -4,6 +4,7 @@ import qwirkle.game.Game;
 import qwirkle.game.HumanPlayer;
 import qwirkle.game.Move;
 import qwirkle.game.Player;
+import qwirkle.io.Cli;
 import qwirkle.io.TUI;
 import qwirkle.network.Client;
 import qwirkle.utils.Utils;
@@ -29,6 +30,8 @@ public class ClientController {
 
     private Player player;
     private Game game;
+    private boolean showSetup;
+    private boolean ai;
 
     public ClientController() {
         ui = new TUI();
@@ -42,6 +45,21 @@ public class ClientController {
         return instance;
     }
 
+    public void setCli(Cli cli) {
+        try {
+            this.server_port = Integer.parseInt(cli.getPort());
+                   } catch (NumberFormatException nfe) {
+                       this.server_port = -1;
+        }
+        this.server_ip = cli.getIp();
+        if((server_port == -1) || (server_ip == null)) {
+            showSetup = true;
+        }
+        this.username = cli.getNickname();
+        this.ai = cli.isAi();
+            
+    }
+
     /**
      * Returns the UI
      *
@@ -52,7 +70,7 @@ public class ClientController {
     }
 
     public void run() {
-        getServerInfo();
+        if (showSetup) getServerInfo();
         getUsername();
     }
 
@@ -152,4 +170,9 @@ public class ClientController {
     public Game getGame() {
         return game;
     }
+
+    public boolean isAi() {
+        return ai;
+    }
+
 }

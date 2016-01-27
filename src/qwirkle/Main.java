@@ -3,6 +3,7 @@ package qwirkle;
 import qwirkle.controllers.ClientController;
 import qwirkle.game.Board;
 import qwirkle.game.Tile;
+import qwirkle.io.Cli;
 import qwirkle.io.PrintColorWriter;
 
 import java.io.UnsupportedEncodingException;
@@ -23,7 +24,9 @@ public class Main {
      * @param args
      */
     public static void main(String[] args) {
+        Cli cli = new Cli(args, 0);
         ClientController client = ClientController.getInstance();
+        ClientController.setCli(cli);
         client.run();
     }
 
