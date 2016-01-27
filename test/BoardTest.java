@@ -46,12 +46,6 @@ public class BoardTest {
 
     @Test
     public void testGetNeighbours() {
-        board.addTile(0, 0, Tile.fromChars("AA"));
-        board.addTile(0, 1, Tile.fromChars("AC"));
-        board.addTile(1, 0, Tile.fromChars("DA"));
 
-        TUI t = new TUI();
-        List<Tile> poss = board.getPossibleMoves(Tile.fromChars("AE"), new Move());
-        t.printBoardWithOptions(board, poss);
     }
 }

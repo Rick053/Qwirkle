@@ -49,6 +49,8 @@ public class HumanPlayer extends Player {
         ClientController controller = ClientController.getInstance();
         Move m = new Move();
 
+        setBoardCopy(b);
+
         if(b.isEmpty()) {
             m = makeMove(b);
         } else {
@@ -95,9 +97,7 @@ public class HumanPlayer extends Player {
     private void placeTile(Move m, Board b) {
         ServerController controller = ServerController.getInstance();
 
-        controller.getUI().printBoard(b);
-
-        //TODO show board;
+        controller.getUI().printBoard(getBoardCopy());
         showHand();
 
         List<Tile> possibilities = new ArrayList<>();
@@ -113,24 +113,23 @@ public class HumanPlayer extends Player {
             chosenTile = getHand().get(choice);
 
             possibilities = b.getPossibleMoves(chosenTile, m);
+            System.out.println("possibilities : " + possibilities);
             //TODO if the user has no tiles which can be placed, he cannot continue the game from here.
             if(possibilities.size() == 0) {
                 ClientController.getInstance().getUI().error("You can't place that tile on the current board.");
             }
         } while (possibilities.size() == 0 && chosenTile != null);
 
-        if(possibilities.size() > 0 && chosenTile != null) {
-            controller.getUI().printBoardWithOptions(b, possibilities);
-            Validator locations = new InRange(0, possibilities.size(), "You can't place a tile there");
-            Validator num = new Numeric("Please enter a number");
-            String l = controller.getUI().getValidatedInput("Where do you want to place your tile? ", new Validator[]{locations, num});
+        controller.getUI().printBoardWithOptions(b, possibilities);
+        Validator locations = new InRange(0, possibilities.size(), "You can't place a tile there");
+        Validator num = new Numeric("Please enter a number");
+        String l = controller.getUI().getValidatedInput("Where do you want to place your tile? ", new Validator[]{locations, num});
 
-            Tile target = possibilities.get(Utils.toInt(l));
-            System.out.println(target.getCol() + " - " + target.getRow());
-            b.addTile(target.getCol(), target.getRow(), chosenTile);
+        Tile target = possibilities.get(Utils.toInt(l));
+        System.out.println(target.getCol() + " - " + target.getRow());
 
-            m.addTile(chosenTile, target.getCol(), target.getRow());
-        }
+        getBoardCopy().addTile(target.getCol(), target.getRow(), chosenTile);
+        m.addTile(chosenTile, target.getCol(), target.getRow());
     }
 
     private void showHand() {
@@ -151,7 +150,6 @@ public class HumanPlayer extends Player {
             if (i< (getHand().size()-1)) writer.print(" - ");
         }
 
-        writer.println("");
-        writer.println("");
+        System.out.println("");
     }
 }

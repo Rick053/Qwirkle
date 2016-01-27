@@ -18,6 +18,8 @@ public abstract class Player {
 
     private Move last_move;
 
+    private Board board_copy;
+
     public Player() {
         hand = new ArrayList<>();
     }
@@ -89,5 +91,13 @@ public abstract class Player {
 
     public void setLast_move(Move last_move) {
         this.last_move = last_move;
+    }
+
+    public Board getBoardCopy() {
+        return board_copy;
+    }
+
+    public void setBoardCopy(Board board_copy) {
+        this.board_copy = board_copy;
     }
 }

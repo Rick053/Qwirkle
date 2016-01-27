@@ -245,7 +245,6 @@ public class Board {
                 int x = t.getCol();
                 int y = t.getRow();
                 if(!t.isEmpty()) {
-
                     if (getTile(x, y + 1) != null && getTile(x, y + 1).isEmpty()){
                         emptyTiles.add(getTile(x, y + 1));
                     }
@@ -268,6 +267,7 @@ public class Board {
         List<Tile> possibilities = new ArrayList<>();
 
         HashSet<Tile> neighbours = getEmptyNeighbours();
+        System.out.println("Neigh: " + neighbours);
 
         if(isEmpty()) {
             possibilities.add(getTile(0, 0));
