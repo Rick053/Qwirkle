@@ -26,7 +26,7 @@ public class Main {
     public static void main(String[] args) {
         Cli cli = new Cli(args, 0);
         ClientController client = ClientController.getInstance();
-        ClientController.setCli(cli);
+        client.setCli(cli);
         client.run();
     }
 
