@@ -54,9 +54,12 @@ public class Game {
         this.board = new Board(13);
         this.players = players;
 
-        for(Player p : players) {
-            p.setGame(this);
+        if(players != null) {
+            for(Player p : players) {
+                p.setGame(this);
+            }
         }
+
         this.bagOfTiles = new ArrayList<>();
         this.currentPlayer = -1;
 
